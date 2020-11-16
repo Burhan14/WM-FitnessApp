@@ -1,0 +1,32 @@
+{
+  "cwd": "C:\\dev\\project\\wm\\WM-FitnessApp",
+  "type": [
+    "cordova"
+  ],
+  "name": "FitnessApp",
+  "framework": "core",
+  "template": "tabs",
+  "bundler": false,
+  "cssPreProcessor": false,
+  "theming": {
+    "customColor": true,
+    "color": "#00587a",
+    "darkTheme": true,
+    "iconFonts": true,
+    "fillBars": true
+  },
+  "customBuild": false,
+  "pkg": "be.burhanatesalp.FitnessApp",
+  "cordova": {
+    "folder": "cordova",
+    "platforms": [
+      "android"
+    ],
+    "plugins": [
+      "cordova-plugin-statusbar",
+      "cordova-plugin-keyboard",
+      "cordova-plugin-splashscreen",
+      "cordova-plugin-device"
+    ]
+  }
+}

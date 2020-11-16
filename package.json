@@ -1,0 +1,35 @@
+{
+  "name": "fitnessapp",
+  "private": true,
+  "version": "1.0.0",
+  "description": "FitnessApp",
+  "repository": "",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "npm run serve",
+    "serve": "http-server ./www/ -o -c 1 -a localhost -p 8080",
+    "build-cordova": "node ./build/build.js && cd cordova && cordova build",
+    "build-run-cordova": "node ./build/build.js && cd cordova && cordova run",
+    "postinstall": "cpy ./node_modules/framework7-icons/fonts/*.* ./www/fonts/"
+  },
+  "browserslist": [
+    "Android >= 7",
+    "IOS >= 11",
+    "Safari >= 11",
+    "Chrome >= 49",
+    "Firefox >= 31",
+    "Samsung >= 5"
+  ],
+  "dependencies": {
+    "dom7": "^2.1.5",
+    "framework7": "^5.7.14",
+    "framework7-icons": "^3.0.1",
+    "template7": "^1.4.2"
+  },
+  "devDependencies": {
+    "cpy": "^8.1.1",
+    "cpy-cli": "^3.1.1",
+    "http-server": "^0.12.3",
+    "rimraf": "^3.0.2"
+  }
+}
