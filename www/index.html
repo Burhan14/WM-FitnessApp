@@ -40,6 +40,9 @@
           </div>
           <div class="page-content">
             <div class="block">My Profile content goes here</div>
+            <div class="col-50">
+              <a href="#" class="button button-raised button-fill login-screen-open" data-login-screen="#my-login-screen">Login Screen</a>
+            </div>
           </div>
         </div>
       </div>
@@ -147,10 +150,7 @@
               <div class="row">
                 <div class="col-50">
                   <a href="#" class="button button-raised button-fill popup-open" data-popup="#my-popup">Popup</a>
-                </div>
-                <div class="col-50">
-                  <a href="#" class="button button-raised button-fill login-screen-open" data-login-screen="#my-login-screen">Login Screen</a>
-                </div>
+                </div>                
               </div>
             </div>
 
@@ -252,12 +252,14 @@
             </div>
             <div class="list">
               <ul>
-                <li>
-                  
+                <li>                
                   <a href="#" class="item-link list-button login-button">Sign In</a>
-                </li>
+                </li>               
               </ul>
-              <div class="block-footer">Some text about login information.<br>Click "Sign In" to close Login Screen</div>
+              <!-- <div class="block-footer">Some text about login information.<br>Click "Sign In" to close Login Screen</div> -->
+              <div class="block-footer">
+                <a href="#" class="item-link list-button link login-screen-close ">Cancel</a>
+              </div>  
             </div>
           </div>
         </div>
