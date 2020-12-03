@@ -9,6 +9,26 @@ var routes = [
     url: './pages/about.html',
   },
   {
+    path: '/training/',
+    url: './pages/training.html',
+    routes: [
+      {
+        path: 'fitness/',
+        componentUrl: './pages/fitnessWorkout.html',
+        options: {
+          transition: 'f7-dive',
+        },
+      },
+      {
+        path: 'home/',
+        componentUrl: './pages/homeWorkout.html',
+        options: {
+          transition: 'f7-dive',
+        },
+      },
+    ],
+  },
+  {
     path: '/form/',
     url: './pages/form.html',
   },
