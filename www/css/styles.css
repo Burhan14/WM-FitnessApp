@@ -1,0 +1,33 @@
+.training-button{
+    height: 35vh;
+    margin: 1vh 2vh;
+    display: flex;
+}
+
+.flex-buttons{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 5vh;
+}
+
+.workouts{
+    width: 20vh;
+    height: 20vh;
+    margin-bottom: 2vh;
+}
+
+.flex-center{
+    display: flex;
+    justify-content: center;
+}
+.flex-around{
+    display: flex;
+    justify-content: space-around;
+}
+.page-title{
+    text-align: center;
+    font-weight: bold;
+    color: #00587a;
+    text-transform: uppercase;
+}

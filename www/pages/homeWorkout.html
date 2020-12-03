@@ -1,0 +1,36 @@
+<template>
+  <div class="page" data-name="homeWorkout">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Home Workouts</div>
+      </div>
+    </div>
+    <div class="center">
+      <div class="flex">
+        <div class="page-content">
+          <div class="flex-buttons">
+            {{#each homeWorkouts}}
+            <a href="/homeWorkouts/{{id}}/" class="button button-large button-fill button-raised workouts training-button">{{title}}</a>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    data: function () {
+      return {
+        homeWorkouts: this.$root.homeWorkouts,
+      };
+    }
+  };
+</script>
