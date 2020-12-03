@@ -36,6 +36,46 @@ var app = new Framework7({
           title: 'Apple iPhone Xs',
           description: 'Expedita sequi perferendis quod illum pariatur aliquam, alias laboriosam! Vero blanditiis placeat, mollitia necessitatibus reprehenderit. Labore dolores amet quos, accusamus earum asperiores officiis assumenda optio architecto quia neque, quae eum.'
         },
+      ],
+      homeWorkouts: [
+        {
+          id: '1',
+          title: 'Full Body',
+        },
+        {
+          id: '2',
+          title: 'Chest',
+        },
+        {
+          id: '3',
+          title: 'Leg',
+        },
+        {
+          id: '4',
+          title: 'Abs',
+        },
+      ],
+      fitnessWorkouts: [
+        {
+          id: '1',
+          title: 'Chest',
+        },
+        {
+          id: '2',
+          title: 'Leg',
+        },
+        {
+          id: '3',
+          title: 'Abs',
+        },
+        {
+          id: '4',
+          title: 'Back',
+        },
+        {
+          id: '5',
+          title: 'Arm',
+        },
       ]
     };
   },

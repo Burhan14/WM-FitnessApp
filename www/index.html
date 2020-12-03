@@ -24,11 +24,12 @@
   <link rel="stylesheet" href="framework7/css/framework7.bundle.min.css">
   <link rel="stylesheet" href="css/icons.css">
   <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <div id="app"class="theme-light">
     <!-- Left panel with cover effect-->
-    <div class="panel panel-left panel-cover theme-dark panel-init">
+    <div class="panel panel-left panel-cover theme-light panel-init">
       <div class="view">
         <div class="page">
           <div class="navbar">
@@ -180,6 +181,11 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- Training View -->
+      <div id="view-training" class="view view-init tab" data-name="training" data-url="/training/">
+        <!-- Catalog page will be loaded here dynamically from /catalog/ route -->
       </div>
 
       <!-- Catalog View -->
