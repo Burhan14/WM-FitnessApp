@@ -1,8 +1,8 @@
 {
-  "name": "fitnessapp",
+  "name": "Shredder",
   "private": true,
   "version": "1.0.0",
-  "description": "FitnessApp",
+  "description": "Shredder",
   "repository": "",
   "license": "UNLICENSED",
   "scripts": {

@@ -3,8 +3,8 @@ var $$ = Dom7;
 var app = new Framework7({
   root: '#app', // App root element
 
-  id: 'be.burhanatesalp.FitnessApp', // App bundle ID
-  name: 'FitnessApp', // App name
+  id: 'be.burhanatesalp.Shredder', // App bundle ID
+  name: 'Shredder', // App name
   theme: 'auto', // Automatic theme detection
 
   // App root data

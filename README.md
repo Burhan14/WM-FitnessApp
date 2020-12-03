@@ -1,4 +1,4 @@
-# FitnessApp
+# Shredder
 
 ## Framework7 CLI Options
 
@@ -6,11 +6,11 @@ Framework7 app created with following options:
 
 ```
 {
-  "cwd": "C:\\dev\\project\\wm\\WM-FitnessApp",
+  "cwd": "C:\\dev\\project\\wm\\WM-Shredder",
   "type": [
     "cordova"
   ],
-  "name": "FitnessApp",
+  "name": "Shredder",
   "framework": "core",
   "template": "tabs",
   "bundler": false,
@@ -23,7 +23,7 @@ Framework7 app created with following options:
     "fillBars": true
   },
   "customBuild": false,
-  "pkg": "be.burhanatesalp.FitnessApp",
+  "pkg": "be.burhanatesalp.Shredder",
   "cordova": {
     "folder": "cordova",
     "platforms": [
