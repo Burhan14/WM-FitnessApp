@@ -9,14 +9,15 @@
                         <span class="if-not-md">Back</span>
                     </a>
                 </div>
-                <div class="title">Home Exercises</div>
+                <!-- We willen hieronder ipv 'fitness exercises', de gekozen type worket gevolgd met 'exercises' noteren (vb. Fitness > Chest > Chest exercises).  -->
+                <div class="title">{{workout.title}} Exercises</div>
             </div>
         </div>
         <div class="page-content">
-            <div class="block-title page-title">These are your exercises</div>
+            <div class="block-title page-title">Complete a full session by doing these exercises</div>
             <div class="list links-list">
                 <ul>
-                    {{#each exercises}}
+                    {{#each workout.exercises}}
                     <li><a href="{{name}}/">{{name}}</a></li>
                     {{/each}}
                 </ul>
@@ -27,8 +28,15 @@
 <script>
     return {
         data: function () {
+            var workoutTitle = this.$route.params.title;
+            var currentWorkout;
+            this.$root.homeWorkouts.forEach(function (workout) {
+                if (workout.title === workoutTitle) {
+                    currentWorkout = workout;
+                }
+            });
             return {
-                exercises: this.$root.homeWorkouts.exercises,
+                workout: currentWorkout,
             };
         }
     };

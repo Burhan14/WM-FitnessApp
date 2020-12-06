@@ -1,5 +1,5 @@
 <template>
-<div class="page" data-name="fitnessWorkout">
+  <div class="page" data-name="fitnessWorkout">
     <div class="navbar">
       <div class="navbar-bg"></div>
       <div class="navbar-inner sliding">
@@ -17,7 +17,8 @@
         <div class="page-content">
           <div class="flex-buttons">
             {{#each fitnessWorkouts}}
-            <a href="{{title}}/" class="button button-large button-fill button-raised workouts training-button">{{title}}</a>
+            <a href="{{title}}/"
+              class="button button-large button-fill button-raised workouts training-button">{{title}}</a>
             {{/each}}
           </div>
         </div>
@@ -26,11 +27,11 @@
   </div>
 </template>
 <script>
-    return {
-      data: function () {
-        return {
-            fitnessWorkouts: this.$root.fitnessWorkouts,
-        };
-      }
-    };
-  </script>
+  return {
+    data: function () {
+      return {
+        fitnessWorkouts: this.$root.fitnessWorkouts,
+      };
+    }
+  };
+</script>
