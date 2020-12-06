@@ -14,24 +14,31 @@ var routes = [
     routes: [
       {
         path: 'fitness/',
-        componentUrl: './pages/fitnessWorkout.html',
+        componentUrl: './pages/fitness.html',
         options: {
           transition: 'f7-dive',
         },
         routes:
         [
           {
-            path: 'Chest/',
-            componentUrl: './pages/fw-exercises.html',
-          }
+            path: ':title/',
+            componentUrl: './pages/f-exercises.html',
+          },
         ]
       },
       {
         path: 'home/',
-        componentUrl: './pages/homeWorkout.html',
+        componentUrl: './pages/home.html',
         options: {
           transition: 'f7-dive',
         },
+        routes:
+        [
+          {
+            path: ':title/',
+            componentUrl: './pages/h-exercises.html',
+          },
+        ]
       },
     ],
   },
