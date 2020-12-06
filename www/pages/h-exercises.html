@@ -1,0 +1,35 @@
+<template>
+    <div class="page" data-name="h-exercises">
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="if-not-md">Back</span>
+                    </a>
+                </div>
+                <div class="title">Home Exercises</div>
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="block-title page-title">These are your exercises</div>
+            <div class="list links-list">
+                <ul>
+                    {{#each exercises}}
+                    <li><a href="{{name}}/">{{name}}</a></li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    return {
+        data: function () {
+            return {
+                exercises: this.$root.homeWorkouts.exercises,
+            };
+        }
+    };
+</script>
