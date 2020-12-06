@@ -23,7 +23,11 @@ var routes = [
           {
             path: ':title/',
             componentUrl: './pages/f-exercises.html',
+            options: {
+              transition: 'f7-dive',
+            },
           },
+          
         ]
       },
       {
@@ -37,10 +41,17 @@ var routes = [
           {
             path: ':title/',
             componentUrl: './pages/h-exercises.html',
+            options: {
+              transition: 'f7-dive',
+            },
           },
         ]
       },
     ],
+  },
+  {
+    path: '/vooruitgang/',
+    url: './pages/vooruitgang.html',
   },
   {
     path: '/form/',

@@ -103,6 +103,8 @@ var app = new Framework7({
     helloWorld: function () {
       app.dialog.alert('Hello World!');
     },
+
+    
   },
   // App routes
   routes: routes,
