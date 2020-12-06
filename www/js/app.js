@@ -15,8 +15,7 @@ var app = new Framework7({
         lastName: 'Doe',
       },
       // Demo products for Catalog section
-      products: [
-        {
+      products: [{
           id: '1',
           title: 'Apple iPhone 8',
           description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.'
@@ -37,8 +36,7 @@ var app = new Framework7({
           description: 'Expedita sequi perferendis quod illum pariatur aliquam, alias laboriosam! Vero blanditiis placeat, mollitia necessitatibus reprehenderit. Labore dolores amet quos, accusamus earum asperiores officiis assumenda optio architecto quia neque, quae eum.'
         },
       ],
-      homeWorkouts: [
-        {
+      homeWorkouts: [{
           id: '1',
           title: 'Full Body',
         },
@@ -55,13 +53,10 @@ var app = new Framework7({
           title: 'Abs',
         },
       ],
-      fitnessWorkouts: [
-        {
+      fitnessWorkouts: [{
           id: '1',
           title: 'Chest',
-          exercises: 
-          [
-            {
+          exercises: [{
               nr: '1',
               name: 'Close-Grip Bench Press',
               description: 'Lie back on a flat bench. Using a close grip (shoulder width), lift the bar from the rack and hold it straight over you with your arms locked. As you breathe in, come down slowly until you feel the bar on your middle chest. After a second pause, bring the bar back to the starting position as you breathe out and push the bar using your triceps muscles. Lock your arms in the contracted position, hold for a second and then start coming down slowly again. Repeat the movement for the prescribed amount of repetitions. When you are done, place the bar back in the rack.',
@@ -100,15 +95,21 @@ var app = new Framework7({
               sets: '3',
               reps: '15',
               rest: '30 sec'
-            },   
+            },
+            {
+              nr: '6',
+              name: 'test',
+              description: 'test',
+              sets: '3',
+              reps: '15',
+              rest: '30 sec'
+            },
           ]
         },
         {
           id: '2',
           title: 'Leg',
-          exercises: 
-          [
-            {
+          exercises: [{
               nr: '1',
               name: 'Barbell Squat',
               description: 'Make a hip-width stance with your toes facing slightly outward. Support the barbell on the top of your trap muscles, chest up, and head facing forward. Bend your knees slowly, while driving them outward and keeping your back straightened. Hinge your hips and your knees will move forward. Make sure the bar moves in a straight line up and down. Slowly keep the weight on your heels and push up to go back to your initial position.',
@@ -165,13 +166,11 @@ var app = new Framework7({
               rest: '60 sec'
             },
           ]
-        },      
+        },
         {
           id: '3',
           title: 'Abs',
-          exercises: 
-          [
-            {
+          exercises: [{
               nr: '1',
               name: 'Hardstyle plank',
               description: 'Lying face down on the ground, prop yourself up into a forearm plank position. Make sure your elbows are aligned underneath your shoulders, and that your hands are balled up in fists. Your forearms should be parallel to one another.',
@@ -216,9 +215,7 @@ var app = new Framework7({
         {
           id: '4',
           title: 'Back',
-          exercises: 
-          [
-            {
+          exercises: [{
               nr: '1',
               name: 'Barbell Deadlift',
               description: 'Remove shoes or wear flat foot wear for extra stability – also Liquid chalk and/or wrist strips can improve grip! Stand facing loaded barbell with the relevant weight, feet shoulder width apart. Keeping your back straight, place bar against your shins and bend your knees. Reach down and grasp bar: this should be done with a shoulder-width, overhand grip. Drive up through heels: keep weight central and close to your body. Facing forward, keeping your head in that same position throughout the lift – locking out at the top and keeping lats tensed. On the way back down, keep head in the same position, and the bar as close – allow the bar to brush off the top of your leg to keep weight centred and hold control. Once the weight hits the ground, pause and complete next rep.',
@@ -255,9 +252,7 @@ var app = new Framework7({
         {
           id: '5',
           title: 'Arm',
-          exercises: 
-          [
-            {
+          exercises: [{
               nr: '1',
               name: 'Barbell Curl',
               description: 'Stand tall with your chest up and core braced, holding the barbell with your hands just outside of your hips, using an underhand grip. Keeping your chest up and your elbows tight to your sides, initiate the move by raising your hands slightly so you feel your biceps become engaged. While maintaining tension on your biceps, curl the bar up to shoulder height, then give your biceps a one-second squeeze. Start to lower the bar slowly, keeping your biceps tensed and engaged to work as many muscle fibres as possible. Once the bar is back in the start position, straighten your arms fully to tense your triceps to ensure that your biceps are worked through the fullest possible range of motion.',
@@ -306,7 +301,7 @@ var app = new Framework7({
               rest: '45 sec'
             },
           ]
-            
+
 
         },
         {
@@ -322,7 +317,7 @@ var app = new Framework7({
       app.dialog.alert('Hello World!');
     },
 
-    
+
   },
   // App routes
   routes: routes,
