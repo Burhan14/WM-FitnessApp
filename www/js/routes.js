@@ -18,6 +18,13 @@ var routes = [
         options: {
           transition: 'f7-dive',
         },
+        routes:
+        [
+          {
+            path: 'Chest/',
+            componentUrl: './pages/fw-exercises.html',
+          }
+        ]
       },
       {
         path: 'home/',

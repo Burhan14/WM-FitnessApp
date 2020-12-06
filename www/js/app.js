@@ -59,6 +59,21 @@ var app = new Framework7({
         {
           id: '1',
           title: 'Chest',
+          exercises: 
+          [
+            {
+              nr: '1',
+              name: 'Bench Press',
+              description: 'Lie flat on your back on a bench. Grip the bar with hands just wider than shoulder-width apart, so when you’re at the bottom of your move your hands are directly above your elbows. This allows for maximum force generation. Bring the bar slowly down to your chest as you breathe in. Push up as you breathe out, gripping the bar hard and watching a spot on the ceiling rather than the bar, so you can ensure it travels the same path every time.',
+              sets: '4',
+              repetitions: '8-12'
+            },
+            {
+              nr: '2',
+              name: ' ',
+              description: ''
+            },  
+          ]
         },
         {
           id: '2',
@@ -75,6 +90,10 @@ var app = new Framework7({
         {
           id: '5',
           title: 'Arm',
+        },
+        {
+          id: '6',
+          title: 'Shoulder',
         },
       ]
     };
