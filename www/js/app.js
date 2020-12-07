@@ -61,7 +61,7 @@ var app = new Framework7({
               name: 'Close-Grip Bench Press',
               description: 'Lie back on a flat bench. Using a close grip (shoulder width), lift the bar from the rack and hold it straight over you with your arms locked. As you breathe in, come down slowly until you feel the bar on your middle chest. After a second pause, bring the bar back to the starting position as you breathe out and push the bar using your triceps muscles. Lock your arms in the contracted position, hold for a second and then start coming down slowly again. Repeat the movement for the prescribed amount of repetitions. When you are done, place the bar back in the rack.',
               sets: '5',
-              repetitions: '10',
+              reps: '10',
               rest: '60 sec'
             },
             {
