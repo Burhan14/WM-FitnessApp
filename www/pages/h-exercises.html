@@ -15,11 +15,37 @@
         </div>
         <div class="page-content">
             <div class="block-title page-title">Complete a full session by doing these exercises</div>
-            <div class="list links-list">
+            <div class="list simple-list">
                 <ul>
                     {{#each workout.exercises}}
-                    <li><a href="{{name}}/">{{name}}</a></li>
-                    {{/each}}
+
+                    <!-- popup link --> 
+                    <li class=""><a href="" data-popup=".popup-{{nr}}" class="popup-open">{{name}}</a></li>
+
+                    <!-- popup page & close --> 
+                      <div class="popup popup-{{nr}}">
+                        <div class="view">
+                          <div class="page">
+                            <div class="navbar">
+                              <div class="navbar-bg"></div>
+                              <div class="navbar-inner">
+                                <div class="title">{{name}}</div>
+                                <div class="right">
+                                  <!-- Link to close popup -->
+                                  <a class="link popup-close">Close</a>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="page-content">
+                                <div class="block">
+                                    {{description}}
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {{/each}}
                 </ul>
             </div>
         </div>
