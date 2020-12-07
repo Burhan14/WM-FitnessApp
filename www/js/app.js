@@ -62,7 +62,8 @@ var app = new Framework7({
               description: 'Lie back on a flat bench. Using a close grip (shoulder width), lift the bar from the rack and hold it straight over you with your arms locked. As you breathe in, come down slowly until you feel the bar on your middle chest. After a second pause, bring the bar back to the starting position as you breathe out and push the bar using your triceps muscles. Lock your arms in the contracted position, hold for a second and then start coming down slowly again. Repeat the movement for the prescribed amount of repetitions. When you are done, place the bar back in the rack.',
               sets: '5',
               reps: '10',
-              rest: '60 sec'
+              rest: '60 sec',
+              // image: './images/chest1.gif'
             },
             {
               nr: '2',
@@ -92,14 +93,6 @@ var app = new Framework7({
               nr: '5',
               name: 'Standing Cable Flye',
               description: 'Place the pulleys on a high position (above your head), select the resistance to be used and hold the pulleys in each hand. Step forward in front of an imaginary straight line between both pulleys while pulling your arms together in front of you. Your torso should have a small forward bend from the waist. With a slight bend on your elbows, extend your arms to the side (straight out at both sides) in a wide arc until you feel a stretch on your chest, breathe in. Return your arms back to the starting position as you breathe out. Make sure to use the same arc of motion used to lower the weights. Hold for a second at the starting position and repeat the movement for the prescribed amount of repetitions.',
-              sets: '3',
-              reps: '15',
-              rest: '30 sec'
-            },
-            {
-              nr: '6',
-              name: 'test',
-              description: 'test',
               sets: '3',
               reps: '15',
               rest: '30 sec'
