@@ -39,6 +39,15 @@ var app = new Framework7({
       homeWorkouts: [{
           id: '1',
           title: 'Full Body',
+          exercises: [{
+            nr: '1',
+            name: 'test',
+            description: 'test',
+            sets: '5',
+            reps: '10',
+            rest: '60 sec',
+          },
+        ]
         },
         {
           id: '2',
