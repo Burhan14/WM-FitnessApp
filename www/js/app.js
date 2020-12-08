@@ -14,31 +14,112 @@ var app = new Framework7({
         firstName: 'John',
         lastName: 'Doe',
       },
-      // Demo products for Catalog section
-      products: [{
-          id: '1',
-          title: 'Apple iPhone 8',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.'
-        },
-        {
-          id: '2',
-          title: 'Apple iPhone 8 Plus',
-          description: 'Velit odit autem modi saepe ratione totam minus, aperiam, labore quia provident temporibus quasi est ut aliquid blanditiis beatae suscipit odio vel! Nostrum porro sunt sint eveniet maiores, dolorem itaque!'
-        },
-        {
-          id: '3',
-          title: 'Apple iPhone X',
-          description: 'Expedita sequi perferendis quod illum pariatur aliquam, alias laboriosam! Vero blanditiis placeat, mollitia necessitatibus reprehenderit. Labore dolores amet quos, accusamus earum asperiores officiis assumenda optio architecto quia neque, quae eum.'
-        },
-        {
-          id: '4',
-          title: 'Apple iPhone Xs',
-          description: 'Expedita sequi perferendis quod illum pariatur aliquam, alias laboriosam! Vero blanditiis placeat, mollitia necessitatibus reprehenderit. Labore dolores amet quos, accusamus earum asperiores officiis assumenda optio architecto quia neque, quae eum.'
-        },
-      ],
+         
       homeWorkouts: [{
           id: '1',
           title: 'Full Body',
+          exercises: 
+          [
+            {
+            nr: '1',
+            name: 'Diamond Push-Ups',
+            description: 'Here we will use narrow grip push-ups. Here, your hands will be placed in a diamond shape. This better targets the chest and triceps. 2 of these sets will be performed on a flat surface to emphasize the whole chest. 2 of these sets should be performed in a decline with your feet elevated and your hands positioned forward more towards your face. This shifts more emphasis to the upper chest. That’s because it now incorporates more shoulder flexion (one of the main functions of the upper chest) into the push-up.',
+            advanced: 'You can simply stuff a bag with books and strap it onto your back to gradually increase the load. You can also use a band to add more resistance as well.',
+            sets: '4',
+            reps: 'Max reps',
+            rest: '45 sec',
+            replaces: 'Bench Press',
+            targets: 'Chest, triceps',          
+          },
+          {
+            nr: '2',
+            name: 'Inverted Row',
+            description: 'Most of the emphasis will be on the mid-back for thickness. Ideally, for the most resistance, you should use a broom or mop and place that between two chairs to perform your row. If you don’t have the right setup for that though, then you can simply perform these under a sturdy table. You can start out with bent knees to use your legs for support. A third option is the following set up instead which we’ll continue to use later on in this workout: Simply take 2 bed sheets or towels, Tie a basic knot at the end of each of them and then throw it over your door and close your door',
+            advanced: 'Getting your body more horizontal to the ground by elevating your feet and adding more load with the use of a backpack stuffed with books will let you progress',
+            sets: '4',
+            reps: 'Max reps',
+            rest: '45 sec',
+            replaces: 'Seated row, barbell row, etc.',
+            targets: 'Traps, lats, & biceps',          
+          },
+          {
+            nr: '3',
+            name: 'Pike Push-ups',
+            description: 'You can start them out on the ground by assuming a pushup position and then moving your hands closer to your feet while keeping your legs straight. Your body should now make an upside-down V shape. Then, bend your elbows and lower your upper body until the top of your nose nearly touches the floor. Your head should move forward past your hands as you reach the bottom position and then your head should return to between your hands at the top position. Just like with the overhead press, your elbows should not flare out sideways. Keep them tucked and vertical over your wrists as you descend.',
+            advanced: 'You can first simply elevate your feet up to the edge of a platform. To progress this even further, you can move your hands closer to the feet. This will make the movement considerably harder. And then, again, repeat the process of elevating your feet onto a higher platform once you’re ready. I’d recommend marking down with tape how far your hands are from the platform so that you’re able to accurately gauge your progress over time.',
+            sets: '3',
+            reps: 'Max reps',
+            rest: '45 sec',
+            replaces: 'Shoulder Press',
+            targets: 'Shoulders, triceps',          
+          },
+          {
+            nr: '4',
+            name: 'Sliding Lat Pulldowns',
+            description: 'It’s time to target the back (primarily the lats). We’ll do so with a vertical pulling angle, rather than horizontal, as we did earlier. This one is bound to get you weird looks around the house. But is worth it for the return in back gains in provides. Simply lay on a smooth surface and use something for grip on your hands, like shoes, for example. Then, you simply perform a lat pulldown motion by pulling your elbows down to slide your body up. You should feel your lats working as you do so.',
+            advanced: 'You can add weight with a backpack. Provide additional resistance by pressing your feet into the ground as you perform your reps',
+            sets: '3',
+            reps: 'Max reps',
+            rest: '45 sec',
+            replaces: 'Lat pulldowns, pull-ups',
+            targets: 'Lats',          
+          },
+          {
+            nr: '5',
+            name: 'Bicep bed sheet curls',
+            description: 'Go back to your bed sheet or towel setup and lean back with your arms straight. Then, keeping your body straight and elbows locked in position, curl your hands towards your face by using your biceps.',
+            advanced: 'Buy a dumbell.',
+            sets: '4',
+            reps: 'Max reps',
+            rest: '45 sec',
+            replaces: 'Bicep Curls',
+            targets: 'Biceps',          
+          },
+          {
+            nr: '6',
+            name: 'Tricep overhead extensions',
+            description: 'To target the long head of the triceps which has yet to be emphasized in this workout, you can simply switch over and perform tricep extensions. Again, you want to keep that elbow locked in place. And your body in a straight line. Alternatively, these can also be done like so on an elevated platform.',
+            advanced: 'Orienting your body to be more horizontal to the ground. Transitioning to just one arm at a time, and/or adding weight by using a backpack',
+            sets: '4',
+            reps: 'Max reps',
+            rest: '45 sec',
+            replaces: 'Cable/dumbbell overhead triceps extensions, skullcrushers',
+            targets: 'Triceps (long head)',          
+          },
+          {
+            nr: '7',
+            name: 'Assisted Pistol Squats',
+            description: 'It’s time to move onto the lower body. And for most of us, bodyweight squats just aren’t going to cut it. Which is why we’ll use the bed sheet set up again to perform assisted pistol squats. This exercise will help to target the quads and glutes. To perform these: Lean back with your arm straight, and then lift one leg off the ground. Then, simply squat down. Finish your reps on one leg before proceeding to the other leg. At first, you can use your arms to pull yourself up for assistance if needed.',
+            advanced: 'Relying less and less on the assistance of your arms during the movement or transitioning to doing this same movement but stopping the range of motion short by sitting on an elevated platform and gradually reducing the height of this',
+            sets: '4',
+            reps: 'Max reps',
+            rest: '45 sec',
+            replaces: 'Barbell squats',
+            targets: 'Quads & Glutes',          
+          },
+          {
+            nr: '8',
+            name: 'Bulgarian Split Squat',
+            description: 'This is an exercise you’re probably familiar with: the Bulgarian split squat. With your rear leg elevated on a platform, this exercise will again further target the quads and glutes.',
+            advanced: 'To progress this, you can simply hold a weighted backpack at your chest. Once that gets too easy though, a more difficult progression is the assisted shrimp squat: Use the side of a counter for assistance and hold one leg behind you with the same arm. Then, squat down until your knee just about touches the floor and come back up with assistance from the counter as needed. Over time, you can progress these by moving off of the counter',
+            sets: '4',
+            reps: 'Max reps',
+            rest: '45 sec',
+            replaces: 'Split squats, lunges',
+            targets: 'Quads & Glutes',          
+          },
+          {
+            nr: '9',
+            name: 'Sliding Hamstring Curls',
+            description: 'Here we’ll use the sliding leg curl. This exercise will help work the hamstrings through both hip and knee extension. To perform these: Simply lay on a smooth surface and place your feet on two or something that will enable them to slide easily. Then, use your hamstrings to curl your heels in towards you while raising your hips up into the air. Your back should remain straight as you do so.',
+            advanced: 'To progress this, you can slow down the tempo and/or perform them with one leg at a time.',
+            sets: '4',
+            reps: 'Max reps',
+            rest: '45 sec',
+            replaces: 'Machine hamstring curls',
+            targets: 'Hamstrings',          
+          },
+        ]
         },
         {
           id: '2',
@@ -62,8 +143,7 @@ var app = new Framework7({
               description: 'Lie back on a flat bench. Using a close grip (shoulder width), lift the bar from the rack and hold it straight over you with your arms locked. As you breathe in, come down slowly until you feel the bar on your middle chest. After a second pause, bring the bar back to the starting position as you breathe out and push the bar using your triceps muscles. Lock your arms in the contracted position, hold for a second and then start coming down slowly again. Repeat the movement for the prescribed amount of repetitions. When you are done, place the bar back in the rack.',
               sets: '5',
               reps: '10',
-              rest: '60 sec',
-              // image: './images/chest1.gif'
+              rest: '60 sec'
             },
             {
               nr: '2',
@@ -294,12 +374,45 @@ var app = new Framework7({
               rest: '45 sec'
             },
           ]
-
-
         },
         {
           id: '6',
           title: 'Shoulder',
+          exercises: 
+          [
+            {
+            nr: '1',
+            name: 'Seated lateral raise',
+            description: 'take light dumbbells then, leaning forward slightly, raise them to shoulder height, leading with your elbows. Pause at the top, then lower back under control.',
+            sets: '3',
+            repetitions: '12',
+            rest: '10 sec'
+          },
+          {
+            nr: '2',
+            name: 'Seated Arnold press',
+            description: 'Sit holding a dumbbell in each hand with palms facing you. Press them up overhead, rotating your wrists as you go, so you end with straight arms and palms facing away.',
+            sets: '3',
+            repetitions: '12',
+            rest: '10 sec'
+          },
+          {
+            nr: '3',
+            name: 'Bent-over reverse flye',
+            description: 'Stand up and, using the same weights as the seated lateral raise exercise, bend forwards from your hips. Lead with your elbows to raise the weights to shoulder height. Pause, then lower back under control.',
+            sets: '3',
+            repetitions: '12',
+            rest: '90 sec'
+          },
+          {
+            nr: '4',
+            name: 'Overhead press',
+            description: 'tand tall with a barbell across the front of your shoulders. Brace your core, then press the bar directly overhead. Lower it slowly back to the start.',
+            sets: '3',
+            repetitions: '12',
+            rest: '10 sec'
+          },          
+        ]
         },
       ]
     };
