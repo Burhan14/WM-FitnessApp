@@ -117,7 +117,7 @@ var app = new Framework7({
             reps: 'Max reps',
             rest: '45 sec',
             replaces: 'Machine hamstring curls',
-            targets: 'Hamstrings',          
+            targets: 'Hamstrings',
           },
         ]
         },
