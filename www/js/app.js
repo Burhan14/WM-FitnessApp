@@ -27,9 +27,7 @@ var app = new Framework7({
             advanced: 'You can simply stuff a bag with books and strap it onto your back to gradually increase the load. You can also use a band to add more resistance as well.',
             sets: '4',
             reps: 'Max reps',
-            rest: '45 sec',
-            replaces: 'Bench Press',
-            targets: 'Chest, triceps',          
+            rest: '45 sec',              
           },
           {
             nr: '2',
@@ -38,9 +36,7 @@ var app = new Framework7({
             advanced: 'Getting your body more horizontal to the ground by elevating your feet and adding more load with the use of a backpack stuffed with books will let you progress',
             sets: '4',
             reps: 'Max reps',
-            rest: '45 sec',
-            replaces: 'Seated row, barbell row, etc.',
-            targets: 'Traps, lats, & biceps',          
+            rest: '45 sec',          
           },
           {
             nr: '3',
@@ -49,9 +45,7 @@ var app = new Framework7({
             advanced: 'You can first simply elevate your feet up to the edge of a platform. To progress this even further, you can move your hands closer to the feet. This will make the movement considerably harder. And then, again, repeat the process of elevating your feet onto a higher platform once you’re ready. I’d recommend marking down with tape how far your hands are from the platform so that you’re able to accurately gauge your progress over time.',
             sets: '3',
             reps: 'Max reps',
-            rest: '45 sec',
-            replaces: 'Shoulder Press',
-            targets: 'Shoulders, triceps',          
+            rest: '45 sec',         
           },
           {
             nr: '4',
@@ -60,9 +54,7 @@ var app = new Framework7({
             advanced: 'You can add weight with a backpack. Provide additional resistance by pressing your feet into the ground as you perform your reps',
             sets: '3',
             reps: 'Max reps',
-            rest: '45 sec',
-            replaces: 'Lat pulldowns, pull-ups',
-            targets: 'Lats',          
+            rest: '45 sec',          
           },
           {
             nr: '5',
@@ -71,9 +63,7 @@ var app = new Framework7({
             advanced: 'Buy a dumbell.',
             sets: '4',
             reps: 'Max reps',
-            rest: '45 sec',
-            replaces: 'Bicep Curls',
-            targets: 'Biceps',          
+            rest: '45 sec',      
           },
           {
             nr: '6',
@@ -82,9 +72,7 @@ var app = new Framework7({
             advanced: 'Orienting your body to be more horizontal to the ground. Transitioning to just one arm at a time, and/or adding weight by using a backpack',
             sets: '4',
             reps: 'Max reps',
-            rest: '45 sec',
-            replaces: 'Cable/dumbbell overhead triceps extensions, skullcrushers',
-            targets: 'Triceps (long head)',          
+            rest: '45 sec',         
           },
           {
             nr: '7',
@@ -93,9 +81,7 @@ var app = new Framework7({
             advanced: 'Relying less and less on the assistance of your arms during the movement or transitioning to doing this same movement but stopping the range of motion short by sitting on an elevated platform and gradually reducing the height of this',
             sets: '4',
             reps: 'Max reps',
-            rest: '45 sec',
-            replaces: 'Barbell squats',
-            targets: 'Quads & Glutes',          
+            rest: '45 sec',          
           },
           {
             nr: '8',
@@ -104,9 +90,7 @@ var app = new Framework7({
             advanced: 'To progress this, you can simply hold a weighted backpack at your chest. Once that gets too easy though, a more difficult progression is the assisted shrimp squat: Use the side of a counter for assistance and hold one leg behind you with the same arm. Then, squat down until your knee just about touches the floor and come back up with assistance from the counter as needed. Over time, you can progress these by moving off of the counter',
             sets: '4',
             reps: 'Max reps',
-            rest: '45 sec',
-            replaces: 'Split squats, lunges',
-            targets: 'Quads & Glutes',          
+            rest: '45 sec',                    
           },
           {
             nr: '9',
@@ -115,23 +99,142 @@ var app = new Framework7({
             advanced: 'To progress this, you can slow down the tempo and/or perform them with one leg at a time.',
             sets: '4',
             reps: 'Max reps',
-            rest: '45 sec',
-            replaces: 'Machine hamstring curls',
-            targets: 'Hamstrings',          
+            rest: '45 sec',                    
           },
         ]
         },
         {
           id: '2',
           title: 'Chest',
+          exercises: 
+          [
+            {
+            nr: '1',
+            name: 'Diamond Push-Ups',
+            description: 'Here we will use narrow grip push-ups. Here, your hands will be placed in a diamond shape. This better targets the chest and triceps. 2 of these sets will be performed on a flat surface to emphasize the whole chest. 2 of these sets should be performed in a decline with your feet elevated and your hands positioned forward more towards your face. This shifts more emphasis to the upper chest. That’s because it now incorporates more shoulder flexion (one of the main functions of the upper chest) into the push-up.',
+            advanced: 'To progress this, you can slow down the tempo and/or you can simply stuff a bag with books and strap it onto your back to gradually increase the load.',          
+            sets: '3',
+            reps: 'Max reps',
+            rest: '45 sec',
+          },
+          {
+            nr: '2',
+            name: 'Wide Press-up',
+            description: 'Perform a standard press-up, but with your hands placed wider than shoulder-width apart.',
+            advanced: 'To progress this, you can slow down the tempo and/or you can simply stuff a bag with books and strap it onto your back to gradually increase the load.',
+            sets: '3',
+            reps: 'Max reps',
+            rest: '45 sec',
+          },
+          {
+            nr: '3',
+            name: 'Incline Push-up',
+            description: 'Incline push-ups make the traditional move slightly easier by elevating your hands, which changes the plane you’re moving your body from. This gives you more leverage, and lightens the load that you have to lift each time you physically push your chest up. “Instead of having both your hands and feet grounded on the floor, in an incline push-up, your hands are planted on an elevated surface, such as a box step, weight bench, stair steps, countertop, or racked barbell',
+            advanced: 'To progress this, you can slow down the tempo and/or you can simply stuff a bag with books and strap it onto your back to gradually increase the load.',
+            sets: '3',
+            reps: 'Max reps',
+            rest: '45 sec',
+          },
+          {
+            nr: '4',
+            name: 'Decline Push-up',
+            description: 'A decline pushup is an advanced variation of the basic pushup that increases the difficulty significantly by placing your feet higher than your hands. Adjusting the bench height allows you to customize the intensity of your workout using just your body weight. All you need is a bench, step, or some other solid object you can rest your feet on.',
+            advanced: 'To progress this, you can slow down the tempo and/or you can simply stuff a bag with books and strap it onto your back to gradually increase the load.',
+            sets: '3',
+            reps: 'Max reps',
+            rest: '45 sec',
+          },
+        ]
         },
         {
           id: '3',
           title: 'Leg',
+          exercises:
+          [
+            {
+              nr: '1',
+              name: 'Squat',
+              description: 'Stand with your feet hip-width apart. Keeping your chest up and back straight throughout, bend your knees and lower, pushing your hips back until your thighs are parallel to the ground. Then drive through your heels to return to standing.',
+              advanced: 'To progress this, you can slow down the tempo and/or you can simply stuff a bag with books and strap it onto your back to gradually increase the load.',
+              sets: '3',
+              reps: 'Max reps',
+              rest: '45 sec',  
+            },
+            {
+              nr: '2',
+              name: 'Assisted Pistol Squats',
+              description: 'It’s time to move onto the lower body. And for most of us, bodyweight squats just aren’t going to cut it. Which is why we’ll use the bed sheet set up again to perform assisted pistol squats. This exercise will help to target the quads and glutes. To perform these: Lean back with your arm straight, and then lift one leg off the ground. Then, simply squat down. Finish your reps on one leg before proceeding to the other leg. At first, you can use your arms to pull yourself up for assistance if needed.',
+              advanced: 'Relying less and less on the assistance of your arms during the movement or transitioning to doing this same movement but stopping the range of motion short by sitting on an elevated platform and gradually reducing the height of this',
+              sets: '4',
+              reps: 'Max reps',
+              rest: '45 sec',
+            },
+            {
+              nr: '3',
+              name: 'Bulgarian Split Squat',
+              description: 'This is an exercise you’re probably familiar with: the Bulgarian split squat. With your rear leg elevated on a platform, this exercise will again further target the quads and glutes.',
+              advanced: 'To progress this, you can simply hold a weighted backpack at your chest. Once that gets too easy though, a more difficult progression is the assisted shrimp squat: Use the side of a counter for assistance and hold one leg behind you with the same arm. Then, squat down until your knee just about touches the floor and come back up with assistance from the counter as needed. Over time, you can progress these by moving off of the counter',
+              sets: '4',
+              reps: 'Max reps',
+              rest: '45 sec',         
+            },
+            {
+              nr: '4',
+              name: 'Sliding Hamstring Curls',
+              description: 'Here we’ll use the sliding leg curl. This exercise will help work the hamstrings through both hip and knee extension. To perform these: Simply lay on a smooth surface and place your feet on two or something that will enable them to slide easily. Then, use your hamstrings to curl your heels in towards you while raising your hips up into the air. Your back should remain straight as you do so.',
+              advanced: 'To progress this, you can slow down the tempo and/or perform them with one leg at a time.',
+              sets: '4',
+              reps: 'Max reps',
+              rest: '45 sec',                     
+            },
+          ]
         },
         {
           id: '4',
           title: 'Abs',
+          exercises: 
+          [
+            {
+              nr: '1',
+              name: 'Hardstyle plank',
+              description: 'Lying face down on the ground, prop yourself up into a forearm plank position. Make sure your elbows are aligned underneath your shoulders, and that your hands are balled up in fists. Your forearms should be parallel to one another.',
+              sets: '3',
+              repetitions: 'Hold on as long as you can.',
+              rest: '30 sec'
+            },
+            {
+              nr: '2',
+              name: 'Dead bug',
+              description: 'Lay face up on the floor with arms straight above your shoulders. To start, bring your knees directly over your hips and bend at the knee so that your calf forms a 90-degree angle with your thigh. Next, simultaneously lower your left arm above your head while straightening your right leg and sending it towards the floor. Pause, return to the starting position, and then repeat on the opposite side.',
+              sets: '3',
+              repetitions: '14',
+              rest: '30 sec'
+            },
+            {
+              nr: '3',
+              name: 'Hollow extension-to-cannonball',
+              description: 'Get into a cannonball-type shape on your back, hugging your knees into your chest—yes, just like you’re at the pool at summer camp again. Simultaneously extend your legs and arms outwards into a “hollow” position, pressing your lower back to the floor. Hold for five seconds before curling up again',
+              sets: '3',
+              repetitions: '8',
+              rest: '30 sec'
+            },
+            {
+              nr: '4',
+              name: 'Dumbbell side bend',
+              description: 'Stand with your feet hip-width apart and hold a dumbbell in your right hand, palm facing inwards towards the torso. Keep your back straight, activate your core, and then bend to the side as far as possible—but only at the waist. Hold for one second at the bottom of your range of motion, and return to start for one rep.',
+              sets: '3',
+              repetitions: '20',
+              rest: '45 sec'
+            },
+            {
+              nr: '5',
+              name: 'Bird dog',
+              description: 'Think of this as an upside-down dead bug. Start in a tabletop position, with your shoulders over wrists and hips over knees. Engage your core while simultaneously lifting your right arm and left leg. Your foot should be flexed as you kick back, and your palm should face in towards your body. Pause for one second when your arm and leg are at the same height as your torso, and then bring your elbow and knee to touch underneath the body.',
+              sets: '3',
+              repetitions: '5',
+              rest: '30 sec'
+            },
+          ]
         },
       ],
       fitnessWorkouts: [{
@@ -243,12 +346,14 @@ var app = new Framework7({
         {
           id: '3',
           title: 'Abs',
-          exercises: [{
+          exercises: 
+          [
+            {
               nr: '1',
               name: 'Hardstyle plank',
               description: 'Lying face down on the ground, prop yourself up into a forearm plank position. Make sure your elbows are aligned underneath your shoulders, and that your hands are balled up in fists. Your forearms should be parallel to one another.',
               sets: '3',
-              repetitions: 'Hold for 10 to 20 seconds per set.',
+              repetitions: 'Hold on as long as you can.',
               rest: '30 sec'
             },
             {
@@ -407,7 +512,7 @@ var app = new Framework7({
           {
             nr: '4',
             name: 'Overhead press',
-            description: 'tand tall with a barbell across the front of your shoulders. Brace your core, then press the bar directly overhead. Lower it slowly back to the start.',
+            description: 'Tand tall with a barbell across the front of your shoulders. Brace your core, then press the bar directly overhead. Lower it slowly back to the start.',
             sets: '3',
             repetitions: '12',
             rest: '10 sec'
