@@ -14,6 +14,7 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "cordova-android": "^9.0.0",
+    "cordova-plugin-camera": "^5.0.1",
     "cordova-plugin-device": "^2.0.3",
     "cordova-plugin-keyboard": "^1.2.0",
     "cordova-plugin-splashscreen": "^6.0.0",
@@ -26,7 +27,10 @@
       "cordova-plugin-statusbar": {},
       "cordova-plugin-keyboard": {},
       "cordova-plugin-splashscreen": {},
-      "cordova-plugin-device": {}
+      "cordova-plugin-device": {},
+      "cordova-plugin-camera": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      }
     },
     "platforms": [
       "android"
