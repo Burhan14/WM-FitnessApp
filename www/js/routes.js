@@ -52,6 +52,16 @@ var routes = [
   {
     path: '/vooruitgang/',
     url: './pages/vooruitgang.html',
+    routes: [
+      {
+        path: 'fotodagboek/',
+        componentUrl: './pages/fotodagboek.html',
+      },
+      {
+        path: 'mijnLichaam/',
+        componentUrl: './pages/mijnLichaam.html',
+      }
+    ]
   },
   {
     path: '/form/',

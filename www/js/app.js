@@ -14,6 +14,10 @@ var app = new Framework7({
         firstName: 'John',
         lastName: 'Doe',
       },
+
+      // homeWorkouts: homeWorkouts,
+      // fitnessWorkouts: fitnessWorkouts,
+
          
       homeWorkouts: [{
           id: '1',
@@ -237,6 +241,8 @@ var app = new Framework7({
           ]
         },
       ],
+
+
       fitnessWorkouts: [{
           id: '1',
           title: 'Chest',
@@ -520,6 +526,8 @@ var app = new Framework7({
         ]
         },
       ]
+
+      
     };
   },
   // App root methods
