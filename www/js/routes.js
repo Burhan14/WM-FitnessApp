@@ -64,9 +64,23 @@ var routes = [
     ]
   },
   {
-    path: '/form/',
-    url: './pages/form.html',
+    path: '/planning/',
+    url: './pages/planning.html',
+    routes:
+        [
+          {
+            path: 'nieuw-event/',
+            url: './pages/nieuw-event.html',
+            options: {
+              transition: 'f7-dive',
+            },
+          },
+        ]
   },
+  // {
+  //   path: '/nieuw-event/',
+  //   componentUrl: './pages/nieuw-event.html',
+  // },
   {
     path: '/catalog/',
     componentUrl: './pages/catalog.html',

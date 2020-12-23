@@ -31,3 +31,10 @@
     color: #00587a;
     text-transform: uppercase;
 }
+
+.color-main {
+    --f7-theme-color: #00587a;
+    --f7-theme-color-rgb: 	0, 88, 122;
+    --f7-theme-color-shade: #004661;
+    --f7-theme-color-tint: #006a94;
+  }
