@@ -554,6 +554,10 @@ var app = new Framework7({
     },
   },
 });
+
+
+//#region Login
+
 // Login Screen Demo
 $$('#my-login-screen .login-button').on('click', function () {
   var username = $$('#my-login-screen [name="username"]').val();
@@ -565,3 +569,28 @@ $$('#my-login-screen .login-button').on('click', function () {
   // Alert username and password
   app.dialog.alert('Username: ' + username + '<br>Password: ' + password);
 });
+
+// Login Api
+var apiAddress = "https://burhan-atesalp.be/wm/FitnessApp/user.php?";
+var opties = {
+  method: "POST", // *GET, POST, PUT, DELETE, etc.
+  mode: "cors", // no-cors, *cors, same-origin
+  cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+  credentials: "omit", // include, *same-origin, omit
+  headers: {
+    "Content-Type": "application/json",
+    "Accept": "application/json"
+  }
+};
+
+function checkLogin() {
+  // de data opvragen van de andere server (zie les 2)
+
+  // body data type must match "Content-Type" header
+  opties.body = JSON.stringify({
+    format: "json",
+    table: "gebruikers",
+    bewerking: "check"
+  });
+}
+//#endregion
