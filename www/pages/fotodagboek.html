@@ -12,9 +12,52 @@
                 <div class="title">Mijn Fotodagboek</div>
             </div>
         </div>
-        <div class="page-content">
+        <div class="fab fab-extended fab-center-bottom color-main" style="width: 50%;">
+            <a href="#" id="btnCamera" @click="neemFoto"><i class="icon material-icons md-only">add</i>
+                <div class="fab-text">Neem een foto</div>
+            </a>
         </div>
-    </div>
+        <div class="page-content">
+            <div class="list simple-list searchbar-not-found">
+                <ul>
+                    <li>Nothing found</li>
+                </ul>
+            </div>
+            <div class="list foto-virtual-list media-list searchbar-found"></div>
+
+            <!-- <div class="list simple-list">
+                <ul>
+                    {{#each listphotos}}
+                    <li><a href="#" data-popup=".afb{{nr}}" class="button popup-open">Zie
+                            Afbeelding{{nr}} - {{url}}</a></li>
+                    <div class="popup afb{{nr}}" data-swipe-to-close="true">
+                        <div class="block text-align-center">
+                            <p>{{caption}}</p>
+                            <img src="{{url}}" style="height: 100%; width: 100%;">
+                        </div>
+                    </div>
+                    {{/each}}
+                </ul>
+            </div> -->
+
+        </div>
 </template>
 <script>
+    return {
+        methods: {
+            neemFoto: function () {
+                let options = {
+                    quality: 80,
+                    destinationType: Camera.DestinationType.FILE_URI,
+                    sourceType: Camera.PictureSourceType.CAMERA,
+                    mediaType: Camera.MediaType.PICTURE,
+                    encodingType: Camera.EncodingType.JPEG,
+                    cameraDirection: Camera.Direction.BACK,
+                    targetWidth: 300,
+                    targetHeight: 400
+                };
+                navigator.camera.getPicture(fotoSuccess, fotoFail, options)
+            },
+        }
+    }
 </script>
