@@ -1,9 +1,11 @@
 var $$ = Dom7;
 //#region GLOBALE/PUBLIEKE VARIABELEN
-var workoutPicker
+var workoutPicker;
 var calendarDateTime;
-var Planningitems
-var virtualList
+var Planningitems;
+var planningVirtualList;
+var fotoVirtualList;
+var listphotos = [];
 //#endregion
 
 var app = new Framework7({
@@ -522,6 +524,13 @@ var app = new Framework7({
     };
   },
 
+  // methods
+  methods: {
+    helloWorld: function () {
+      app.dialog.alert('hello world');
+    }
+  },
+
   // App routes
   routes: routes,
   // Input settings
@@ -547,9 +556,9 @@ var app = new Framework7({
 
 var mainView = app.views.create('.view-main');
 
- //#region LOGIN
+//#region LOGIN
 
- // Login Screen Demo
+// Login Screen Demo
 $$('#my-login-screen .login-button').on('click', function () {
   var username = $$('#my-login-screen [name="username"]').val();
   var password = $$('#my-login-screen [name="password"]').val();
@@ -589,25 +598,37 @@ function checkLogin() {
 
 //#region hulpmethodes
 
-Date.prototype.toString = function() {
+Date.prototype.toString = function () {
   var mm = this.getMonth() + 1; // getMonth() is zero-based
   var dd = this.getDate();
 
   return this.getFullYear() + "-" + mm + "-" + dd + " " + this.getHours() + ":" + this.getUTCMinutes() + ":" + this.getUTCSeconds();
 };
 
+function randomString(length, chars) {
+  var result = '';
+  for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+  return result;
+}
+
 //#endregion
 
 //#region Camera Plugin 
 
-function fotoSuccess (imgURI) {
-document.getElementById('fotoResultaat').textContent = imgURI;
-document.getElementById('photo').src = imgURI;
-
+function fotoSuccess(imgURI) {
+  listphotos.push({
+    title: new Date(Date.now()).toLocaleDateString(),
+    subtitle: new Date(Date.now()).toLocaleTimeString(),
+    url: imgURI,
+    caption: new Date(Date.now()).toLocaleString(),
+    // nr: randomString(8, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,;:!^$/?*'),
+    nr: Date.now(),
+  });
+  fotoVirtualList.update();
 };
 
 function fotoFail(msg) {
-  document.getElementById('fotoResultaat').textContent = msg;
+  app.dialog.alert(msg);
 };
 
 //#endregion
@@ -627,25 +648,24 @@ $$(document).on('page:init', function (e, page) {
         });
       }
 
-virtualList = app.virtualList.create({
-  // List Element
-  el: '.virtual-list',
-  // Pass array with items
-  items: Planningitems,
-  // Custom search function for searchbar
-  searchAll: function (query, items) {
-    var found = [];
-    for (var i = 0; i < items.length; i++) {
-      if (items[i].title.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i); //search in titles
-      if (items[i].subtitle.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i); //search in subtitles
-    }
-    return found; //return array with mathced indexes
-  },
-  // List item Template7 template
-  itemTemplate:
-    '<li>' +
-      '<a href="{{title}}-{{subtitle}}/" class="item-link item-content">' +
-        '<div class="item-inner">' +
+      planningVirtualList = app.virtualList.create({
+        // List Element
+        el: '.planning-virtual-list',
+        // Pass array with items
+        items: Planningitems,
+        // Custom search function for searchbar
+        searchAll: function (query, items) {
+          var found = [];
+          for (var i = 0; i < items.length; i++) {
+            if (items[i].title.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i); //search in titles
+            if (items[i].subtitle.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i); //search in subtitles
+          }
+          return found; //return array with mathced indexes
+        },
+        // List item Template7 template
+        itemTemplate: '<li>' +
+          '<a href="{{title}}-{{subtitle}}/" class="item-link item-content">' +
+          '<div class="item-inner">' +
           '<div class="item-title-row">' +
           '<div class="item-title">{{title}}</div>' +
           '</div>' +
@@ -664,7 +684,13 @@ virtualList = app.virtualList.create({
       calendarDateTime = app.calendar.create({
         inputEl: '#calendar-date-time',
         timePicker: true,
-        dateFormat: { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' },
+        dateFormat: {
+          month: 'long',
+          day: 'numeric',
+          year: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric'
+        },
         // dateFormat: 'yyyy-mm-dd HH::mm:ss' ,
         // on: {
         //   change: function () {
@@ -707,42 +733,94 @@ virtualList = app.virtualList.create({
         //   }
         // }
       });
+
       //#region TOEVOEGEN BUTTON
       $$('#btnVoegToe').on('click', function () {
-          console.log('DATUM: '+ calendarDateTime.getValue() +", "+ workoutPicker.getValue()[0] + ' Workout ' + workoutPicker.getValue()[1]);
-          console.log(calendarDateTime)
-          // 1- SEND TO DB 
-          // 2- GO BACK
-          // 3- REFRESH VIRTUAL LIST / FETCH FROM DB
-          Planningitems.push({
-            title: workoutPicker.getValue()[1] + ' Workout @ ' +workoutPicker.getValue()[0],
-            subtitle: calendarDateTime.getValue()[0].toLocaleDateString() + " @ " + calendarDateTime.getValue()[0].toLocaleTimeString().substring(0,5),
-            // link: ...,
-          });
-          virtualList.update();
-        
-        
+        console.log('DATUM: ' + calendarDateTime.getValue() + ", " + workoutPicker.getValue()[0] + ' Workout ' + workoutPicker.getValue()[1]);
+        console.log(calendarDateTime)
+        // 1- SEND TO DB 
+        // 2- GO BACK
+        // 3- REFRESH VIRTUAL LIST / FETCH FROM DB
+        Planningitems.push({
+          title: workoutPicker.getValue()[1] + ' Workout @ ' + workoutPicker.getValue()[0],
+          subtitle: calendarDateTime.value[0].toLocaleDateString([], {
+            month: '2-digit',
+            day: '2-digit',
+            year: 'numeric'
+          }) + " @ " + calendarDateTime.value[0].toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit'
+          }),
+          // link: ...,
+        });
+        planningVirtualList.update();
+
       });
       //#endregion
       //#endregion
       break;
 
-    // case "fotodagboek":
+    case "fotodagboek":
+      // Dummy items array
 
-      
-    //   const fs = require('fs');
-    //   const dir = './images';
+      for (var i = 1; i <= 3; i++) {
+        listphotos.push({
+          title: 'Item ' + i,
+          subtitle: 'Subtitle ' + i,
+          url: 'images/mijnLichaam/test' + i + '.png',
+          caption: 'Caption 1 Text',
+          nr: i + 1,
+          
+        });
+      }
 
-    //   fs.readdir(dir, (err, files) => {
-    //     console.log(files.length);
-    //   });
+      fotoVirtualList = app.virtualList.create({
+        // List Element
+        el: '.foto-virtual-list',
+        // Pass array with items
+        items: listphotos,
+        // Custom search function for searchbar
+        searchAll: function (query, items) {
+          var found = [];
+          for (var i = 0; i < items.length; i++) {
+            if (items[i].title.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i); //search in titles
+            if (items[i].subtitle.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i); //search in subtitles
+          }
+          return found; //return array with mathced indexes
+        },
+        // List item Template7 template
+        itemTemplate: '<li>' +
+          '<a href="" data-popup=".afb{{nr}}" class="popup-open item-link item-content">' +
+          '<div class="item-inner">' +
+          '<div class="item-title-row">' +
+          '<div class="item-title">{{title}}</div>' +
+          '</div>' +
+          '<div class="item-subtitle">{{subtitle}}</div>' +
+          '</div>' +
+          '</a>' +
+          '<div class="popup afb{{nr}}" data-swipe-to-close="true">' +
+          '<div class="block text-align-center">' +
+          '<p>{{caption}}</p>' +
+          '<img src="{{url}}" style="height: 100%; width: 100%;">' +
+          '</div>' +
+          '</div>' +
+          '</li>',
+        // Item height
+        height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
+      });
 
-    //   break;
+
+
+
+
+
+      // const fs = require('fs');
+      // const dir = './images';
+
+      // fs.readdir(dir, (err, files) => {
+      //   console.log(files.length);
+      // });
+
+      break;
   }
 })
-
-
-
-
-
-
