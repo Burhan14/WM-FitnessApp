@@ -1,5 +1,11 @@
 var $$ = Dom7;
-var myPhotoBrowserPopupDark;
+//#region GLOBALE/PUBLIEKE VARIABELEN
+var workoutPicker
+var calendarDateTime;
+var Planningitems
+var virtualList
+//#endregion
+
 var app = new Framework7({
   root: '#app', // App root element
 
@@ -515,12 +521,6 @@ var app = new Framework7({
 
     };
   },
-  // App root methods
-  methods: {
-    helloWorld: function () {
-      app.dialog.alert('Hello World!');
-    },
-  },
 
   // App routes
   routes: routes,
@@ -545,17 +545,11 @@ var app = new Framework7({
   },
 });
 
-var view = app.views.create('.view-main', {
-  on: {
-    pageInit: function () {
-      console.log('page init')
-    }
-  }
-})
+var mainView = app.views.create('.view-main');
 
-//#region LOGIN
+ //#region LOGIN
 
-// Login Screen Demo
+ // Login Screen Demo
 $$('#my-login-screen .login-button').on('click', function () {
   var username = $$('#my-login-screen [name="username"]').val();
   var password = $$('#my-login-screen [name="password"]').val();
@@ -593,6 +587,16 @@ function checkLogin() {
 }
 //#endregion
 
+//#region hulpmethodes
+
+Date.prototype.toString = function() {
+  var mm = this.getMonth() + 1; // getMonth() is zero-based
+  var dd = this.getDate();
+
+  return this.getFullYear() + "-" + mm + "-" + dd + " " + this.getHours() + ":" + this.getUTCMinutes() + ":" + this.getUTCSeconds();
+};
+
+//#endregion
 
 //#region Camera Plugin 
 
@@ -609,35 +613,39 @@ function fotoFail(msg) {
 //#endregion
 
 
+//ON X PAGE INIT => DO:
 $$(document).on('page:init', function (e, page) {
   switch (page.name) {
     case "planning":
       // Dummy items array
-      var items = [];
-      for (var i = 1; i <= 10000; i++) {
-        items.push({
+      Planningitems = [];
+      for (var i = 1; i <= 3; i++) {
+        Planningitems.push({
           title: 'Item ' + i,
-          subtitle: 'Subtitle ' + i
+          subtitle: 'Subtitle ' + i,
+          // link: ...,
         });
       }
 
-      var virtualList = app.virtualList.create({
-        // List Element
-        el: '.virtual-list',
-        // Pass array with items
-        items: items,
-        // Custom search function for searchbar
-        searchAll: function (query, items) {
-          var found = [];
-          for (var i = 0; i < items.length; i++) {
-            if (items[i].title.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i);
-          }
-          return found; //return array with mathced indexes
-        },
-        // List item Template7 template
-        itemTemplate: '<li>' +
-          '<a href="#" class="item-link item-content">' +
-          '<div class="item-inner">' +
+virtualList = app.virtualList.create({
+  // List Element
+  el: '.virtual-list',
+  // Pass array with items
+  items: Planningitems,
+  // Custom search function for searchbar
+  searchAll: function (query, items) {
+    var found = [];
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].title.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i); //search in titles
+      if (items[i].subtitle.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i); //search in subtitles
+    }
+    return found; //return array with mathced indexes
+  },
+  // List item Template7 template
+  itemTemplate:
+    '<li>' +
+      '<a href="{{title}}-{{subtitle}}/" class="item-link item-content">' +
+        '<div class="item-inner">' +
           '<div class="item-title-row">' +
           '<div class="item-title">{{title}}</div>' +
           '</div>' +
@@ -653,21 +661,16 @@ $$(document).on('page:init', function (e, page) {
     case "nieuw-event":
       //#region DateTime picker
 
-      var calendarDateTime = app.calendar.create({
+      calendarDateTime = app.calendar.create({
         inputEl: '#calendar-date-time',
         timePicker: true,
-        dateFormat: {
-          month: 'numeric',
-          day: 'numeric',
-          year: 'numeric',
-          hour: 'numeric',
-          minute: 'numeric'
-        },
-        on: {
-          opened: function () {
-            console.log('Calendar opened')
-          }
-        }
+        dateFormat: { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' },
+        // dateFormat: 'yyyy-mm-dd HH::mm:ss' ,
+        // on: {
+        //   change: function () {
+        //     console.log(this.getValue().toString())
+        //   }
+        // }
       });
 
       //#endregion
@@ -677,7 +680,7 @@ $$(document).on('page:init', function (e, page) {
         Fitness: ['Chest', 'Leg', 'Abs', 'Back', 'Arm', 'Shoulder'],
         Home: ['Full Body', 'Chest', 'Leg', 'Abs']
       };
-      var workoutPicker = app.picker.create({
+      workoutPicker = app.picker.create({
         inputEl: '#workout-picker',
         rotateEffect: true,
         formatValue: function (values) {
@@ -690,7 +693,7 @@ $$(document).on('page:init', function (e, page) {
               if (picker.cols[1].replaceValues) {
                 picker.cols[1].replaceValues(workouts[workout]);
               }
-              console.log(picker);
+              // console.log(picker);
             }
           },
           {
@@ -700,12 +703,27 @@ $$(document).on('page:init', function (e, page) {
         ],
         // on: {
         //   change: function () {
-        //     console.log('value changed')
+        //     console.log(this.value[1])
         //   }
         // }
       });
-
-
+      //#region TOEVOEGEN BUTTON
+      $$('#btnVoegToe').on('click', function () {
+          console.log('DATUM: '+ calendarDateTime.getValue() +", "+ workoutPicker.getValue()[0] + ' Workout ' + workoutPicker.getValue()[1]);
+          console.log(calendarDateTime)
+          // 1- SEND TO DB 
+          // 2- GO BACK
+          // 3- REFRESH VIRTUAL LIST / FETCH FROM DB
+          Planningitems.push({
+            title: workoutPicker.getValue()[1] + ' Workout @ ' +workoutPicker.getValue()[0],
+            subtitle: calendarDateTime.getValue()[0].toLocaleDateString() + " @ " + calendarDateTime.getValue()[0].toLocaleTimeString().substring(0,5),
+            // link: ...,
+          });
+          virtualList.update();
+        
+        
+      });
+      //#endregion
       //#endregion
       break;
 
