@@ -13,8 +13,59 @@
             </div>
         </div>
         <div class="page-content">
+            <div class="list simple-list">
+                <ul>
+                    {{#each listphotos}}
+                    <li><a href="#" data-popup=".afb{{nr}}" class="button popup-open">Zie
+                            Afbeelding{{nr}} - {{url}}</a></li>
+                    <div class="popup afb{{nr}}" data-swipe-to-close="true">
+                        <div class="block text-align-center">
+                            <p>{{caption}}</p>
+                            <img src="{{url}}" style="height: 100%; width: 100%;">
+                        </div>
+                    </div>
+                    {{/each}}
+                </ul>
+            </div>
+            <div class="fab fab-extended fab-center-bottom color-main" style="width: 50%;">
+                <a href="#" id="btnCamera" @click="neemFoto"><i class="icon material-icons md-only">add</i><div class="fab-text">Neem een foto</div></a>
+            </div>
         </div>
-    </div>
 </template>
 <script>
+    return {
+        data: function () {
+            var listphotos = []
+            for (var i = 0; i < 10; i++) {
+                listphotos[i] = {
+                    url: 'images/mijnLichaam/test' + i + '.png',
+                    caption: 'Caption 1 Text',
+                    nr: i + 1,
+                }
+            }
+            return {
+                listphotos
+            }
+        },
+
+        methods: {
+            neemFoto: function () {
+                let options = {
+                    quality: 80,
+                    destinationType: Camera.DestinationType.FILE_URI,
+                    sourceType: Camera.PictureSourceType.CAMERA,
+                    mediaType: Camera.MediaType.PICTURE,
+                    encodingType: Camera.EncodingType.JPEG,
+                    cameraDirection: Camera.Direction.BACK,
+                    targetWidth: 300,
+                    targetHeight: 400
+                };
+
+                navigator.camera.getPicture(fotoSucces, fotoFail, options)
+
+            },
+        }
+    }
 </script>
+
+
