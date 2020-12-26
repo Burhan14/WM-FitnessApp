@@ -634,6 +634,17 @@ function fotoFail(msg) {
 //#endregion
 
 
+for (var i = 1; i <= 3; i++) {
+  listphotos.push({
+    title: 'Item ' + i,
+    subtitle: 'Subtitle ' + i,
+    url: 'images/mijnLichaam/test' + i + '.png',
+    caption: 'Caption 1 Text',
+    nr: i + 1,
+
+  });
+}
+
 //ON X PAGE INIT => DO:
 $$(document).on('page:init', function (e, page) {
   switch (page.name) {
@@ -691,12 +702,6 @@ $$(document).on('page:init', function (e, page) {
           hour: 'numeric',
           minute: 'numeric'
         },
-        // dateFormat: 'yyyy-mm-dd HH::mm:ss' ,
-        // on: {
-        //   change: function () {
-        //     console.log(this.getValue().toString())
-        //   }
-        // }
       });
 
       //#endregion
@@ -719,7 +724,6 @@ $$(document).on('page:init', function (e, page) {
               if (picker.cols[1].replaceValues) {
                 picker.cols[1].replaceValues(workouts[workout]);
               }
-              // console.log(picker);
             }
           },
           {
@@ -727,20 +731,25 @@ $$(document).on('page:init', function (e, page) {
             width: 160,
           },
         ],
-        // on: {
-        //   change: function () {
-        //     console.log(this.value[1])
-        //   }
-        // }
       });
 
       //#region TOEVOEGEN BUTTON
       $$('#btnVoegToe').on('click', function () {
-        console.log('DATUM: ' + calendarDateTime.getValue() + ", " + workoutPicker.getValue()[0] + ' Workout ' + workoutPicker.getValue()[1]);
-        console.log(calendarDateTime)
+        // TEST
+        // console.log('DATUM: ' + calendarDateTime.value[0].toLocaleDateString([], {
+        //   month: '2-digit',
+        //   day: '2-digit',
+        //   year: 'numeric'
+        // }) + ", " + calendarDateTime.value[0].toLocaleTimeString([], {
+        //   hour: '2-digit',
+        //   minute: '2-digit'
+        // })); // show in console in string
+        // console.log(calendarDateTime.value.toString()) // send to database
+
         // 1- SEND TO DB 
         // 2- GO BACK
         // 3- REFRESH VIRTUAL LIST / FETCH FROM DB
+
         Planningitems.push({
           title: workoutPicker.getValue()[1] + ' Workout @ ' + workoutPicker.getValue()[0],
           subtitle: calendarDateTime.value[0].toLocaleDateString([], {
@@ -751,7 +760,6 @@ $$(document).on('page:init', function (e, page) {
             hour: '2-digit',
             minute: '2-digit'
           }),
-          // link: ...,
         });
         planningVirtualList.update();
 
@@ -761,18 +769,6 @@ $$(document).on('page:init', function (e, page) {
       break;
 
     case "fotodagboek":
-      // Dummy items array
-
-      for (var i = 1; i <= 3; i++) {
-        listphotos.push({
-          title: 'Item ' + i,
-          subtitle: 'Subtitle ' + i,
-          url: 'images/mijnLichaam/test' + i + '.png',
-          caption: 'Caption 1 Text',
-          nr: i + 1,
-          
-        });
-      }
 
       fotoVirtualList = app.virtualList.create({
         // List Element
