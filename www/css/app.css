@@ -5,11 +5,17 @@
 
 /* Custom color theme properties */
 :root {
+  --f7-theme-color: #e7b948;
+  --f7-theme-color-rgb: 0, 88, 122;
+  --f7-theme-color-shade: #8d712a;
+  --f7-theme-color-tint: #f7cc5f;
+}
+/* :root {
   --f7-theme-color: #00587a;
   --f7-theme-color-rgb: 0, 88, 122;
   --f7-theme-color-shade: #003b51;
   --f7-theme-color-tint: #0075a3;
-}
+} */
 
 /* Invert navigation bars to fill style */
 :root,
