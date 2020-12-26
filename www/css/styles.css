@@ -1,3 +1,23 @@
+*:not(i){
+    font-family: 'Bungee'!important;
+}
+*:not(div){
+    color: #00587a;
+}
+
+.title-large{
+    text-align: center;
+    color: #00587a;
+}
+
+.title, a{
+    color: #00587a!important;
+}
+
+html{
+    background-color: #e7b948!important;
+}
+
 .training-button{
     height: 35vh;
     margin: 1vh 2vh;
