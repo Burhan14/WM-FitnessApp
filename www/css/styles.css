@@ -63,6 +63,10 @@ html {
     --f7-theme-color-tint: #006a94;
 }
 
+.calculate {
+    margin-top: 3%;
+}
+
 .no-chevron::after{
     content: none!important;
 }
