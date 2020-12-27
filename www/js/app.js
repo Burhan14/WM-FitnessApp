@@ -5,6 +5,7 @@ var calendarDateTime;
 var Planningitems;
 var planningVirtualList;
 var fotoVirtualList;
+var placesVirtualList;
 var listphotos = [];
 //#endregion
 
@@ -634,19 +635,132 @@ function fotoFail(msg) {
 //#endregion
 
 
-for (var i = 1; i <= 3; i++) {
-  listphotos.push({
-    title: 'Item ' + i,
-    subtitle: 'Subtitle ' + i,
-    url: 'images/mijnLichaam/test' + i + '.png',
-    caption: 'Caption 1 Text',
-    nr: i + 1,
 
-  });
+
+//#region PLACES
+Placesitems = [];
+Placesitems.push(
+  {
+  title: 'Basic-Fit Haren ',
+  Longitude: 123,
+  Latitude: 456,
+  },
+  {
+  title: 'Basic-Fit Evere ',
+  Longitude: 123,
+  Latitude: 456,
+  },
+  {
+  title: 'Basic-Fit Madou ',
+  Longitude: 123,
+  Latitude: 456,
+  },
+  {
+  title: 'Basic-Fit Art-loi ',
+  Longitude: 123,
+  Latitude: 456,
+  },
+);
+
+placesVirtualList = app.virtualList.create({
+  // List Element
+  el: '.places-virtual-list',
+  // Pass array with items
+  items: Placesitems,
+  // List item Template7 template
+  itemTemplate: '<li>' +
+    '<a href="" class="item-link item-content">' +
+    '<div class="item-inner">' +
+    '<div class="item-title-row no-chevron" style="justify-content: center;">' +
+    '<div class="item-title">{{title}}</div>' +
+    '</div>' +
+    '<div class="item-subtitle distance" style="text-align: center;">LON: {{Longitude}} - LAT: {{Latitude}}</div>' +
+    '</div>' +
+    '</div>' +
+    '</a>' +
+    '</li>',
+  // Item height
+  height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
+});
+
+function getLocatie(){
+  if (navigator.geolocation) {
+    var accurate = true;
+    if(app.watchPositionID !== null){
+        // de vorige watch eerst stoppen, of we hebben meerdere
+        // simultane lopen.
+        navigator.geolocation.clearWatch(app.watchPositionID);
+    }
+    
+    app.watchPositionID = navigator.geolocation.watchPosition(
+        showLocation(),
+        positionError, 
+        { 
+            enableHighAccuracy: accurate,
+            maximumAge: 10 * 1000
+        }
+    );
+      
+  } else {
+    self.$app.dialog.alert('Het spijt me, maar geolocatie wordt niet ondersteund door deze browser.', 'Geen geolocatie ondersteuning');
+  }
 }
+function showLocation(position, lon, lat) {
+  if (app.view.current.router.url == "/locatie/") {
+    // success functie
+    // bereken afstand tot brussel met formule van haversine
+
+    const latBrussel = lon
+    const lonBrussel = lat
+
+    const R = 6371e3; // metres
+    const φ1 = position.coords.latitude * Math.PI / 180; // φ, λ in radians
+    const φ2 = latBrussel * Math.PI / 180;
+    const Δφ = (latBrussel - position.coords.latitude) * Math.PI / 180;
+    const Δλ = (lonBrussel - position.coords.longitude) * Math.PI / 180;
+
+    const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+      Math.cos(φ1) * Math.cos(φ2) *
+      Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    const d = (R * c).toFixed(0); // in metres
+
+    $$("#locatieResultaat").html(
+      `<p>Latitude: ${position.coords.latitude}</p><p>Longitude: ${position.coords.longitude}</p><p>Accuracy: ${position.coords.accuracy}m.</p><p>Timestamp: ${new Date(position.timestamp)}</p>
+  <p>Afstand tot Brussel: ${d}m</p>`
+    );
+  }
+}
+function positionError(error) {
+  console.log('Error occurred. Error code: ' + error.code);
+  // error.code can be:
+  //   0: unknown error
+  //   1: permission denied
+  //   2: position unavailable (error response from location provider)
+  //   3: timed out
+  switch (error.code) {
+    case 0:
+      // unknown error
+      app.dialog.alert('Onbekend probleem bij het bepalen van je positie. Zorg er voor dat de positiebepaling van je toestel actief is.', 'Positie probleem');
+    case 1:
+      // permission denied
+      app.dialog.alert('Het spijt me, maar ik ga je moeten blijven pesten als je geen toestemming geeft om je positie te zien. Als je wilt, kan je de pagina herladen en eventueel de geschiedenis van je browser wissen. Het laatste uur is meer dan voldoende. <b>iPhone</b> : zorg er voor dat je locatie toestemming in het algemeen EN locatie toestemming aan Safari geeft.', 'Positie toelating probleem');
+    case 2:
+      // position unavailable (error response from location provider)
+      app.dialog.alert('Je positie is niet beschikbaar. Zorg er voor dat de positiebepaling van je toestel actief is.', 'Positie niet beschikbaar');
+    case 3:
+      // timed out
+      app.dialog.alert('Het duurt te lang om je positie te vinden. Zit je in een tunnel? Of zit je nog in de school? Op een heel aantal toestellen kan de positie sneller bepaald worden als je ook je wifi aanzet.', 'Positie timeout');
+  }
+};
+
+//#endregion 
+
 
 //ON X PAGE INIT => DO:
 $$(document).on('page:init', function (e, page) {
+  console.log(page.name)
   switch (page.name) {
     case "planning":
       // Dummy items array
@@ -769,6 +883,16 @@ $$(document).on('page:init', function (e, page) {
       break;
 
     case "fotodagboek":
+
+      for (var i = 1; i <= 3; i++) {
+        listphotos.push({
+          title: 'Item ' + i,
+          subtitle: 'Subtitle ' + i,
+          url: 'images/mijnLichaam/test' + i + '.png',
+          caption: 'Caption 1 Text',
+          nr: i + 1,
+        });
+      }
 
       fotoVirtualList = app.virtualList.create({
         // List Element
