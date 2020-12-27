@@ -21,7 +21,7 @@ html {
 }
 
 .training-button {
-    height: 35vh;
+    height: 30vh;
     margin: 1vh 2vh;
     display: flex;
 }
@@ -65,4 +65,8 @@ html {
 
 .calculate {
     margin-top: 3%;
+}
+
+.no-chevron::after{
+    content: none!important;
 }
