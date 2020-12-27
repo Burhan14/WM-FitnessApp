@@ -805,17 +805,87 @@ $$(document).on('page:init', function (e, page) {
         height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
       });
 
-
-
-
-
-
       // const fs = require('fs');
       // const dir = './images';
 
       // fs.readdir(dir, (err, files) => {
       //   console.log(files.length);
       // });
+
+      break;
+
+
+
+
+
+      case "mijnLichaam":
+
+      (function () {
+        const form    = document.getElementById('calc-form');
+
+        function errorMessage(msg) {
+            app.dialog.alert(msg);
+            return false;
+        }
+
+        function showResults(calories) {
+          app.dialog.alert(`<p>Uw basal metabolic rate (BMR) is: <strong>${(calories).toFixed(2)} </strong> calorieën per dag.</p>`);                       
+          form.reset()
+        }
+    
+        /**
+         * Handle form submit
+         */
+        function submitHandler(e) {
+            e.preventDefault();
+    
+            // Age
+            let age = parseFloat(form.age.value);
+            //let unit = form.distance_unit.value;
+            if(isNaN(age) || age < 0) {
+                return errorMessage('Voer een geldige leeftijd in');
+            }
+       
+            // Height
+            let heightCM = parseFloat(form.height_cm.value);
+            if(isNaN(heightCM) || heightCM < 0) {
+                
+              let heightFeet = parseFloat(form.height_ft.value);
+              if(isNaN(heightFeet) || heightFeet < 0) {
+                  return errorMessage('Voer een geldige hoogte in feet of centimeters in');
+              }      
+             let heightInches = parseFloat(form.height_in.value);
+              if(isNaN(heightInches) || heightInches < 0) {
+                  heightInches=0;
+              }   
+              heightCM = (2.54 * heightInches) + (30.4 * heightFeet)
+              
+            }   
+    
+              let weight = parseFloat(form.weight.value);
+              if(isNaN(weight) || weight < 0) {
+                  return errorMessage('Voer een geldig gewicht in');
+              }   
+          
+            if(form.weight_unit.value == 'lb') {
+                weight = 0.453592 * weight;
+            }
+          
+           let calories = 0;
+           if(form.gender.value == 'Female') {
+              //females =  655.09 + 9.56 x (Weight in kg) + 1.84 x (Height in cm) - 4.67 x age   
+             calories = 655.09 + (9.56 * weight) + (1.84 * heightCM) - (4.67 * age);
+            }  else {
+             calories = 66.47 + (13.75 * weight) + (5 * heightCM) - (6.75 * age);
+            }
+     
+            // Display results
+           showResults(calories);
+        }
+    
+        // Add Event Listeners
+        form.addEventListener('submit', submitHandler);
+      })();
 
       break;
   }

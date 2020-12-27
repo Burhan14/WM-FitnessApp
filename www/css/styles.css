@@ -1,51 +1,55 @@
-*:not(i){
-    font-family: 'Bungee'!important;
+*:not(i) {
+    font-family: 'Bungee' !important;
 }
-*:not(div){
+
+*:not(div) {
     color: #00587a;
 }
 
-.title-large{
+.title-large {
     text-align: center;
     color: #00587a;
 }
 
-.title, a{
-    color: #00587a!important;
+.title,
+a {
+    color: #00587a !important;
 }
 
-html{
-    background-color: #e7b948!important;
+html {
+    background-color: #e7b948 !important;
 }
 
-.training-button{
+.training-button {
     height: 35vh;
     margin: 1vh 2vh;
     display: flex;
 }
 
-.flex-buttons{
+.flex-buttons {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     margin-top: 5vh;
 }
 
-.workouts{
+.workouts {
     width: 20vh;
     height: 20vh;
     margin-bottom: 2vh;
 }
 
-.flex-center{
+.flex-center {
     display: flex;
     justify-content: center;
 }
-.flex-around{
+
+.flex-around {
     display: flex;
     justify-content: space-around;
 }
-.page-title{
+
+.page-title {
     text-align: center;
     font-weight: bold;
     color: #00587a;
@@ -54,7 +58,11 @@ html{
 
 .color-main {
     --f7-theme-color: #00587a;
-    --f7-theme-color-rgb: 	0, 88, 122;
+    --f7-theme-color-rgb: 0, 88, 122;
     --f7-theme-color-shade: #004661;
     --f7-theme-color-tint: #006a94;
-  }
+}
+
+.calculate {
+    margin-top: 3%;
+}
