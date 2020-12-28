@@ -7,8 +7,8 @@ var planningVirtualList;
 var fotoVirtualList;
 var placesVirtualList;
 var listphotos = [];
-var globalLon ;
-var globalLat ;
+var globalLon;
+var globalLat;
 //#endregion
 
 var app = new Framework7({
@@ -575,19 +575,6 @@ $$('#my-login-screen .login-button').on('click', function () {
 });
 
 
-// Login Api
-var apiAddress = "https://burhan-atesalp.be/wm/FitnessApp/user.php?";
-var opties = {
-  method: "POST", // *GET, POST, PUT, DELETE, etc.
-  mode: "cors", // no-cors, *cors, same-origin
-  cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-  credentials: "omit", // include, *same-origin, omit
-  headers: {
-    "Content-Type": "application/json",
-    "Accept": "application/json"
-  }
-};
-
 function checkLogin() {
   // de data opvragen van de andere server (zie les 2)
 
@@ -650,18 +637,18 @@ Placesitems = [];
 Placesitems.push({
   title: 'Basic-Fit Haren ',
   Latitude: 50.89134948402122,
-  Longitude:  4.427129477301076,
+  Longitude: 4.427129477301076,
 }, {
   title: 'Basic-Fit Evere ',
-  Latitude:  50.86088202951444,
+  Latitude: 50.86088202951444,
   Longitude: 4.418236613607214,
 }, {
   title: 'Basic-Fit Madou ',
-  Latitude: 50.84917837179206, 
+  Latitude: 50.84917837179206,
   Longitude: 4.37034308905814,
 }, {
   title: 'Basic-Fit Art-loi ',
-  Latitude: 50.84305445482712, 
+  Latitude: 50.84305445482712,
   Longitude: 4.367339014910025,
 }, );
 
@@ -698,8 +685,7 @@ function getLocatie(longitude, latitude) {
 
     app.watchPositionID = navigator.geolocation.watchPosition(
       showLocation,
-      positionError, 
-      {
+      positionError, {
         enableHighAccuracy: accurate,
         maximumAge: 10 * 1000
       }
@@ -717,8 +703,8 @@ function showLocation(position) {
   // success functie
   // bereken afstand tot brussel met formule van haversine
 
-  var latitude = globalLat; // Brussel Latitude: 50.8504500
-  var longitude =  globalLon; // Brussel Longitude: 4.3487800
+  var latitude = globalLat;
+  var longitude = globalLon;
 
   var R = 6371e3; // metres
   var φ1 = position.coords.latitude * Math.PI / 180; // φ, λ in radians
@@ -771,6 +757,8 @@ function nieuwePlek() {
     Latitude: lat,
     Longitude: lon,
   });
+
+  LocatieToevoegen(naam, lat, lon);
 
   placesVirtualList.update();
 }
