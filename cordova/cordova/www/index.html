@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <!--
+  Customize this policy to fit your own app's needs. For more guidance, see:
+      https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+  Some notes:
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+      * Enable inline JS: add 'unsafe-inline' to default-src
+  -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+
+  <meta name="theme-color" content="#00587a">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>Shredder</title>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="framework7/css/framework7.bundle.min.css">
+  <link rel="stylesheet" href="css/icons.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <div id="app" class="theme-light">
+    <!-- Left panel with cover effect-->
+    <div class="panel panel-left panel-cover theme-light panel-init">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+              <div class="title">Mijn profiel</div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="block">
+              <p><i class="material-icons md-48" style="font-size: 48px; color:#00587a;">account_circle</i> Log in om uw
+                profielinformatie te zien</p>
+            </div>
+            <div class="col-50">
+              <a href="#" class="button button-raised button-outline login-screen-open"
+                data-login-screen="#my-login-screen" style="border-radius: 0px;">Log in</a>
+            </div>
+            <div class="toolbar toolbar-bottom tabbar-labels" style="position: absolute;bottom: 0px;">
+              <div class="toolbar-inner">
+                <a href="" class="tab-link tab-link-active">
+                  <i class="icon f7-icons if-not-md">gear</i>
+                  <i class="icon material-icons if-md">settings</i>
+                  <span class="tabbar-label">Instellingen</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Views/Tabs container -->
+    <div class="views tabs safe-areas">
+      <!-- Tabbar for switching views-tabs -->
+      <div class="toolbar toolbar-bottom tabbar-labels">
+        <div class="toolbar-inner">
+          <a href="#view-home" class="tab-link tab-link-active">
+            <i class="icon f7-icons if-not-md">house_fill</i>
+            <i class="icon material-icons if-md">home</i>
+            <span class="tabbar-label">Home</span>
+          </a>
+          <a href="#view-training" class="tab-link">
+            <i class="icon f7-icons if-not-md">square_list_fill</i>
+            <i class="icon material-icons if-md">fitness_center</i>
+            <span class="tabbar-label">Training</span>
+          </a>
+          <a href="#view-vooruitgang" class="tab-link">
+            <i class="icon f7-icons if-not-md">chart_bar_alt_fill</i>
+            <i class="icon material-icons if-md">show_chart</i>
+            <span class="tabbar-label">Progress</span>
+          </a>
+          <a href="#view-planning" class="tab-link">
+            <i class="icon f7-icons if-not-md">calendar</i>
+            <i class="icon material-icons if-md">date_range</i>
+            <span class="tabbar-label">Planning</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Your main view/tab, should have "view-main" class. It also has "tab-active" class -->
+      <div id="view-home" class="view view-main view-init tab tab-active">
+        <div class="page" data-name="home">
+          <!-- Top Navbar -->
+          <div class="navbar navbar-large">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+              <div class="left">
+                <a href="#" class="link icon-only panel-open" data-panel="left">
+                  <i class="icon f7-icons if-not-md">menu</i>
+                  <i class="icon material-icons if-md">menu</i>
+                </a>
+              </div>
+              <div class="title sliding">Shredder</div>
+              <div class="title-large">
+                <div class="title-large-text">Shredder</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Extended FAB Center Bottom -->
+          <div class="fab fab-extended fab-center-bottom" style="width: 50%;">
+            <a href="" class="popup-open" data-popup=".popup-plek">
+              <i class="icon f7-icons if-not-md">plus</i>
+              <i class="icon material-icons md-only">add</i>
+              <div class="fab-text">Nieuwe Plek</div>
+            </a>
+          </div>
+
+          <!-- Scrollable page content-->
+          <div class="page-content">
+
+            <!-- Inset content block -->
+            <div class="block block-strong inset">
+              <div id="afstand"
+                class="elevation-demo elevation-6 elevation-hover-24 elevation-pressed-12 elevation-transition">Klik op
+                een plek om de afstand te berekenen</div>
+              <div class="block-title page-title">SPORTPLEKKEN</div>
+              <div class="list places-virtual-list media-list searchbar-found"></div>
+            </div>
+            <!-- popup -->
+            <div class="popup popup-plek">
+              <div class="block">
+                <div class="navbar">
+                  <div class="navbar-bg"></div>
+                  <div class="navbar-inner">
+                    <div class="title">Nieuwe plek</div>
+                    <div class="right">
+                      <!-- Link to close popup -->
+                      <a class="link popup-close">sluiten</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="list">
+                  <div class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Naam:</div>
+                      <div class="item-input-wrap">
+                        <input type="text" name="naam" id="plekNaam"
+                          placeholder="Naam van de locatie">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Latitude:</div>
+                      <div class="item-input-wrap">
+                        <input type="text" name="Latitude" id="plekLatitude" inputmode="numeric" pattern="[0-9]*"
+                          placeholder="precieze latitude">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Longitude:</div>
+                      <div class="item-input-wrap">
+                        <input type="text" name="Longitude" id="plekLongitude" inputmode="numeric" pattern="[0-9]*"
+                          placeholder="precieze longitude">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex-center plekToevoegen">
+                    <button class="button button-raised button-fill popup-close"
+                      style="width: 50%; color: #00587a;" onclick="nieuwePlek()">Voeg Toe</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Training View -->
+      <div id="view-training" class="view view-init tab" data-name="training" data-url="/training/">
+        <!-- Training page will be loaded here dynamically from /training/ route -->
+      </div>
+
+      <!-- Vooruitgang View -->
+      <div id="view-vooruitgang" class="view view-init tab" data-name="vooruitgang" data-url="/vooruitgang/">
+        <!-- Vooruitgang page will be loaded here dynamically from /vooruitgang/ route -->
+      </div>
+
+      <!-- Planning View -->
+      <div id="view-planning" class="view view-init tab" data-name="planning" data-url="/planning/">
+        <!-- Planning page will be loaded here dynamically from /planning/ route -->
+      </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div class="login-screen" id="my-login-screen">
+      <div class="view">
+        <div class="page">
+          <div class="page-content login-screen-content">
+            <div class="login-screen-title">Login</div>
+            <div class="list">
+              <ul>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <div class="item-title item-label">Gebruikersnaam</div>
+                    <div class="item-input-wrap">
+
+                      <input type="text" name="username" placeholder="Uw gebruikersnaam">
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <div class="item-title item-label">Wachtwoord</div>
+                    <div class="item-input-wrap">
+                      <input type="password" name="password" placeholder="Uw wachtwoord">
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="list">
+              <ul>
+                <li>
+                  <a href="#" class="item-link list-button login-button">Log In</a>
+                </li>
+              </ul>
+              <!-- <div class="block-footer">Some text about login information.<br>Click "Sign In" to close Login Screen</div> -->
+              <div class="block-footer">
+                <a href="#" class="item-link list-button link login-screen-close ">Cancel</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="cordova.js"></script>
+  <!-- Framework7 library -->
+  <script src="framework7/js/framework7.bundle.min.js"></script>
+  <!-- <script src="framework7/js/framework7.min.js"></script> -->
+  <!-- Cordova APIs -->
+  <script src="js/cordova-app.js"></script>
+  <!-- App routes -->
+  <script src="js/routes.js"></script>
+  <!-- App scripts -->
+  <script src="js/app.js"></script>
+
+
+
+</body>
+
+</html>

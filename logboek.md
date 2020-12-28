@@ -25,8 +25,8 @@
 * app colors & fonts review
 
 ## 27/12/2020: 14:00 - 22:00 ( 2 uur pauze ) 
-* 
-* 
+* BMR + BMI
+* start location (home page)
 * 
 * 
 
