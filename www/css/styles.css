@@ -70,3 +70,14 @@ html {
 .no-chevron::after{
     content: none!important;
 }
+
+#afstand{
+    height: 7vh;
+    text-align: center;
+    padding-top: 20px;
+}
+
+.places-virtual-list ul{
+    height: 100% !important
+    ;
+}

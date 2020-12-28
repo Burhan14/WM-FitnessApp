@@ -7,6 +7,8 @@ var planningVirtualList;
 var fotoVirtualList;
 var placesVirtualList;
 var listphotos = [];
+var globalLon ;
+var globalLat ;
 //#endregion
 
 var app = new Framework7({
@@ -550,6 +552,7 @@ var app = new Framework7({
       if (f7.device.cordova) {
         // Init cordova APIs (see cordova-app.js)
         cordovaApp.init(f7);
+        placesVirtualList.update();
       }
     },
   },
@@ -638,29 +641,29 @@ function fotoFail(msg) {
 
 
 //#region PLACES
+
+app.on('sortableSort', function (listEl, indexes) {
+  console.log(indexes);
+})
+
 Placesitems = [];
-Placesitems.push(
-  {
+Placesitems.push({
   title: 'Basic-Fit Haren ',
-  Longitude: 123,
-  Latitude: 456,
-  },
-  {
+  Latitude: 50.89134948402122,
+  Longitude:  4.427129477301076,
+}, {
   title: 'Basic-Fit Evere ',
-  Longitude: 123,
-  Latitude: 456,
-  },
-  {
+  Latitude:  50.86088202951444,
+  Longitude: 4.418236613607214,
+}, {
   title: 'Basic-Fit Madou ',
-  Longitude: 123,
-  Latitude: 456,
-  },
-  {
+  Latitude: 50.84917837179206, 
+  Longitude: 4.37034308905814,
+}, {
   title: 'Basic-Fit Art-loi ',
-  Longitude: 123,
-  Latitude: 456,
-  },
-);
+  Latitude: 50.84305445482712, 
+  Longitude: 4.367339014910025,
+}, );
 
 placesVirtualList = app.virtualList.create({
   // List Element
@@ -669,69 +672,72 @@ placesVirtualList = app.virtualList.create({
   items: Placesitems,
   // List item Template7 template
   itemTemplate: '<li>' +
-    '<a href="" class="item-link item-content">' +
+    '<a href="" class="item-link item-content" onclick="getLocatie({{Longitude}}, {{Latitude}})">' +
     '<div class="item-inner">' +
     '<div class="item-title-row no-chevron" style="justify-content: center;">' +
     '<div class="item-title">{{title}}</div>' +
     '</div>' +
-    '<div class="item-subtitle distance" style="text-align: center;">LON: {{Longitude}} - LAT: {{Latitude}}</div>' +
-    '</div>' +
     '</div>' +
     '</a>' +
+    '<div class="sortable-handler"></div>' +
     '</li>',
   // Item height
   height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
 });
 
-function getLocatie(){
+
+
+function getLocatie(longitude, latitude) {
   if (navigator.geolocation) {
     var accurate = true;
-    if(app.watchPositionID !== null){
-        // de vorige watch eerst stoppen, of we hebben meerdere
-        // simultane lopen.
-        navigator.geolocation.clearWatch(app.watchPositionID);
+    if (app.watchPositionID !== null) {
+      // de vorige watch eerst stoppen, of we hebben meerdere
+      // simultane lopen.
+      navigator.geolocation.clearWatch(app.watchPositionID);
     }
-    
+
     app.watchPositionID = navigator.geolocation.watchPosition(
-        showLocation(),
-        positionError, 
-        { 
-            enableHighAccuracy: accurate,
-            maximumAge: 10 * 1000
-        }
+      showLocation,
+      positionError, 
+      {
+        enableHighAccuracy: accurate,
+        maximumAge: 10 * 1000
+      }
     );
-      
+
+    globalLon = longitude;
+    globalLat = latitude;
+
   } else {
-    self.$app.dialog.alert('Het spijt me, maar geolocatie wordt niet ondersteund door deze browser.', 'Geen geolocatie ondersteuning');
+    app.dialog.alert('Het spijt me, maar geolocatie wordt niet ondersteund door deze browser.', 'Geen geolocatie ondersteuning');
   }
 }
-function showLocation(position, lon, lat) {
-  if (app.view.current.router.url == "/locatie/") {
-    // success functie
-    // bereken afstand tot brussel met formule van haversine
 
-    const latBrussel = lon
-    const lonBrussel = lat
+function showLocation(position) {
+  // success functie
+  // bereken afstand tot brussel met formule van haversine
 
-    const R = 6371e3; // metres
-    const φ1 = position.coords.latitude * Math.PI / 180; // φ, λ in radians
-    const φ2 = latBrussel * Math.PI / 180;
-    const Δφ = (latBrussel - position.coords.latitude) * Math.PI / 180;
-    const Δλ = (lonBrussel - position.coords.longitude) * Math.PI / 180;
+  var latitude = globalLat; // Brussel Latitude: 50.8504500
+  var longitude =  globalLon; // Brussel Longitude: 4.3487800
 
-    const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-      Math.cos(φ1) * Math.cos(φ2) *
-      Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var R = 6371e3; // metres
+  var φ1 = position.coords.latitude * Math.PI / 180; // φ, λ in radians
+  var φ2 = latitude * Math.PI / 180;
+  var Δφ = (latitude - position.coords.latitude) * Math.PI / 180;
+  var Δλ = (longitude - position.coords.longitude) * Math.PI / 180;
 
-    const d = (R * c).toFixed(0); // in metres
+  var a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+    Math.cos(φ1) * Math.cos(φ2) *
+    Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    $$("#locatieResultaat").html(
-      `<p>Latitude: ${position.coords.latitude}</p><p>Longitude: ${position.coords.longitude}</p><p>Accuracy: ${position.coords.accuracy}m.</p><p>Timestamp: ${new Date(position.timestamp)}</p>
-  <p>Afstand tot Brussel: ${d}m</p>`
-    );
-  }
+  var d = (R * c).toFixed(0); // in metres
+
+  $$("#afstand").html(
+    `Afstand tot de gekozen locatie : ${(d/1000).toFixed(1)}km (${d}m)`
+  );
 }
+
 function positionError(error) {
   console.log('Error occurred. Error code: ' + error.code);
   // error.code can be:
@@ -755,6 +761,19 @@ function positionError(error) {
   }
 };
 
+function nieuwePlek() {
+  var naam = document.getElementById('plekNaam').value;
+  var lat = document.getElementById('plekLatitude').value;
+  var lon = document.getElementById('plekLongitude').value;
+
+  Placesitems.push({
+    title: naam,
+    Latitude: lat,
+    Longitude: lon,
+  });
+
+  placesVirtualList.update();
+}
 //#endregion 
 
 
@@ -789,7 +808,7 @@ $$(document).on('page:init', function (e, page) {
         },
         // List item Template7 template
         itemTemplate: '<li>' +
-          '<a href="{{title}}-{{subtitle}}/" class="item-link item-content">' +
+          '<a href="" class="item-link item-content">' +
           '<div class="item-inner">' +
           '<div class="item-title-row">' +
           '<div class="item-title">{{title}}</div>' +
@@ -1017,7 +1036,7 @@ $$(document).on('page:init', function (e, page) {
           }
 
           // Display results
-          showResults(calories,bmi);
+          showResults(calories, bmi);
         }
 
         // Add Event Listeners
