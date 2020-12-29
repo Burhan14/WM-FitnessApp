@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="page-content">
-            <form class="list calc-form" id="calc-form">
+            <div class="list calc-form" id="calc-form">
                 <ul>
                     <li>
                         <div class="item-content item-input">
@@ -53,7 +53,7 @@
                             <div class="item-inner">
                                 <div class="item-title item-label">Lengte:</div>
                                 <div class="item-input-wrap">
-                                    <input type="text" name="height_cm" id="height_cm" inputmode="numeric"
+                                    <input type="text" name="height_cm" id="height-cm" inputmode="numeric"
                                         pattern="[0-9]*" placeholder="in centimeters">
                                 </div>
                             </div>
@@ -75,7 +75,7 @@
                             <div class="item-inner">
                                 <div class="item-title item-label">Geslacht</div>
                                 <div class="item-input-wrap">
-                                    <select name="gender">
+                                    <select id="gender" name="gender">
                                         <option value="male" selected>Man</option>
                                         <option value="female">Vrouw</option>
                                     </select>
@@ -88,7 +88,7 @@
                             <div class="item-inner">
                                 <div class="item-title item-label">Gewicht</div>
                                 <div class="item-input-wrap">
-                                    <select name="weight_unit">
+                                    <select id="weight_unit" name="weight_unit">
                                         <option value="kg" selected>kg</option>
                                         <option value="lb" >lb</option>
                                     </select>
@@ -98,10 +98,10 @@
                     </li>
                 </ul>
                 <div class="flex-center calculate">
-                    <button class="form-submit button button-raised button-fill"
-                        style="width: 50%; color: #00587a;">Bereken</button>
+                    <a onclick="BmrBmiBerekenen()" class="form-submit button button-raised button-fill link back" 
+                        style="width: 50%; color: #00587a;">Bereken</a>         
                 </div>
-            </form>   
+            </div>   
         </div>
     </div>
 </template>
