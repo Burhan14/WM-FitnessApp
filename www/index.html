@@ -129,7 +129,11 @@
               <div id="afstand"
                 class="elevation-demo elevation-6 elevation-hover-24 elevation-pressed-12 elevation-transition">Klik op
                 een plek om de afstand te berekenen</div>
-              <div class="block-title page-title"> SPORTPLEKKEN <a class="link sortable-toggle" data-sortable=".sortable"> &nbsp; <i class="icon material-icons md-only">low_priority</i></a></div>
+              <div class="block-title page-title"> 
+                <a onclick="GetLocatiesFromDB()"><i class="icon material-icons md-only">cached</i>&nbsp; &nbsp; &nbsp; &nbsp;</a>
+                 SPORTPLEKKEN 
+                <a class="link sortable-toggle" data-sortable=".sortable">&nbsp; &nbsp; &nbsp; &nbsp;<i class="icon material-icons md-only">low_priority</i></a>
+              </div>
               <div class="list places-virtual-list media-list searchbar-found sortable"></div>
             </div>
             <!-- popup -->
