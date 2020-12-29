@@ -31,8 +31,8 @@
 * 
 
 ## 28/12/2020: 14:00 - 22:00 ( 2 uur pauze ) 
-* 
-* 
+* Location OK
+* Start Php
 * 
 * 
 

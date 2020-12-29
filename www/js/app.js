@@ -961,7 +961,7 @@ $$(document).on('page:init', function (e, page) {
 
 
 
-    case "mijnLichaam":
+    case "BMR-BMI":
 
       (function () {
         const form = document.getElementById('calc-form');
