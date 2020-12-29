@@ -78,6 +78,12 @@ html {
 }
 
 .places-virtual-list ul{
-    height: 100% !important
-    ;
+    height: 100% !important;
+    overflow-y:hidden;
+    overflow-x:hidden;
+}
+
+body{
+    height: 100%;
+    width: 100%;
 }
