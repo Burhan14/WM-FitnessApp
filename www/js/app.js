@@ -1,16 +1,19 @@
-var $$ = Dom7;
 //#region GLOBALE/PUBLIEKE VARIABELEN
+var $$ = Dom7;
 var workoutPicker;
 var calendarDateTime;
 var Planningitems;
 var planningVirtualList;
 var fotoVirtualList;
 var placesVirtualList;
+var mijnLichaamItems;
+var mijnLichaamVirtualList;
 var listphotos = [];
 var globalLon;
 var globalLat;
 var Placesitems = [];
-
+var calories;
+var bmi;
 //#endregion
 
 var app = new Framework7({
@@ -626,7 +629,6 @@ function fotoFail(msg) {
 //#region Geolocation Plugin / API
 
 
-
 placesVirtualList = app.virtualList.create({
   // List Element
   el: '.places-virtual-list',
@@ -843,8 +845,11 @@ $$(document).on('page:init', function (e, page) {
         });
         planningVirtualList.update();
 
+
+
       });
       //#endregion
+
       //#endregion
       break;
 
@@ -897,87 +902,137 @@ $$(document).on('page:init', function (e, page) {
       break;
 
     case "mijnLichaam":
+      // Dummy items array
+      mijnLichaamItems = [];
+      for (var i = 1; i <= 3; i++) {
+        mijnLichaamItems.push({
+          title: 'Item ' + i,
+          subtitle: 'Subtitle ' + i,
+          // link: ...,
+        });
+      }
 
-      (function () {
-        const form = document.getElementById('calc-form');
-
-        function errorMessage(msg) {
-          app.dialog.alert(msg);
-          return false;
-        }
-
-        function showResults(calories, bmi) {
-          app.dialog.alert(`<p>BMR: ± <strong>${(calories).toFixed(2)} </strong> kcal. <br><br>BMI: ${(bmi)} </p>`, "Resultaat");
-          form.reset()
-        }
-
-        /**
-         * Handle form submit
-         */
-        function submitHandler(e) {
-          e.preventDefault();
-
-
-          // Age
-          let age = parseFloat(form.age.value);
-          //let unit = form.distance_unit.value;
-          if (isNaN(age) || age < 0) {
-            return errorMessage('Voer een geldige leeftijd in');
+      mijnLichaamVirtualList = app.virtualList.create({
+        // List Element
+        el: '.mijnLichaam-virtual-list',
+        // Pass array with items
+        items: mijnLichaamItems,
+        // Custom search function for searchbar
+        searchAll: function (query, items) {
+          var found = [];
+          for (var i = 0; i < items.length; i++) {
+            if (items[i].title.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i); //search in titles
+            if (items[i].subtitle.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i); //search in subtitles
           }
-
-          // Height
-          let heightCM = parseFloat(form.height_cm.value);
-          if (isNaN(heightCM) || heightCM < 0) {
-
-            let heightFeet = parseFloat(form.height_ft.value);
-            if (isNaN(heightFeet) || heightFeet < 0) {
-              return errorMessage('Voer een geldige hoogte in feet of centimeters in');
-            }
-            let heightInches = parseFloat(form.height_in.value);
-            if (isNaN(heightInches) || heightInches < 0) {
-              heightInches = 0;
-            }
-            heightCM = (2.54 * heightInches) + (30.4 * heightFeet)
-
-          }
-
-          let weight = parseFloat(form.weight.value);
-          if (isNaN(weight) || weight < 0) {
-            return errorMessage('Voer een geldig gewicht in');
-          }
-
-          if (form.weight_unit.value == 'lb') {
-            weight = 0.453592 * weight;
-          }
-
-          let calories = 0;
-          if (form.gender.value == 'Female') {
-            //females =  655.09 + 9.56 x (Weight in kg) + 1.84 x (Height in cm) - 4.67 x age   
-            calories = 655.09 + (9.56 * weight) + (1.84 * heightCM) - (4.67 * age);
-          } else {
-            calories = 66.47 + (13.75 * weight) + (5 * heightCM) - (6.75 * age);
-          }
-
-          let bmi = (weight / (heightCM ** 2)) * 10000;
-
-          if (bmi < 18.5) {
-            bmi = bmi.toFixed(1) + " (Ondergewicht)";
-          } else if (bmi < 25) {
-            bmi = bmi.toFixed(1) + " (Normaal)";
-          } else if (bmi < 30) {
-            bmi = bmi.toFixed(1) + " (Overgewicht)";
-          } else {
-            bmi = bmi.toFixed(1) + "(Zwaarlijvig)";
-          }
-
-          // Display results
-          showResults(calories, bmi);
-        }
-
-        // Add Event Listeners
-        form.addEventListener('submit', submitHandler);
-      })();
+          return found; //return array with mathced indexes
+        },
+        // List item Template7 template
+        itemTemplate: '<li>' +
+          '<a href="" class="item-link item-content">' +
+          '<div class="item-inner">' +
+          '<div class="item-title-row">' +
+          '<div class="item-subtitle">BMR: {{BMR}} - BMI:{{BMI}}</div>' +
+          '</div>' +
+          '<div class="item-title">{{subtitle}}</div>' +
+          '</div>' +
+          '</a>' +
+          '</li>',
+        // Item height
+        height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
+      });
 
       break;
   }
-});
+})
+
+//#region BMR/BMI CALCULATOR + TOEVOEGEN VAN ITEMS IN MIJNLICHAAMVIRTUALLIST
+function errorMessage(msg) {
+  app.dialog.alert(msg);
+  return false;
+}
+
+function showResults(calories, bmi) {
+  app.dialog.alert(`<p>BMR: ± <strong>${(calories).toFixed(2)} </strong> kcal. <br><br>BMI: ${(bmi)} </p>`, "Resultaat");
+
+}
+
+/**
+ * Handle form submit
+ */
+function submitHandler() {
+
+  // Age
+  let age = document.getElementById('age').value;
+  //let unit = form.distance_unit.value;
+  if (isNaN(age) || age < 0) {
+    return errorMessage('Voer een geldige leeftijd in');
+  }
+
+  // Height
+  let heightCM = document.getElementById('height-cm').value;
+  if (isNaN(heightCM) || heightCM < 0) {
+
+    let heightFeet = document.getElementById('height-ft').value;
+    if (isNaN(heightFeet) || heightFeet < 0) {
+      return errorMessage('Voer een geldige hoogte in feet of centimeters in');
+    }
+    let heightInches = document.getElementById('height-in').value;
+    if (isNaN(heightInches) || heightInches < 0) {
+      heightInches = 0;
+    }
+    heightCM = (2.54 * heightInches) + (30.4 * heightFeet)
+
+  }
+
+  let weight = document.getElementById('weight').value;
+  if (isNaN(weight) || weight < 0) {
+    return errorMessage('Voer een geldig gewicht in');
+  }
+
+  let weight_unit = document.getElementById('weight_unit').value
+  if (weight_unit == 'lb') {
+    weight = 0.453592 * weight;
+  }
+
+  calories = 0;
+  let gender = document.getElementById('gender').value
+  if (gender == 'Female') {
+    //females =  655.09 + 9.56 x (Weight in kg) + 1.84 x (Height in cm) - 4.67 x age   
+    calories = 655.09 + (9.56 * weight) + (1.84 * heightCM) - (4.67 * age);
+  } else {
+    calories = 66.47 + (13.75 * weight) + (5 * heightCM) - (6.75 * age);
+  }
+
+  bmi = (weight / (heightCM ** 2)) * 10000;
+
+  if (bmi < 18.5) {
+    bmi = bmi.toFixed(1) + " (Ondergewicht)";
+  } else if (bmi < 25) {
+    bmi = bmi.toFixed(1) + " (Normaal)";
+  } else if (bmi < 30) {
+    bmi = bmi.toFixed(1) + " (Overgewicht)";
+  } else {
+    bmi = bmi.toFixed(1) + "(Zwaarlijvig)";
+  }
+
+  // Display results
+  showResults(calories, bmi);
+}
+
+function BmrBmiBerekenen() {
+  submitHandler();
+  console.log(calories + ' - ' + bmi);
+
+  mijnLichaamItems.push({
+    BMR: calories,
+    BMI: bmi,
+    subtitle: new Date(Date.now()).toLocaleDateString(),
+  });
+
+  mijnLichaamVirtualList.update();
+
+};
+
+
+//#endregion
+

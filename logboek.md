@@ -31,13 +31,13 @@
 * 
 
 ## 28/12/2020: 14:00 - 22:00 ( 2 uur pauze ) 
-* 
-* 
+* Location OK
+* Start Php
 * 
 * 
 
 ## 29/12/2020: 14:00 - 22:00 ( 2 uur pauze ) 
-* 
-* 
+* MijnLichaam pagina Virtual List OK
+* Locations API OK (get,,add,delete)
 * 
 * 
