@@ -613,7 +613,7 @@ function fotoSuccess(imgURI) {
   listphotos.push({
     title: new Date(Date.now()).toLocaleDateString(),
     subtitle: new Date(Date.now()).toLocaleTimeString(),
-    url: "data:image/jpeg;base64,"+imgURI,
+    url: "data:image/jpeg;base64," + imgURI,
     caption: new Date(Date.now()).toLocaleString(),
     nr: Date.now(),
   });
@@ -927,15 +927,16 @@ $$(document).on('page:init', function (e, page) {
           return found; //return array with mathced indexes
         },
         // List item Template7 template
-        itemTemplate: '<li>' +
-          '<a href="" class="item-link item-content">' +
+        itemTemplate: '<li class="swipeout">' +
+          '<a href="" class="item-link item-content swipeout-content">' +
           '<div class="item-inner">' +
           '<div class="item-title-row">' +
-          '<div class="item-subtitle">BMR: {{BMR}} - BMI:{{BMI}}</div>' +
+          '<div class="item-subtitle">BMR: {{bmr}} - BMI:{{bmi}}</div>' +
           '</div>' +
-          '<div class="item-title">{{subtitle}}</div>' +
+          '<div class="item-title">{{datum}}</div>' +
           '</div>' +
           '</a>' +
+          '<div class="swipeout-actions-right"><a href="#" onclick="BerekeningVerwijderen({{id}})" class="swipeout-delete">Delete</a></div>' +
           '</li>',
         // Item height
         height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
@@ -1024,15 +1025,13 @@ function BmrBmiBerekenen() {
   console.log(calories + ' - ' + bmi);
 
   mijnLichaamItems.push({
-    BMR: calories,
-    BMI: bmi,
-    subtitle: new Date(Date.now()).toLocaleDateString(),
+    bmr: calories,
+    bmi: bmi,
+    datum: new Date(Date.now()).toLocaleDateString(),
   });
 
+  BerekeningToevoegen(calories, bmi, new Date(Date.now()));
   mijnLichaamVirtualList.update();
 
 };
-
-
 //#endregion
-
