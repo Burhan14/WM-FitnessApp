@@ -25,11 +25,15 @@ $subtitle = $postvars["subtitle"];
 $url = $postvars["url"];
 $caption = $postvars["caption"];
 $nr = $postvars["nr"];
-//MIJNLICHAAM API
+//BMR-BMI API
 $bmr = $postvars["bmr"];
 $bmi = $postvars["bmi"];
 $datum = $postvars["datum"];
-
+//trainingSessie API
+$training = $postvars["training"];
+$workout = $postvars["workout"];
+$momentShow = $postvars["momentShow"];
+$moment = $postvars["moment"];
 
 
 // de volgende lijnen zijn zodat we ook vanuit gewone
@@ -68,8 +72,8 @@ if (isset($id) || isset($table) || isset($bewerking)) {
 }
 
 if (isset($bewerking) && isset($table)) {
-    if($table !== 'sportLocaties' && $table !== 'fotoDagboek' && $table !== 'mijnLichaam'){
-        // table mag enkel 1 van deze 2 zijn
+    if($table !== 'sportLocaties' && $table !== 'fotoDagboek' && $table !== 'mijnLichaam' && $table !== 'trainingSessies'){
+        // table mag enkel 1 van deze zijn
         die('{"error":"wrong table","status":"fail"}');
     }
 } else {
@@ -282,6 +286,55 @@ if (!$conn) {
         // b staat voor blob
         // "sid" staat dus voor string, integer, double
         if(!$stmt -> bind_param("dss", $bmr, $bmi, $datum)){
+            die('{"error":"Prepared Statement bind failed","errNo":"' . json_encode($conn -> errno) .'","mysqlError":"' . json_encode($conn -> error) .'","status":"fail"}');
+        }
+        if(!$stmt -> execute()) {
+            // add failed
+            $stmt -> close();
+            die('{"error":"Prepared Statement failed","errNo":"' . json_encode($conn -> errno) .'","mysqlError":"' . json_encode($conn -> error) .'","status":"fail"}');
+        }
+        // added
+        $stmt -> close();
+        die('{"data":"ok","message":"Record added successfully","status":"ok"}');
+    } elseif ($bewerking == "addSessie") {
+        /* De volgende lijnen zijn in commentaar geplaatst omdat de methode die we bij
+           framework7 gebruikte, de form data niet als POST verzond. (De variabelen 
+           zitten niet in de $_POST variabele)
+           Om een idee te geven van wat je wel kan doen als je wel met POST verzendt,
+           staan de lijnen hieronder nog in commentaar.
+           Let hierbij ook naar de code op lijnen 18 tot 20. 
+           */
+        //$PR_naam = null;
+        //$PR_CT_ID = null;
+        //$prijs = null;
+        //if (isset($_POST['PR_naam']) && isset($_POST['PR_CT_ID'])
+        //&& isset($_POST['prijs'])) {
+        if ($training && $workout && $momentShow && $moment) {  
+            // hier kan je extra controle plaatsen om ongewenste input te voorkomen
+            $training = htmlentities($training);
+            $workout = htmlentities($workout);
+            $momentShow = htmlentities($momentShow);
+            $moment = htmlentities($moment);
+            
+            //$lat = $_POST['latitude'];
+            //$lon = $_POST['longitude'];
+            if($training === "" || $workout === "" || $momentShow === "" || $moment === "") {
+                die('{"error":"missing data","status":"fail"}');
+            }
+        } else {
+            die('{"error":"missing data","status":"fail","training":"'.$training.'","workout":"'.$workout.'","momentShow":"'.$momentShow.'","moment":"'.$moment.'"}');
+        }
+        // product toevoegen
+        if(!$stmt = $conn->prepare("INSERT INTO `trainingSessies`(`training`, `workout`, `momentShow`, `moment`) VALUES (?,?,?,?)")){
+            die('{"error":"Prepared Statement failed","errNo":"' . json_encode($conn -> errno) .'","mysqlError":"' . json_encode($conn -> error) .'","status":"fail"}');
+        }
+        // bind parameters
+        // s staat voor string
+        // i staat voor integer
+        // d staat voor double
+        // b staat voor blob
+        // "sid" staat dus voor string, integer, double
+        if(!$stmt -> bind_param("ssss", $training, $workout, $momentShow, $moment)){
             die('{"error":"Prepared Statement bind failed","errNo":"' . json_encode($conn -> errno) .'","mysqlError":"' . json_encode($conn -> error) .'","status":"fail"}');
         }
         if(!$stmt -> execute()) {
