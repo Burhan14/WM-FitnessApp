@@ -1,0 +1,46 @@
+<template>
+  <div class="page" data-name="mijnLichaam">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Mijn Lichaam</div>
+        <div class="subnavbar">
+          <form data-search-container=".mijnLichaam-virtual-list" data-search-item="li" data-search-in=".item-title"
+              class="searchbar searchbar-init">
+              <div class="searchbar-inner">
+                  <div class="searchbar-input-wrap">
+                      <input type="search" placeholder="Search" />
+                      <i class="searchbar-icon"></i>
+                      <span class="input-clear-button"></span>
+                  </div>
+                  <span class="searchbar-disable-button if-not-aurora">Cancel</span>
+              </div>
+          </form>
+      </div>
+      </div>
+    </div>
+    <div class="searchbar-backdrop"></div>
+    <!-- Extended FAB Center Bottom -->
+    <div class="fab fab-extended fab-center-bottom" style="width: 50%;">
+        <a href="BMR-BMI/">
+            <i class="icon f7-icons if-not-md">plus</i>
+            <i class="icon material-icons md-only">add</i>
+            <div class="fab-text">Nieuwe Berekening</div>
+        </a>
+    </div>
+    <div class="page-content">
+        <div class="list simple-list searchbar-not-found">
+            <ul>
+                <li>Nothing found</li>
+            </ul>
+        </div>
+        <div class="list mijnLichaam-virtual-list media-list searchbar-found"></div>
+    </div>
+  </div>
+</template>

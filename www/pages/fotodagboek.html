@@ -1,0 +1,61 @@
+<template>
+    <div class="page" data-name="fotodagboek">
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="if-not-md">Back</span>
+                    </a>
+                </div>
+                <div class="title">Mijn Fotodagboek</div>
+                <div class="subnavbar">
+                    <form data-search-container=".foto-virtual-list" data-search-item="li" data-search-in=".item-title"
+                        class="searchbar searchbar-init">
+                        <div class="searchbar-inner">
+                            <div class="searchbar-input-wrap">
+                                <input type="search" placeholder="Search" />
+                                <i class="searchbar-icon"></i>
+                                <span class="input-clear-button"></span>
+                            </div>
+                            <span class="searchbar-disable-button if-not-aurora">Cancel</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="fab fab-extended fab-center-bottom" style="width: 50%;">
+            <a href="#" id="btnCamera" @click="neemFoto"><i class="icon material-icons md-only">add</i>
+                <div class="fab-text">Neem een foto</div>
+            </a>
+        </div>
+        <div class="page-content">
+            <div class="list simple-list searchbar-not-found">
+                <ul>
+                    <li>Nothing found</li>
+                </ul>
+            </div>
+            <div class="list foto-virtual-list media-list searchbar-found"></div>
+        </div>
+</template>
+<script>
+    return {
+        methods: {
+            neemFoto: function () {
+                let options = {
+                    quality: 50,
+                    // destinationType: Camera.DestinationType.FILE_URI,
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    sourceType: Camera.PictureSourceType.CAMERA,
+                    mediaType: Camera.MediaType.PICTURE,
+                    encodingType: Camera.EncodingType.JPEG,
+                    cameraDirection: Camera.Direction.BACK,
+                    targetWidth: 300,
+                    targetHeight: 400
+                };
+                navigator.camera.getPicture(fotoSuccess, fotoFail, options)
+            },
+        }
+    }
+</script>

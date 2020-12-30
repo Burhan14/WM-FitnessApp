@@ -1,0 +1,113 @@
+<template>
+    <div class="page" data-name="BMR-BMI">
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="if-not-md">Back</span>
+                    </a>
+                </div>
+                <div class="title">Mijn Lichaam</div>
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="list calc-form" id="calc-form">
+                <ul>
+                    <li>
+                        <div class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Leeftijd:</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" name="age" id="age" inputmode="numeric" pattern="[0-9]*"
+                                        placeholder="Typ uw leeftijd">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Lengte:</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" name="height_ft" id="height-ft" inputmode="numeric"
+                                        pattern="[0-9]*" placeholder="in feet">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Lengte:</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" name="height_in" id="height-in" inputmode="numeric"
+                                        pattern="[0-9]*" placeholder="in inches">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Lengte:</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" name="height_cm" id="height-cm" inputmode="numeric"
+                                        pattern="[0-9]*" placeholder="in centimeters">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Gewicht:</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" name="weight" id="weight" inputmode="numeric" pattern="[0-9]*"
+                                        placeholder="Typ uw gewicht">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Geslacht</div>
+                                <div class="item-input-wrap">
+                                    <select id="gender" name="gender">
+                                        <option value="male" selected>Man</option>
+                                        <option value="female">Vrouw</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Gewicht</div>
+                                <div class="item-input-wrap">
+                                    <select id="weight_unit" name="weight_unit">
+                                        <option value="kg" selected>kg</option>
+                                        <option value="lb" >lb</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="flex-center calculate">
+                    <a onclick="BmrBmiBerekenen()" class="form-submit button button-raised button-fill link back" 
+                        style="width: 50%; color: #00587a;">Bereken</a>         
+                </div>
+            </div>   
+        </div>
+    </div>
+</template>
+<script>
+</script>
+
+
+
+  
