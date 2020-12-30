@@ -1,0 +1,84 @@
+<template>
+    <div class="page" data-name="training-sessie">
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="if-not-md">Back</span>
+                    </a>
+                </div>
+                <div class="title">Sessie op: {{moment}}</div>
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="block-title page-title">Complete a full session by doing these exercises</div>
+            <div class="list simple-list">
+                <ul>
+                    {{#each workout.exercises}}
+                    <!-- popup button-->
+                    <li><a href="" data-popup=".popup-{{nr}}" class="popup-open">{{name}}</a></li>
+                    <!-- popup & close -->
+                    <div class="popup popup-{{nr}}">
+                        <div class="view">
+                            <div class="page">
+                                <div class="navbar">
+                                    <div class="navbar-bg"></div>
+                                    <div class="navbar-inner">
+                                        <div class="title">{{name}}</div>
+                                        <div class="right">
+                                            <!-- Link to close popup -->
+                                            <a class="link popup-close">sluiten</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="page-content">
+                                    <div class="block">
+                                        <p> <strong>Sets:</strong> {{sets}}</p>
+                                        <p> <strong>Repetitions:</strong> {{reps}}</p>
+                                        <p> <strong>Inter set resting time:</strong> {{rest}}</p>
+                                    </div>
+                                    <p class="page-title">How to:</p>
+                                    <img src="./images/{{name}}.gif" style="height: 25vh; width: 100%;" alt="movement">
+                                    <div class="block">
+                                        {{description}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    return {
+        data: function () {
+            var sessieTraining = this.$route.params.training;
+            var sessieWorkout = this.$route.params.workout;
+            var sessieMoment = this.$route.params.moment;
+            var currentWorkout;
+            if (sessieTraining == "Fitness") {
+                console.log('fitnessFoundOnPage');
+                this.$root.fitnessWorkouts.forEach(function (workout) {
+                    if (workout.title === sessieWorkout) {
+                        currentWorkout = workout;
+                    }
+                });
+            } else {
+                console.log('homeFoundOnPage');
+                this.$root.homeWorkouts.forEach(function (workout) {
+                    if (workout.title === sessieWorkout) {
+                        currentWorkout = workout;
+                    }
+                });
+            }
+            return {
+                workout: currentWorkout,
+            };
+        }
+    };
+</script>
