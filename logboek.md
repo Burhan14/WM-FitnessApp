@@ -31,10 +31,12 @@
 ## 28/12/2020: 14:00 - 22:00 ( 2 uur pauze ) 
 * Location OK
 * Start PHP
+* Testing with Postman
 
 ## 29/12/2020: 14:00 - 23:30 ( 2 uur pauze ) 
 * MijnLichaam pagina Virtual List OK
 * Locations API OK (get,add,delete)
+* Testing with Postman
 
 ## 30/12/2020: 16:30 - 23:00 ( 2 uur pauze ) 
 * BMR-BMI API OK (get,add,delete)
@@ -42,6 +44,7 @@
 * planning/trainingSessie API OK (get,add,delete)
 * TrainingSessie progress(rep/kg) tried => failed (issue/fix: passing multiple params through url/view/route)
 * code rearrange
+* Testing with Postman
 
 ## 31/12/2020: 14:00 - 23:30 ( 2 uur pauze ) 
 * Start Native ?
