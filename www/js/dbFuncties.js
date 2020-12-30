@@ -154,10 +154,10 @@ function GetFotosFromDB() {
 
         // $$("#pList").html(tlines);
 
-        console.log(list);
+        // console.log(list);
         fotoVirtualList.deleteAllItems()
         for (const f of list) {
-          fotoVirtualList.appendItem(l);
+          fotoVirtualList.appendItem(f);
         }
         fotoVirtualList.update()
 
@@ -210,4 +210,32 @@ function FotoToevoegen(_title, _subtitle, _url, _caption, _nr) {
     });
 
   return true;
+}
+
+function FotoVerwijderen(id) {
+  // fetch request opzetten om een item te verwijderen.
+  // body data type must match "Content-Type" header
+  opties.body = JSON.stringify({
+    format: "json",
+    table: "fotoDagboek",
+    bewerking: "delete",
+    id: id
+  });
+
+  fetch(apiAddress, opties)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (responseData) {
+      // de verwerking van de data
+      app.dialog.alert("Foto verwijderd", "Doei...");
+      // refresh de lijst
+      GetFotosFromDB();
+
+    })
+    .catch(function (error) {
+      // verwerk de fout
+      app.dialog.alert('POST failed. :' + errorThrown, "Item toegevoegd");
+    });
+  
 }

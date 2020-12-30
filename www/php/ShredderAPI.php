@@ -228,7 +228,7 @@ if (!$conn) {
         // d staat voor double
         // b staat voor blob
         // "sid" staat dus voor string, integer, double
-        if(!$stmt -> bind_param("ssssi", $title, $subtitle, $url, $caption, $nr)){
+        if(!$stmt -> bind_param("sssss", $title, $subtitle, $url, $caption, $nr)){
             die('{"error":"Prepared Statement bind failed","errNo":"' . json_encode($conn -> errno) .'","mysqlError":"' . json_encode($conn -> error) .'","status":"fail"}');
         }
         if(!$stmt -> execute()) {
