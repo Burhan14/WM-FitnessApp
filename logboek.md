@@ -49,3 +49,7 @@
 ## 31/12/2020: 16:00 - 20:30 ( 2 uur pauze ) 
 * Start Native 
 * TrainingSessie progress(rep/kg) : fixed on local but doesn't save (db or localstorage ?)
+
+## 01/01/2021: 13:00 - 20:45 ( 2 uur pauze ) 
+* Native progress : outer navigation & layout 
+* HIIT TIMER OK
