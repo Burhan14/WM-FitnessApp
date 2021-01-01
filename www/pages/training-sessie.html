@@ -9,16 +9,17 @@
                         <span class="if-not-md">Back</span>
                     </a>
                 </div>
-                <div class="title">Sessie op: {{moment}}</div>
+                <div class="title">{{sessieWorkout}} workout @ {{sessieTraining}} (Sessie op: {{moment}})</div>
             </div>
         </div>
         <div class="page-content">
-            <div class="block-title page-title">Complete a full session by doing these exercises</div>
+            <div class="block-title page-title">Exercises in deze sessie</div>
             <div class="list simple-list">
                 <ul>
                     {{#each workout.exercises}}
                     <!-- popup button-->
                     <li><a href="" data-popup=".popup-{{nr}}" class="popup-open">{{name}}</a></li>
+                    <li><input placeholder="# of sets" type="text"><input placeholder="used weight" type="text"></li>
                     <!-- popup & close -->
                     <div class="popup popup-{{nr}}">
                         <div class="view">
@@ -57,19 +58,19 @@
 <script>
     return {
         data: function () {
-            var sessieTraining = this.$route.params.training;
-            var sessieWorkout = this.$route.params.workout;
-            var sessieMoment = this.$route.params.moment;
+            var trainingWorkoutMoment = this.$route.params.twm;
+            var twmSplit = trainingWorkoutMoment.split("+");
+            var sessieTraining = twmSplit[0];
+            var sessieWorkout = twmSplit[1];
+            var moment = twmSplit[2];
             var currentWorkout;
             if (sessieTraining == "Fitness") {
-                console.log('fitnessFoundOnPage');
                 this.$root.fitnessWorkouts.forEach(function (workout) {
                     if (workout.title === sessieWorkout) {
                         currentWorkout = workout;
                     }
                 });
             } else {
-                console.log('homeFoundOnPage');
                 this.$root.homeWorkouts.forEach(function (workout) {
                     if (workout.title === sessieWorkout) {
                         currentWorkout = workout;
@@ -78,6 +79,9 @@
             }
             return {
                 workout: currentWorkout,
+                moment: moment,
+                sessieTraining: sessieTraining,
+                sessieWorkout: sessieWorkout,
             };
         }
     };

@@ -5,6 +5,52 @@
       <div class="title">Training</div>
     </div>
   </div>
+  <div class="fab fab-extended fab-center-bottom color-main">
+    <!-- popup open -->
+    <a data-popup=".popup-timer" class="popup-open">
+      <i class="icon material-icons md-only">timer</i>
+    </a>
+    <!-- popup & close -->
+    <div class="popup popup-timer">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+              <div class="title">HIIT TIMER</div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <a class="link popup-close">sluiten</a>
+              </div>
+            </div>
+          </div>
+          <div class="page-content timer">
+            <!-- POPUP FOR HIIT TIMER FOUND ON:  http://kellylougheed.com/blog/a-javascript-timer-for-hiit-workouts/ -->
+            <div id="app">
+
+              <h2>HIIT Timer</h2>
+
+              <p class="controls">
+                <input type="text" id="intervalTime" value="20" /> second intervals <input type="text" id="breakTime"
+                  value="10" /> seconds rest <button id="settings">Update</button>
+              </p>
+
+              <h1 id="status">Rest</h1>
+
+              <p class="large"><span id="sec">20</span></p>
+
+              <div class="timer-buttons">
+                <button id="start">Start</button>
+                <button id="pause">Pause</button>
+                <button id="reset">Reset</button>
+              </div>
+
+            </div>            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="page-content">
     <div class="block-title page-title">Choose your workout</div>
     <p class="row">
