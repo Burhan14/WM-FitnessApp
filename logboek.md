@@ -46,5 +46,6 @@
 * code rearrange
 * Testing with Postman
 
-## 31/12/2020: 14:00 - 23:30 ( 2 uur pauze ) 
-* Start Native ?
+## 31/12/2020: 16:00 - 20:30 ( 2 uur pauze ) 
+* Start Native 
+* TrainingSessie progress(rep/kg) : fixed on local but doesn't save (db or localstorage ?)
