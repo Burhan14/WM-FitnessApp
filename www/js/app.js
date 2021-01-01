@@ -841,6 +841,88 @@ function nieuwePlek() {
 //ON X PAGE INIT => DO:
 $$(document).on('page:init', function (e, page) {
   switch (page.name) {
+    case "training":
+        //#region SCRIPT FOR HIIT TIMER FOUND ON:  http://kellylougheed.com/blog/a-javascript-timer-for-hiit-workouts/
+          var seconds = 20;
+          var rest = true;
+          var interval;
+
+          var intervalTime = 20;
+          var breakTime = 10;
+
+          var settingsButton = document.getElementById("settings"); //update btn
+          var intervalInput = document.getElementById("intervalTime");
+          var breakInput = document.getElementById("breakTime");
+
+          var startButton = document.getElementById("start");
+          var pauseButton = document.getElementById("pause");
+          var resetButton = document.getElementById("reset");
+
+          var statusHeader = document.getElementById("status");
+          var secondsSpan = document.getElementById("sec");
+
+          settingsButton.onclick = function () {
+            intervalTime = Math.floor(intervalInput.value * 1);
+            breakTime = Math.floor(breakInput.value * 1);
+            reset();
+          }
+
+          startButton.onclick = function () {
+            rest = false;
+            changeToGo();
+            interval = setInterval(countdownSeconds, 1000);
+            startButton.disabled = true;
+          }
+
+          resetButton.onclick = function () {
+            reset();
+          }
+
+          function reset() {
+            clearInterval(interval);
+            seconds = intervalTime;
+            secondsSpan.innerText = seconds;
+            rest = true;
+            changeToRest();
+            startButton.disabled = false;
+          }
+
+          pauseButton.onclick = function () {
+            clearInterval(interval);
+            startButton.disabled = false;
+          }
+
+          function countdownSeconds() {
+            seconds -= 1;
+            secondsSpan.innerText = seconds;
+            checkForStateChange();
+          }
+
+          function checkForStateChange() {
+            if (seconds == 0 && rest == false) {
+              seconds = breakTime + 1;
+              rest = true;
+              changeToRest();
+            } else if (seconds == 0 && rest == true) {
+              seconds = intervalTime + 1;
+              rest = false;
+              changeToGo();
+            }
+          }
+
+          function changeToRest() {
+            $(".timer").css("background", "cyan");
+            statusHeader.innerText = "Rest";
+          }
+
+          function changeToGo() {
+            $(".timer").css("background", "pink");
+            statusHeader.innerText = "Go!";
+          }
+
+  //#endregion
+      break;
+
     case "planning":
       GetSessiesFromDB();
 
@@ -862,8 +944,8 @@ $$(document).on('page:init', function (e, page) {
           return found; //return array with mathced indexes
         },
         // List item Template7 template
-        itemTemplate: '<li>' +
-          '<a href="" class="item-link item-content">' +
+        itemTemplate: '<li class="swipeout">' +
+          '<a href="{{training}}+{{workout}}+{{moment}}/" class="item-link item-content swipeout-content">' +
           '<div class="item-inner">' +
           '<div class="item-title-row">' +
           '<div class="item-title">{{workout}}  Workout @ {{training}}</div>' +
@@ -871,6 +953,7 @@ $$(document).on('page:init', function (e, page) {
           '<div class="item-subtitle">{{momentShow}}</div>' +
           '</div>' +
           '</a>' +
+          '<div class="swipeout-actions-right"><a href="#" onclick="SessieVerwijderen({{id}})" class="swipeout-delete">Delete</a></div>'+
           '</li>',
         // Item height
         height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
@@ -1018,3 +1101,4 @@ $$(document).on('page:init', function (e, page) {
       break;
     }
   })
+
