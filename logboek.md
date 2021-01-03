@@ -6,7 +6,7 @@
 ## 22/12/2020: 14:00 - 21:30 ( 2 uur pauze ) 
 * database design (problematic)
 * start planning
-* Tempting Php + login
+* Tempting PHP + login
 
 ## 23/12/2020: 14:00 - 22:00 ( 2 uur pauze ) 
 * database design (problematic) 
