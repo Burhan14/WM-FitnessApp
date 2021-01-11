@@ -658,6 +658,47 @@ placesVirtualList = app.virtualList.create({
   height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
 });
 
+function getLocatieFormulier() {
+  if (navigator.geolocation) {
+    var accurate = true;
+    if (app.watchPositionID !== null) {
+      // de vorige watch eerst stoppen, of we hebben meerdere
+      // simultane lopen.
+      navigator.geolocation.clearWatch(app.watchPositionID);
+    }
+
+    app.watchPositionID = navigator.geolocation.watchPosition(
+      showLocationFormulier,
+      positionError, {
+        enableHighAccuracy: accurate,
+        maximumAge: 10 * 1000
+      }
+    );
+
+    // console.log(position.coords.latitude +' '+ position.coords.longitude)
+    // document.getElementById("plekLatitude").value = latitude;
+    // document.getElementById("plekLongitude").value = longitude;
+
+  } else {
+    app.dialog.alert('Het spijt me, maar geolocatie wordt niet ondersteund door deze browser.', 'Geen geolocatie ondersteuning');
+  }
+}
+
+function showLocationFormulier(position) {
+  // success functie
+
+  console.log(position.coords.latitude +' '+ position.coords.longitude)
+
+  document.getElementById("plekLatitude").value = position.coords.latitude;
+  document.getElementById("plekLongitude").value = position.coords.longitude;
+  
+  if (app.watchPositionID !== null) {
+    // de vorige watch eerst stoppen, of we hebben meerdere
+    // simultane lopen.
+    navigator.geolocation.clearWatch(app.watchPositionID);
+  }
+}
+
 function getLocatie(longitude, latitude) {
   if (navigator.geolocation) {
     var accurate = true;
@@ -685,7 +726,7 @@ function getLocatie(longitude, latitude) {
 
 function showLocation(position) {
   // success functie
-  // bereken afstand tot brussel met formule van haversine
+  // bereken afstand tot plek met formule van haversine
 
   var latitude = globalLat;
   var longitude = globalLon;
