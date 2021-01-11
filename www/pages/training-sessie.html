@@ -1,0 +1,88 @@
+<template>
+    <div class="page" data-name="training-sessie">
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="if-not-md">Back</span>
+                    </a>
+                </div>
+                <div class="title">{{sessieWorkout}} workout @ {{sessieTraining}} (Sessie op: {{moment}})</div>
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="block-title page-title">Exercises in deze sessie</div>
+            <div class="list simple-list">
+                <ul>
+                    {{#each workout.exercises}}
+                    <!-- popup button-->
+                    <li><a href="" data-popup=".popup-{{nr}}" class="popup-open">{{name}}</a></li>
+                    <li><input placeholder="# of sets" type="text"><input placeholder="used weight" type="text"></li>
+                    <!-- popup & close -->
+                    <div class="popup popup-{{nr}}">
+                        <div class="view">
+                            <div class="page">
+                                <div class="navbar">
+                                    <div class="navbar-bg"></div>
+                                    <div class="navbar-inner">
+                                        <div class="title">{{name}}</div>
+                                        <div class="right">
+                                            <!-- Link to close popup -->
+                                            <a class="link popup-close">sluiten</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="page-content">
+                                    <div class="block">
+                                        <p> <strong>Sets:</strong> {{sets}}</p>
+                                        <p> <strong>Repetitions:</strong> {{reps}}</p>
+                                        <p> <strong>Inter set resting time:</strong> {{rest}}</p>
+                                    </div>
+                                    <p class="page-title">How to:</p>
+                                    <img src="./images/{{name}}.gif" style="height: 25vh; width: 100%;" alt="movement">
+                                    <div class="block">
+                                        {{description}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    return {
+        data: function () {
+            var trainingWorkoutMoment = this.$route.params.twm;
+            var twmSplit = trainingWorkoutMoment.split("+");
+            var sessieTraining = twmSplit[0];
+            var sessieWorkout = twmSplit[1];
+            var moment = twmSplit[2];
+            var currentWorkout;
+            if (sessieTraining == "Fitness") {
+                this.$root.fitnessWorkouts.forEach(function (workout) {
+                    if (workout.title === sessieWorkout) {
+                        currentWorkout = workout;
+                    }
+                });
+            } else {
+                this.$root.homeWorkouts.forEach(function (workout) {
+                    if (workout.title === sessieWorkout) {
+                        currentWorkout = workout;
+                    }
+                });
+            }
+            return {
+                workout: currentWorkout,
+                moment: moment,
+                sessieTraining: sessieTraining,
+                sessieWorkout: sessieWorkout,
+            };
+        }
+    };
+</script>

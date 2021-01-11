@@ -82,6 +82,10 @@ var routes = [
             path: 'nieuw-event/',
             url: './pages/nieuw-event.html',
           },
+          {
+            path: ':twm/',
+            componentUrl: './pages/training-sessie.html',
+          },
         ]
   },
 

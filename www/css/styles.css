@@ -57,10 +57,10 @@ html {
 }
 
 .color-main {
-    --f7-theme-color: #00587a;
+    --f7-theme-color: #e7b948;
     --f7-theme-color-rgb: 0, 88, 122;
-    --f7-theme-color-shade: #004661;
-    --f7-theme-color-tint: #006a94;
+    --f7-theme-color-shade: #8d712a;
+    --f7-theme-color-tint: #f7cc5f;
 }
 
 .calculate {
@@ -87,3 +87,142 @@ body{
     height: 100%;
     width: 100%;
 }
+
+/*#region CSS FOR HIIT TIMER FOUND ON:  http://kellylougheed.com/blog/a-javascript-timer-for-hiit-workouts/*/
+.timer {
+	font-family: 'Oswald', 'Helvetica Neue', arial;
+	font-weight: 100;
+	text-align: center;
+	text-transform: uppercase;
+	width: 100%;
+	margin: 0;
+	color: rgba(0,0,0,.7);
+	background: cyan;
+}
+
+.timer h2 {
+	letter-spacing: 2px;
+	padding: 5px;
+	color: rgba(255,255,255,.9);
+	font-size: 2em;
+	margin: 0;
+	font-weight: 300;
+	text-transform: uppercase;
+}
+
+.timer p.controls {
+	background: rgba(0,0,0,.1);
+    padding: 10px;
+    margin: 10px;
+    letter-spacing: 1px;
+    text-align: -webkit-center;
+    border-radius: 20px;
+}
+
+.timer p.controls button {
+	padding: 7px;
+}
+
+.timer input {
+	background: none;
+	padding: 7px;
+	width: 50px;
+	text-align: center;
+}
+
+.timer .clear {
+	clear: both;
+}
+
+.timer div#app {
+	background: rgba(0,0,0,.1);
+	width: 40%;
+	margin: 0 auto;
+	margin-top: 20px;
+	padding-bottom: 20px;
+	border-radius: 20px;
+}
+
+.timer h1 {
+	font-family: 'Oswald', 'Helvetica Neue', arial;
+	font-weight: 300;
+	font-size: 3em;
+	letter-spacing: 5px;
+	color: rgba(255,255,255,.8);
+	margin: 10px 0 -30px 0;
+}
+
+.timer p.large {
+	font-size: 10em;
+	font-family: 'Oswald', 'Helvetica Neue', arial;
+	color: rgba(0,0,0,.5);
+	margin: 20px;
+}
+
+.timer button, input {
+	color: rgba(255,255,255,.9);
+	font-size: 1em;
+	border-radius: 10px;
+}
+
+.timer button {
+	padding: 15px 25px;
+	border: none;
+	background: rgba(0,0,0,.3);
+	letter-spacing: 1px;
+	font-family: 'Oswald', 'Helvetica Neue', arial;
+	text-transform: uppercase;
+}
+
+.timer button:hover {
+	cursor: pointer;
+	background: rgba(0,0,0,.15);
+}
+
+.timer .timer-buttons{
+	display: flex;
+    justify-content: space-around;
+	padding: 10px;
+}
+
+.timer .timer-buttons button {
+	margin: 5px;
+}
+
+@media (max-width: 767px) {
+
+	.timer div#app {
+		width: 90%;
+	}
+
+	.timer p#title {
+		float: none;
+		text-align: center;
+		border-bottom: 1px solid rgba(255,255,255,.9);
+		margin-bottom: 20px;
+	}
+
+	.timer p#time {
+		float: none;
+		text-align: center;
+	}
+
+	.timer p#time input {
+		padding: 5px 5px;
+		font-size: .8em;
+	}
+
+	.timer p#time button {
+		padding: 2px 20px;
+	}
+
+	.timer h1, p.large {
+		margin: 0;
+	}
+
+	.timer p.large {
+		font-size: 4em;
+	}
+}
+/*#endregion RegionName*/
+

@@ -1,4 +1,3 @@
-
 // het bestand op jouw server (zie les 2 : php).
 var apiAddress = "https://burhan-atesalp.be/wm/FitnessApp/ShredderAPI.php?";
 var opties = {
@@ -80,13 +79,13 @@ function LocatieToevoegen(loc, lat, lon) {
     })
     .then(function (responseData) {
 
-        if (responseData.status === "fail") {
-          app.dialog.alert("Sorry, probeer nog een keer met meer data ...", responseData.error);
-        } else {
-          app.dialog.alert("ok", "Locatie toegevoegd");
-        }
-        // refresh de lijst
-        GetLocatiesFromDB();
+      if (responseData.status === "fail") {
+        app.dialog.alert("Sorry, probeer nog een keer met meer data ...", responseData.error);
+      } else {
+        app.dialog.alert("ok", "Locatie toegevoegd");
+      }
+      // refresh de lijst
+      GetLocatiesFromDB();
 
     })
     .catch(function (error) {
@@ -122,7 +121,7 @@ function LocatieVerwijderen(id) {
       // verwerk de fout
       app.dialog.alert('POST failed. :' + errorThrown, "Item toegevoegd");
     });
-  
+
 }
 
 function GetBerekeningenFromDB() {
@@ -193,13 +192,13 @@ function BerekeningToevoegen(_bmr, _bmi, _datum) {
     })
     .then(function (responseData) {
 
-        if (responseData.status === "fail") {
-          app.dialog.alert("Sorry, probeer nog een keer met meer data ...", responseData.error);
-        } else {
-          app.dialog.alert("ok", "Berekening toegevoegd");
-        }
-        // refresh de lijst
-        GetBerekeningenFromDB();
+      if (responseData.status === "fail") {
+        app.dialog.alert("Sorry, probeer nog een keer met meer data ...", responseData.error);
+      } else {
+        app.dialog.alert("ok", "Berekening toegevoegd");
+      }
+      // refresh de lijst
+      GetBerekeningenFromDB();
 
     })
     .catch(function (error) {
@@ -307,13 +306,13 @@ function FotoToevoegen(_title, _subtitle, _url, _caption, _nr) {
     })
     .then(function (responseData) {
 
-        if (responseData.status === "fail") {
-          app.dialog.alert("Sorry, probeer nog een keer met meer data ...", responseData.error);
-        } else {
-          app.dialog.alert("ok", "Foto toegevoegd");
-        }
-        // refresh de lijst
-        GetFotosFromDB();
+      if (responseData.status === "fail") {
+        app.dialog.alert("Sorry, probeer nog een keer met meer data ...", responseData.error);
+      } else {
+        app.dialog.alert("ok", "Foto toegevoegd");
+      }
+      // refresh de lijst
+      GetFotosFromDB();
 
     })
     .catch(function (error) {
@@ -349,5 +348,119 @@ function FotoVerwijderen(id) {
       // verwerk de fout
       app.dialog.alert('POST failed. :' + errorThrown, "Item toegevoegd");
     });
-  
+
+}
+
+function GetSessiesFromDB() {
+  // de data opvragen van de andere server (zie les 2)
+
+  // body data type must match "Content-Type" header
+  opties.body = JSON.stringify({
+    format: "json",
+    table: "trainingSessies",
+    bewerking: "get"
+  });
+
+  // test de api
+  fetch(apiAddress, opties)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (responseData) {
+      // de verwerking van de data
+      var list = responseData.data;
+
+      if (list.length > 0) {
+
+        // // er zit minstens 1 item in list, we geven dit ook onmiddelijk weer
+        // let tlines = "";
+        // for (let i = 0, len = list.length; i < len; i++) {
+        //   tlines += `<div class='row'><span class='col'>${list[i].PR_naam}</span><span class='col'>${ list[i].prijs}</span><button onClick='sendAjax(${list[i].PR_ID});' class='button button-fill button-raised button-small color-orange col'>Verwijder</button></div>`;
+        // }
+
+        // $$("#pList").html(tlines);
+
+        // console.log(list);
+        planningVirtualList.deleteAllItems()
+        for (const s of list) {
+          planningVirtualList.appendItem(s);
+        }
+        planningVirtualList.update()
+
+      } else {
+        app.dialog.alert("Sessies konden niet opgevraagd worden");
+      }
+
+    })
+    .catch(function (error) {
+      // verwerk de fout
+      app.dialog.alert("fout : " + error);
+    });
+
+  return true;
+}
+
+function SessieToevoegen(_training, _workout, _momentShow, _moment) {
+
+  // body data type must match "Content-Type" header
+  opties.body = JSON.stringify({
+    format: "json",
+    table: "trainingSessies",
+    bewerking: "addSessie",
+    training: _training,
+    workout: _workout,
+    momentShow: _momentShow,
+    moment: _moment,
+  });
+
+  // test de api
+  fetch(apiAddress, opties)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (responseData) {
+
+      if (responseData.status === "fail") {
+        app.dialog.alert("Sorry, probeer nog een keer met meer data ...", responseData.error);
+      } else {
+        app.dialog.alert("ok", "Sessie toegevoegd");
+      }
+      // refresh de lijst
+      GetSessiesFromDB();
+
+    })
+    .catch(function (error) {
+      // verwerk de fout
+      app.dialog.alert('POST failed. :' + errorThrown, "Toevoegen is niet gelukt");
+    });
+
+  return true;
+}
+
+function SessieVerwijderen(id) {
+  // fetch request opzetten om een item te verwijderen.
+  // body data type must match "Content-Type" header
+  opties.body = JSON.stringify({
+    format: "json",
+    table: "trainingSessies",
+    bewerking: "delete",
+    id: id
+  });
+
+  fetch(apiAddress, opties)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (responseData) {
+      // de verwerking van de data
+      app.dialog.alert("Sessie verwijderd", "Doei...");
+      // refresh de lijst
+      GetSessiesFromDB();
+
+    })
+    .catch(function (error) {
+      // verwerk de fout
+      app.dialog.alert('POST failed. :' + errorThrown, "Item toegevoegd");
+    });
+
 }
