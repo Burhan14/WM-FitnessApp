@@ -52,7 +52,7 @@
 * small fixes
 
 ---
-**Stopped progress from 01/01/2020 until 10/01/2020 (AAD project)**
+__*Stopped progress from 01/01/2020 until 10/01/2020 (AAD project)*__
 
 ---
 
