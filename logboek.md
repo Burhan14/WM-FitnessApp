@@ -52,7 +52,8 @@
 * small fixes
 
 ---
-Stopped progress from 01/01/2020 until 10/01/2020 (AAD project)
+**Stopped progress from 01/01/2020 until 10/01/2020 (AAD project)**
+
 ---
 
 ## 11/01/2020: 14:00 - 21:30 ( 2 uur pauze ) 
