@@ -45,3 +45,27 @@
 
 ## 31/12/2020: 14:00 - 23:30 ( 2 uur pauze ) 
 * Start Native ?
+
+## 01/01/2020: 14:00 - 21:30 ( 2 uur pauze ) 
+* continue Native
+* added timer to hybrid version
+* small fixes
+
+---
+Stopped progress from 01/01/2020 until 10/01/2020 (AAD project)
+---
+
+## 11/01/2020: 14:00 - 21:30 ( 2 uur pauze ) 
+* continue Native
+
+
+## 12/01/2020: 14:00 - 21:30 ( 2 uur pauze ) 
+* continue Native
+
+
+## 13/01/2020: 14:00 - 21:30 ( 2 uur pauze ) 
+* continue Native
+* hybrid code rearrange + comments
+
+
+
