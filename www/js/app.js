@@ -24,7 +24,6 @@ var app = new Framework7({
   theme: 'auto', // Automatic theme detection
   // App root data
 
-
   data: function () {
     return {
       //#region WORKOUTS

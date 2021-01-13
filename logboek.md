@@ -44,7 +44,7 @@
 * code rearrange
 
 ## 31/12/2020: 14:00 - 23:30 ( 2 uur pauze ) 
-* Start Native ?
+* Start Native
 
 ## 01/01/2020: 14:00 - 21:30 ( 2 uur pauze ) 
 * continue Native
