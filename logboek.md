@@ -46,10 +46,30 @@
 * code rearrange
 * Testing with Postman
 
-## 31/12/2020: 16:00 - 20:30 ( 2 uur pauze ) 
-* Start Native 
-* TrainingSessie progress(rep/kg) : fixed on local but doesn't save (db or localstorage ?)
+## 31/12/2020: 14:00 - 23:30 ( 2 uur pauze ) 
+* Start Native
 
-## 01/01/2021: 13:00 - 20:45 ( 2 uur pauze ) 
-* Native progress : outer navigation & layout 
-* HIIT TIMER OK
+## 01/01/2020: 14:00 - 21:30 ( 2 uur pauze ) 
+* continue Native
+* added timer to hybrid version
+* small fixes
+
+---
+__*Stopped progress from 01/01/2020 until 10/01/2020 (AAD project)*__
+
+---
+
+## 11/01/2020: 14:00 - 21:30 ( 2 uur pauze ) 
+* continue Native
+
+
+## 12/01/2020: 14:00 - 21:30 ( 2 uur pauze ) 
+* continue Native
+
+
+## 13/01/2020: 14:00 - 21:30 ( 2 uur pauze ) 
+* continue Native
+* hybrid code rearrange + comments
+
+
+

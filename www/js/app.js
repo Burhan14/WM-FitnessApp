@@ -6,7 +6,7 @@ var Planningitems;
 var planningVirtualList;
 var fotoVirtualList;
 var placesVirtualList;
-var mijnLichaamItems;
+var mijnLichaamItems = [];
 var mijnLichaamVirtualList;
 var listphotos = [];
 var globalLon;
@@ -24,14 +24,8 @@ var app = new Framework7({
   theme: 'auto', // Automatic theme detection
   // App root data
 
-
   data: function () {
     return {
-      user: {
-        firstName: 'John',
-        lastName: 'Doe',
-      },
-
       //#region WORKOUTS
       homeWorkouts: [{
           id: '1',
@@ -532,28 +526,24 @@ var app = new Framework7({
     };
   },
 
-  // methods
-  methods: {
-    helloWorld: function () {
-      app.dialog.alert('hello world');
-    }
-  },
-
   // App routes
   routes: routes,
+
   // Input settings
   input: {
     scrollIntoViewOnFocus: Framework7.device.cordova && !Framework7.device.electron,
     scrollIntoViewCentered: Framework7.device.cordova && !Framework7.device.electron,
   },
+
   // Cordova Statusbar settings
   statusbar: {
     iosOverlaysWebView: true,
     androidOverlaysWebView: false,
   },
+
   on: {
     init: function () {
-      
+
       var f7 = this;
       if (f7.device.cordova) {
         // Init cordova APIs (see cordova-app.js)
@@ -567,12 +557,9 @@ var app = new Framework7({
   },
 });
 
+//#region LOGIN (TO IMPLEMENT)
 
-
-
-//#region LOGIN
-
-// Login Screen Demo
+// Login Screen Demo 
 $$('#my-login-screen .login-button').on('click', function () {
   var username = $$('#my-login-screen [name="username"]').val();
   var password = $$('#my-login-screen [name="password"]').val();
@@ -584,17 +571,6 @@ $$('#my-login-screen .login-button').on('click', function () {
   app.dialog.alert('Username: ' + username + '<br>Password: ' + password);
 });
 
-
-function checkLogin() {
-  // de data opvragen van de andere server (zie les 2)
-
-  // body data type must match "Content-Type" header
-  opties.body = JSON.stringify({
-    format: "json",
-    table: "gebruikers",
-    bewerking: "check"
-  });
-}
 //#endregion
 
 //#region hulpmethodes
@@ -617,18 +593,21 @@ function randomString(length, chars) {
 //#region Camera Plugin / API 
 
 function fotoSuccess(imgURL) {
-  // listphotos.push({
-    var title= new Date(Date.now()).toLocaleDateString()
-    var subtitle= new Date(Date.now()).toLocaleTimeString()
-    var url= "data:image/jpeg;base64,"+imgURL
-    var caption= new Date(Date.now()).toLocaleString()
-    var nr=  Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-  // });
+
+  // maak variabelen onSuccess
+  var title = new Date(Date.now()).toLocaleDateString()
+  var subtitle = new Date(Date.now()).toLocaleTimeString()
+  var url = "data:image/jpeg;base64," + imgURL
+  var caption = new Date(Date.now()).toLocaleString()
+  var nr = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+  // verzend variabelen naar DB en update lijst (dbFuncties)
   FotoToevoegen(title, subtitle, url, caption, nr)
   fotoVirtualList.update();
 };
 
 function fotoFail(msg) {
+  // onFail show msg
   app.dialog.alert(msg);
 };
 
@@ -636,13 +615,13 @@ function fotoFail(msg) {
 
 //#region Geolocation Plugin / API
 
-
+// lijst aanmaken
 placesVirtualList = app.virtualList.create({
   // List Element
   el: '.places-virtual-list',
   // Pass array with items
   items: Placesitems,
-  // List item Template7 template
+  // List item Template7 template (EDITED BY FUAT & BURHAN)
   itemTemplate: '<li class="swipeout">' +
     '<a href="" class="item-link item-content swipeout-content" onclick="getLocatie({{longitude}}, {{latitude}})">' +
     '<div class="item-inner">' +
@@ -658,12 +637,12 @@ placesVirtualList = app.virtualList.create({
   height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
 });
 
+// methode om huidige locatie automatisch in te vullen in formulier (ipv manueel)  
 function getLocatieFormulier() {
   if (navigator.geolocation) {
     var accurate = true;
     if (app.watchPositionID !== null) {
-      // de vorige watch eerst stoppen, of we hebben meerdere
-      // simultane lopen.
+      // de vorige watch eerst stoppen, of we hebben meerdere simultane lopen.
       navigator.geolocation.clearWatch(app.watchPositionID);
     }
 
@@ -675,36 +654,32 @@ function getLocatieFormulier() {
       }
     );
 
-    // console.log(position.coords.latitude +' '+ position.coords.longitude)
-    // document.getElementById("plekLatitude").value = latitude;
-    // document.getElementById("plekLongitude").value = longitude;
-
   } else {
     app.dialog.alert('Het spijt me, maar geolocatie wordt niet ondersteund door deze browser.', 'Geen geolocatie ondersteuning');
   }
 }
 
+// methode om huidige locatie automatisch in te vullen in formulier (ipv manueel)
 function showLocationFormulier(position) {
   // success functie
 
-  console.log(position.coords.latitude +' '+ position.coords.longitude)
+  // console.log(position.coords.latitude +' '+ position.coords.longitude)
 
   document.getElementById("plekLatitude").value = position.coords.latitude;
   document.getElementById("plekLongitude").value = position.coords.longitude;
-  
+
   if (app.watchPositionID !== null) {
-    // de vorige watch eerst stoppen, of we hebben meerdere
-    // simultane lopen.
+    // de vorige watch eerst stoppen, of we hebben meerdere simultane lopen.
     navigator.geolocation.clearWatch(app.watchPositionID);
   }
 }
 
+// methode om huidige locatie te halen (voor verdere afstand berekeningen)
 function getLocatie(longitude, latitude) {
   if (navigator.geolocation) {
     var accurate = true;
     if (app.watchPositionID !== null) {
-      // de vorige watch eerst stoppen, of we hebben meerdere
-      // simultane lopen.
+      // de vorige watch eerst stoppen, of we hebben meerdere simultane lopen.
       navigator.geolocation.clearWatch(app.watchPositionID);
     }
 
@@ -716,6 +691,7 @@ function getLocatie(longitude, latitude) {
       }
     );
 
+    // coord. van gekozen plek naar globaal verzenden
     globalLon = longitude;
     globalLat = latitude;
 
@@ -724,6 +700,8 @@ function getLocatie(longitude, latitude) {
   }
 }
 
+// berekenen van afstand tussen gekozen plek (globalLon/globalLat) en huidige positie (position.coords)
+// tonen op scherm 
 function showLocation(position) {
   // success functie
   // bereken afstand tot plek met formule van haversine
@@ -749,6 +727,7 @@ function showLocation(position) {
   );
 }
 
+// onFail
 function positionError(error) {
   console.log('Error occurred. Error code: ' + error.code);
   // error.code can be:
@@ -772,204 +751,205 @@ function positionError(error) {
   }
 };
 
+// variabelen van nieuwe plek aanmaken om naar db te sturen
 function nieuwePlek() {
   var naam = document.getElementById('plekNaam').value;
   var lat = document.getElementById('plekLatitude').value;
   var lon = document.getElementById('plekLongitude').value;
 
-  // Placesitems.push({
-  //   locatie: naam,
-  //   Latitude: lat,
-  //   Longitude: lon,
-  // });
-
+  // verzend variabelen naar DB en update lijst (dbFuncties)
   LocatieToevoegen(naam, lat, lon);
-
   placesVirtualList.update();
 }
+
 //#endregion 
 
 //#region BMR/BMI API
-  function errorMessage(msg) {
-    app.dialog.alert(msg);
-    return false;
+
+// onFail
+function errorMessage(msg) {
+  app.dialog.alert(msg);
+  return false;
+}
+
+// onSuccess
+function showResults(calories, bmi) {
+  app.dialog.alert(`<p>BMR: ± <strong>${(calories).toFixed(2)} </strong> kcal. <br><br>BMI: ${(bmi)} </p>`, "Resultaat");
+}
+
+// Handle form submit
+function submitHandler() {
+
+  // Age
+  let age = document.getElementById('age').value;
+  //let unit = form.distance_unit.value;
+  if (isNaN(age) || age < 0) {
+    return errorMessage('Voer een geldige leeftijd in');
   }
-  
-  function showResults(calories, bmi) {
-    app.dialog.alert(`<p>BMR: ± <strong>${(calories).toFixed(2)} </strong> kcal. <br><br>BMI: ${(bmi)} </p>`, "Resultaat");
-  
+
+  // Height
+  let heightCM = document.getElementById('height-cm').value;
+  if (isNaN(heightCM) || heightCM < 0) {
+
+    let heightFeet = document.getElementById('height-ft').value;
+    if (isNaN(heightFeet) || heightFeet < 0) {
+      return errorMessage('Voer een geldige hoogte in feet of centimeters in');
+    }
+    let heightInches = document.getElementById('height-in').value;
+    if (isNaN(heightInches) || heightInches < 0) {
+      heightInches = 0;
+    }
+    heightCM = (2.54 * heightInches) + (30.4 * heightFeet)
+
   }
-  
-  /**
-   * Handle form submit
-   */
-  function submitHandler() {
-  
-    // Age
-    let age = document.getElementById('age').value;
-    //let unit = form.distance_unit.value;
-    if (isNaN(age) || age < 0) {
-      return errorMessage('Voer een geldige leeftijd in');
-    }
-  
-    // Height
-    let heightCM = document.getElementById('height-cm').value;
-    if (isNaN(heightCM) || heightCM < 0) {
-  
-      let heightFeet = document.getElementById('height-ft').value;
-      if (isNaN(heightFeet) || heightFeet < 0) {
-        return errorMessage('Voer een geldige hoogte in feet of centimeters in');
-      }
-      let heightInches = document.getElementById('height-in').value;
-      if (isNaN(heightInches) || heightInches < 0) {
-        heightInches = 0;
-      }
-      heightCM = (2.54 * heightInches) + (30.4 * heightFeet)
-  
-    }
-  
-    let weight = document.getElementById('weight').value;
-    if (isNaN(weight) || weight < 0) {
-      return errorMessage('Voer een geldig gewicht in');
-    }
-  
-    let weight_unit = document.getElementById('weight_unit').value
-    if (weight_unit == 'lb') {
-      weight = 0.453592 * weight;
-    }
-  
-    calories = 0;
-    let gender = document.getElementById('gender').value
-    if (gender == 'Female') {
-      //females =  655.09 + 9.56 x (Weight in kg) + 1.84 x (Height in cm) - 4.67 x age   
-      calories = 655.09 + (9.56 * weight) + (1.84 * heightCM) - (4.67 * age);
-    } else {
-      calories = 66.47 + (13.75 * weight) + (5 * heightCM) - (6.75 * age);
-    }
-  
-    bmi = (weight / (heightCM ** 2)) * 10000;
-  
-    if (bmi < 18.5) {
-      bmi = bmi.toFixed(1) + " (Ondergewicht)";
-    } else if (bmi < 25) {
-      bmi = bmi.toFixed(1) + " (Normaal)";
-    } else if (bmi < 30) {
-      bmi = bmi.toFixed(1) + " (Overgewicht)";
-    } else {
-      bmi = bmi.toFixed(1) + "(Zwaarlijvig)";
-    }
-  
-    // Display results
-    showResults(calories, bmi);
+
+  let weight = document.getElementById('weight').value;
+  if (isNaN(weight) || weight < 0) {
+    return errorMessage('Voer een geldig gewicht in');
   }
-  
-  function BmrBmiBerekenen() {
-    submitHandler();
-    console.log(calories + ' - ' + bmi);
-  
-    mijnLichaamItems.push({
-      bmr: calories,
-      bmi: bmi,
-      datum: new Date(Date.now()).toLocaleDateString(),
-    });
-  
-    BerekeningToevoegen(calories, bmi, new Date(Date.now()));
-    mijnLichaamVirtualList.update();
-  
-  };
-  //#endregion
+
+  let weight_unit = document.getElementById('weight_unit').value
+  if (weight_unit == 'lb') {
+    weight = 0.453592 * weight;
+  }
+
+  calories = 0;
+  let gender = document.getElementById('gender').value
+  if (gender == 'Female') {
+    //females =  655.09 + 9.56 x (Weight in kg) + 1.84 x (Height in cm) - 4.67 x age   
+    calories = 655.09 + (9.56 * weight) + (1.84 * heightCM) - (4.67 * age);
+  } else {
+    calories = 66.47 + (13.75 * weight) + (5 * heightCM) - (6.75 * age);
+  }
+
+  bmi = (weight / (heightCM ** 2)) * 10000;
+
+  if (bmi < 18.5) {
+    bmi = bmi.toFixed(1) + " (Ondergewicht)";
+  } else if (bmi < 25) {
+    bmi = bmi.toFixed(1) + " (Normaal)";
+  } else if (bmi < 30) {
+    bmi = bmi.toFixed(1) + " (Overgewicht)";
+  } else {
+    bmi = bmi.toFixed(1) + "(Zwaarlijvig)";
+  }
+
+  // Display results
+  showResults(calories, bmi);
+}
+
+// action: berekening + toevoegen in DB
+function BmrBmiBerekenen() {
+  submitHandler();
+
+  // console.log(calories + ' - ' + bmi);
+
+  mijnLichaamItems.push({
+    bmr: calories,
+    bmi: bmi,
+    datum: new Date(Date.now()).toLocaleDateString(),
+  });
+
+  // verzend naar DB en update lijst (dbFuncties)
+  BerekeningToevoegen(calories, bmi, new Date(Date.now()));
+  mijnLichaamVirtualList.update();
+
+};
+//#endregion
 
 //ON X PAGE INIT => DO:
 $$(document).on('page:init', function (e, page) {
   switch (page.name) {
     case "training":
-        //#region SCRIPT FOR HIIT TIMER FOUND ON:  http://kellylougheed.com/blog/a-javascript-timer-for-hiit-workouts/
-          var seconds = 20;
-          var rest = true;
-          var interval;
+      //#region SCRIPT FOR HIIT TIMER FOUND ON:  http://kellylougheed.com/blog/a-javascript-timer-for-hiit-workouts/
 
-          var intervalTime = 20;
-          var breakTime = 10;
+      var seconds = 20;
+      var rest = true;
+      var interval;
 
-          var settingsButton = document.getElementById("settings"); //update btn
-          var intervalInput = document.getElementById("intervalTime");
-          var breakInput = document.getElementById("breakTime");
+      var intervalTime = 20;
+      var breakTime = 10;
 
-          var startButton = document.getElementById("start");
-          var pauseButton = document.getElementById("pause");
-          var resetButton = document.getElementById("reset");
+      var settingsButton = document.getElementById("settings"); //update btn
+      var intervalInput = document.getElementById("intervalTime");
+      var breakInput = document.getElementById("breakTime");
 
-          var statusHeader = document.getElementById("status");
-          var secondsSpan = document.getElementById("sec");
+      var startButton = document.getElementById("start");
+      var pauseButton = document.getElementById("pause");
+      var resetButton = document.getElementById("reset");
 
-          settingsButton.onclick = function () {
-            intervalTime = Math.floor(intervalInput.value * 1);
-            breakTime = Math.floor(breakInput.value * 1);
-            reset();
-          }
+      var statusHeader = document.getElementById("status");
+      var secondsSpan = document.getElementById("sec");
 
-          startButton.onclick = function () {
-            rest = false;
-            changeToGo();
-            interval = setInterval(countdownSeconds, 1000);
-            startButton.disabled = true;
-          }
+      settingsButton.onclick = function () {
+        intervalTime = Math.floor(intervalInput.value * 1);
+        breakTime = Math.floor(breakInput.value * 1);
+        reset();
+      }
 
-          resetButton.onclick = function () {
-            reset();
-          }
+      startButton.onclick = function () {
+        rest = false;
+        changeToGo();
+        interval = setInterval(countdownSeconds, 1000);
+        startButton.disabled = true;
+      }
 
-          function reset() {
-            clearInterval(interval);
-            seconds = intervalTime;
-            secondsSpan.innerText = seconds;
-            rest = true;
-            changeToRest();
-            startButton.disabled = false;
-          }
+      resetButton.onclick = function () {
+        reset();
+      }
 
-          pauseButton.onclick = function () {
-            clearInterval(interval);
-            startButton.disabled = false;
-          }
+      function reset() {
+        clearInterval(interval);
+        seconds = intervalTime;
+        secondsSpan.innerText = seconds;
+        rest = true;
+        changeToRest();
+        startButton.disabled = false;
+      }
 
-          function countdownSeconds() {
-            seconds -= 1;
-            secondsSpan.innerText = seconds;
-            checkForStateChange();
-          }
+      pauseButton.onclick = function () {
+        clearInterval(interval);
+        startButton.disabled = false;
+      }
 
-          function checkForStateChange() {
-            if (seconds == 0 && rest == false) {
-              seconds = breakTime + 1;
-              rest = true;
-              changeToRest();
-            } else if (seconds == 0 && rest == true) {
-              seconds = intervalTime + 1;
-              rest = false;
-              changeToGo();
-            }
-          }
+      function countdownSeconds() {
+        seconds -= 1;
+        secondsSpan.innerText = seconds;
+        checkForStateChange();
+      }
 
-          function changeToRest() {
-            $(".timer").css("background", "cyan");
-            statusHeader.innerText = "Rest";
-          }
+      function checkForStateChange() {
+        if (seconds == 0 && rest == false) {
+          seconds = breakTime + 1;
+          rest = true;
+          changeToRest();
+        } else if (seconds == 0 && rest == true) {
+          seconds = intervalTime + 1;
+          rest = false;
+          changeToGo();
+        }
+      }
 
-          function changeToGo() {
-            $(".timer").css("background", "pink");
-            statusHeader.innerText = "Go!";
-          }
+      function changeToRest() {
+        $(".timer").css("background", "cyan");
+        statusHeader.innerText = "Rest";
+      }
 
-  //#endregion
+      function changeToGo() {
+        $(".timer").css("background", "pink");
+        statusHeader.innerText = "Go!";
+      }
+
+      //#endregion
       break;
 
     case "planning":
+      // Sessies ophalen van DB
       GetSessiesFromDB();
 
       Planningitems = [];
-      
 
+      // lijst aanmaken 
       planningVirtualList = app.virtualList.create({
         // List Element
         el: '.planning-virtual-list',
@@ -980,11 +960,11 @@ $$(document).on('page:init', function (e, page) {
           var found = [];
           for (var i = 0; i < items.length; i++) {
             if (items[i].title.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i); //search in titles
-            if (items[i].subtitle.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i); //search in subtitles
+            if (items[i].subtitle.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i); //search in subtitles (werkt niet meerk ???)
           }
           return found; //return array with mathced indexes
         },
-        // List item Template7 template
+        // List item Template7 template  (EDITED BY FUAT & BURHAN)
         itemTemplate: '<li class="swipeout">' +
           '<a href="{{training}}+{{workout}}+{{moment}}/" class="item-link item-content swipeout-content">' +
           '<div class="item-inner">' +
@@ -994,7 +974,7 @@ $$(document).on('page:init', function (e, page) {
           '<div class="item-subtitle">{{momentShow}}</div>' +
           '</div>' +
           '</a>' +
-          '<div class="swipeout-actions-right"><a href="#" onclick="SessieVerwijderen({{id}})" class="swipeout-delete">Delete</a></div>'+
+          '<div class="swipeout-actions-right"><a href="#" onclick="SessieVerwijderen({{id}})" class="swipeout-delete">Delete</a></div>' +
           '</li>',
         // Item height
         height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
@@ -1002,8 +982,8 @@ $$(document).on('page:init', function (e, page) {
       break;
 
     case "nieuw-event":
-      //#region DateTime picker
 
+      // kalender aanmaken
       calendarDateTime = app.calendar.create({
         inputEl: '#calendar-date-time',
         timePicker: true,
@@ -1016,18 +996,20 @@ $$(document).on('page:init', function (e, page) {
         },
       });
 
-      //#endregion
-
       //#region Workout picker
+
+      // Array met workouts (fitness & home)
       var workouts = {
         Fitness: ['Chest', 'Leg', 'Abs', 'Back', 'Arm', 'Shoulder'],
         Home: ['Full Body', 'Chest', 'Leg', 'Abs']
       };
+
+      // picker aanmaken
       workoutPicker = app.picker.create({
         inputEl: '#workout-picker',
         rotateEffect: true,
         formatValue: function (values) {
-          return values[0] + ' - ' + values[1] ;
+          return values[0] + ' - ' + values[1];
         },
         cols: [{
             textAlign: 'center',
@@ -1045,25 +1027,35 @@ $$(document).on('page:init', function (e, page) {
         ],
       });
 
-      //#region TOEVOEGEN BUTTON
+      // onButtonClick
       $$('#btnVoegToe').on('click', function () {
 
+        //variabelen aanmaken om naar db te sturen
         var training = workoutPicker.getValue()[0]
-        var workout =  workoutPicker.getValue()[1]
-        var momentShow =  calendarDateTime.value[0].toLocaleDateString([], {month: '2-digit', day: '2-digit', year: 'numeric'}) + " @ " + calendarDateTime.value[0].toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
+        var workout = workoutPicker.getValue()[1]
+        var momentShow = calendarDateTime.value[0].toLocaleDateString([], {
+          month: '2-digit',
+          day: '2-digit',
+          year: 'numeric'
+        }) + " @ " + calendarDateTime.value[0].toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit'
+        })
         var moment = calendarDateTime.value[0].toString()
+
+        // verzend variabelen naar DB en update lijst (dbFuncties)
         SessieToevoegen(training, workout, momentShow, moment)
 
         planningVirtualList.update();
 
       });
-      //#endregion
 
       //#endregion
       break;
 
     case "fotodagboek":
 
+      // lijst aanmaken
       fotoVirtualList = app.virtualList.create({
         // List Element
         el: '.foto-virtual-list',
@@ -1074,11 +1066,11 @@ $$(document).on('page:init', function (e, page) {
           var found = [];
           for (var i = 0; i < items.length; i++) {
             if (items[i].title.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i); //search in titles
-            if (items[i].subtitle.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i); //search in subtitles
+            if (items[i].subtitle.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i); //search in subtitles (werkt niet meer ???)
           }
           return found; //return array with mathced indexes
         },
-        // List item Template7 template
+        // List item Template7 template  (EDITED BY FUAT & BURHAN)
         itemTemplate: '<li class="swipeout">' +
           '<a href="" data-popup=".afb{{nr}}" class="popup-open item-link item-content swipeout-content">' +
           '<div class="item-inner">' +
@@ -1094,21 +1086,20 @@ $$(document).on('page:init', function (e, page) {
           '<img src="{{url}}" style="height: 100%; width: 100%;">' +
           '</div>' +
           '</div>' +
-          '<div class="swipeout-actions-right"><a href="#" onclick="FotoVerwijderen({{id}})" class="swipeout-delete">Delete</a></div>'+
+          '<div class="swipeout-actions-right"><a href="#" onclick="FotoVerwijderen({{id}})" class="swipeout-delete">Delete</a></div>' +
           '</li>',
         // Item height
         height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
       });
 
+      // fotos ophalen van DB
       GetFotosFromDB();
 
       break;
 
     case "mijnLichaam":
-      // Dummy items array
-      mijnLichaamItems = [];
-      
 
+      // lijst aanmaken
       mijnLichaamVirtualList = app.virtualList.create({
         // List Element
         el: '.mijnLichaam-virtual-list',
@@ -1119,11 +1110,11 @@ $$(document).on('page:init', function (e, page) {
           var found = [];
           for (var i = 0; i < items.length; i++) {
             if (items[i].title.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i); //search in titles
-            if (items[i].subtitle.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i); //search in subtitles
+            if (items[i].subtitle.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i); //search in subtitles (werkt niet meer ???)
           }
           return found; //return array with mathced indexes
         },
-        // List item Template7 template
+        // List item Template7 template  (EDITED BY FUAT & BURHAN)
         itemTemplate: '<li class="swipeout">' +
           '<a href="" class="item-link item-content swipeout-content">' +
           '<div class="item-inner">' +
@@ -1138,8 +1129,7 @@ $$(document).on('page:init', function (e, page) {
         // Item height
         height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
       });
-      
-      break;
-    }
-  })
 
+      break;
+  }
+})
