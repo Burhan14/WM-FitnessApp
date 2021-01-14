@@ -1,5 +1,5 @@
-// het bestand op jouw server (zie les 2 : php).
 var apiAddress = "https://burhan-atesalp.be/wm/FitnessApp/ShredderAPI.php?";
+
 var opties = {
   method: "POST", // *GET, POST, PUT, DELETE, etc.
   mode: "cors", // no-cors, *cors, same-origin
