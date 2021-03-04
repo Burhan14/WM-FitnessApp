@@ -48,7 +48,8 @@
     </platform>
 
 
-
+    <!-- Firebase configuration end stap 7 -->
+    <preference name="AndroidLaunchMode" value="singleTask" /> 
 
     <preference name="DisallowOverscroll" value="true" />
     <preference name="BackupWebStorage" value="local" />
@@ -60,3 +61,9 @@
     <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
     <preference name="AllowInlineMediaPlayback" value="true" />
 </widget>
+<universal-links>
+    <host name="shredderapp.page.link" scheme="https" />
+    <host name="shredder-c8d60.firebaseapp.com" scheme="https">
+        <path url="/__/auth/callback"/>
+    </host>
+</universal-links>

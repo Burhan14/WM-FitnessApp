@@ -38,10 +38,28 @@
       "cordova-plugin-file-transfer": {},
       "cordova-plugin-geolocation": {
         "GPS_REQUIRED": "true"
+      },
+      "cordova-plugin-buildinfo": {},
+      "cordova-universal-links-plugin": {},
+      "cordova-plugin-browsertab": {},
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-customurlscheme": {
+        "URL_SCHEME": "com.firebase.cordova",
+        "ANDROID_SCHEME": " ",
+        "ANDROID_HOST": " ",
+        "ANDROID_PATHPREFIX": "/"
       }
     },
     "platforms": [
       "android"
     ]
+  },
+  "dependencies": {
+    "cordova-plugin-browsertab": "0.2.0",
+    "cordova-plugin-buildinfo": "4.0.0",
+    "cordova-plugin-compat": "1.2.0",
+    "cordova-plugin-customurlscheme": "5.0.2",
+    "cordova-plugin-inappbrowser": "5.0.0",
+    "cordova-universal-links-plugin-fix": "1.2.1"
   }
 }
