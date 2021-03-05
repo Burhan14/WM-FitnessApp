@@ -1,27 +1,5 @@
 //#region Firebase
 
-// Firebase App (the core Firebase SDK) is always required and
-// must be listed before other Firebase SDKs
-var firebase = require("firebase/app");
-
-// Add the Firebase products that you want to use
-require("firebase/auth");
-require("firebase/firestore");
-
-// TODO: Replace the following with your app's Firebase project configuration
-// For Firebase JavaScript SDK v7.20.0 and later, `measurementId` is an optional field
-var firebaseConfig = {
-  apiKey: "AIzaSyDzEbWA-7z5ew_EAGyZb9OkaWRgZyVC6ic",
-  authDomain: "shredder-c8d60.firebaseapp.com",
-  projectId: "shredder-c8d60",
-  storageBucket: "shredder-c8d60.appspot.com",
-  messagingSenderId: "711790613732",
-  appId: "1:711790613732:web:147d9f62598a64b02c88f1",
-  measurementId: "G-QHGF9E9TWJ"
-};
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
 
 //#endregion
 
@@ -579,8 +557,13 @@ var app = new Framework7({
         cordovaApp.init(f7);
         placesVirtualList.update();
 
+          // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+
         // Create an instance of the Google provider object:
         var provider = new firebase.auth.GoogleAuthProvider();
+
       }
     },
     pageInit: function () {
@@ -1169,41 +1152,41 @@ $$(document).on('page:init', function (e, page) {
 
 // Authenticate with Firebase using the Google provider object using signInWithRedirect. Note that signInWithPopup is not supported in Cordova.
 
-firebase.auth().signInWithRedirect(provider).then(() => {
-  return firebase.auth().getRedirectResult();
-}).then((result) => {
-  /** @type {firebase.auth.OAuthCredential} */
-  var credential = result.credential;
+// firebase.auth().signInWithRedirect(provider).then(() => {
+//   return firebase.auth().getRedirectResult();
+// }).then((result) => {
+//   /** @type {firebase.auth.OAuthCredential} */
+//   var credential = result.credential;
 
-  // This gives you a Google Access Token.
-  // You can use it to access the Google API.
-  var token = credential.accessToken;
-  // The signed-in user info.
-  var user = result.user;
-  // ...
-}).catch((error) => {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-});
+//   // This gives you a Google Access Token.
+//   // You can use it to access the Google API.
+//   var token = credential.accessToken;
+//   // The signed-in user info.
+//   var user = result.user;
+//   // ...
+// }).catch((error) => {
+//   // Handle Errors here.
+//   var errorCode = error.code;
+//   var errorMessage = error.message;
+// });
 
 // To handle the case where the app activity is destroyed before the sign-in operation completes, call getRedirectResult when your app loads.
-firebase.auth().getRedirectResult().then((result) => {
-  if (result.credential) {
-    /** @type {firebase.auth.OAuthCredential} */
-    var credential = result.credential;
+// firebase.auth().getRedirectResult().then((result) => {
+//   if (result.credential) {
+//     /** @type {firebase.auth.OAuthCredential} */
+//     var credential = result.credential;
 
-    // This gives you a Google Access Token.
-    // You can use it to access the Google API.
-    var token = credential.accessToken;
-    // The signed-in user info.
-    var user = result.user;
-    // ...
-  }
-}).catch((error) => {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-});
+//     // This gives you a Google Access Token.
+//     // You can use it to access the Google API.
+//     var token = credential.accessToken;
+//     // The signed-in user info.
+//     var user = result.user;
+//     // ...
+//   }
+// }).catch((error) => {
+//   // Handle Errors here.
+//   var errorCode = error.code;
+//   var errorMessage = error.message;
+// });
 
 //#endregion
