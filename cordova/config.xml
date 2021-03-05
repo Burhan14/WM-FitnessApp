@@ -50,11 +50,12 @@
 
     <!-- Firebase configuration end stap 7 -->
     <universal-links>
-    <host name="shredderapp.page.link" scheme="https" />
-    <host name="shredder-c8d60.firebaseapp.com" scheme="https">
-        <path url="/__/auth/callback"/>
-    </host>
-</universal-links>
+        <host name="shredderapp.page.link" scheme="https" />
+        <host name="shredder-c8d60.firebaseapp.com" scheme="https">
+            <path url="/__/auth/callback"/>
+        </host>
+    </universal-links>
+    
     <preference name="AndroidLaunchMode" value="singleTask" /> 
 
 

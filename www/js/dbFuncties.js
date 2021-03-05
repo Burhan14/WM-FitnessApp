@@ -32,15 +32,7 @@ function GetLocatiesFromDB() {
 
       if (list.length > 0) {
 
-        // // er zit minstens 1 item in list, we geven dit ook onmiddelijk weer
-        // let tlines = "";
-        // for (let i = 0, len = list.length; i < len; i++) {
-        //   tlines += `<div class='row'><span class='col'>${list[i].PR_naam}</span><span class='col'>${ list[i].prijs}</span><button onClick='sendAjax(${list[i].PR_ID});' class='button button-fill button-raised button-small color-orange col'>Verwijder</button></div>`;
-        // }
-
-        // $$("#pList").html(tlines);
-
-        console.log(list);
+        // console.log(list);
         placesVirtualList.deleteAllItems()
         for (const l of list) {
           placesVirtualList.appendItem(l);
