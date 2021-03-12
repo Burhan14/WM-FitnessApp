@@ -559,6 +559,7 @@ var app = new Framework7({
         GetLocatiesFromDB()
 
         // Initialize Firebase
+        initFB();
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
 
