@@ -560,8 +560,7 @@ var app = new Framework7({
 
         // Initialize Firebase
         initFB();
-        firebase.initializeApp(firebaseConfig);
-        firebase.analytics();
+
 
         
 
