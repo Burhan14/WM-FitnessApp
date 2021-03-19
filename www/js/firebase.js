@@ -5,8 +5,8 @@ function initFB() {
 
   // Create an instance of the Google provider object:
   var provider = new firebase.auth.GoogleAuthProvider();
-  cordovaSignInRedirect(provider);
-  cordovaRedirectResult();
+  // cordovaSignInRedirect(provider);
+
 
   // Authenticate with Firebase using the Google provider object using signInWithRedirect. Note that signInWithPopup is not supported in Cordova.
 
@@ -31,7 +31,7 @@ function initFB() {
   //   var errorMessage = error.message;
   // });
 
-  function cordovaSignInRedirect(provider) {
+  // function cordovaSignInRedirect(provider) {
     // [START auth_cordova_sign_in_redirect]
     firebase.auth().signInWithRedirect(provider).then(() => {
       return firebase.auth().getRedirectResult();
@@ -52,9 +52,9 @@ function initFB() {
       var errorMessage = error.message;
     });
     // [END auth_cordova_sign_in_redirect]
-  }
+  // }
 
-  function cordovaRedirectResult() {
+  // function cordovaRedirectResult() {
     // [START auth_cordova_redirect_result]
     firebase.auth().getRedirectResult().then((result) => {
       if (result.credential) {
@@ -75,7 +75,7 @@ function initFB() {
       var errorMessage = error.message;
     });
     // [END auth_cordova_redirect_result]
-  }
+  // }
 
   // To handle the case where the app activity is destroyed before the sign-in operation completes, call getRedirectResult when your app loads.
 

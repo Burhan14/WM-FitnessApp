@@ -45,8 +45,6 @@
       <icon density="xhdpi" src="res/icon/android/mipmap-xhdpi/ic_launcher.png" />
       <icon density="xxhdpi" src="res/icon/android/mipmap-xxhdpi/ic_launcher.png" />
       <icon density="xxxhdpi" src="res/icon/android/mipmap-xxxhdpi/ic_launcher.png" />
-    </platform>
-
 
     <!-- Firebase configuration end stap 7 -->
     <universal-links>
@@ -54,7 +52,11 @@
         <host name="shredder-c8d60.firebaseapp.com" scheme="https">
             <path url="/__/auth/callback"/>
         </host>
-    </universal-links>
+    </universal-links>      
+    </platform>
+
+
+
     
     <preference name="AndroidLaunchMode" value="singleTask" /> 
 

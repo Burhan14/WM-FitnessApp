@@ -552,14 +552,15 @@ var app = new Framework7({
     init: function () {
 
       var f7 = this;
+        // Initialize Firebase
+        initFB();      
       if (f7.device.cordova) {
         // Init cordova APIs (see cordova-app.js)
         cordovaApp.init(f7);
         placesVirtualList.update();
         GetLocatiesFromDB()
 
-        // Initialize Firebase
-        initFB();
+
 
 
         
