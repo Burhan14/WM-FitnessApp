@@ -43,13 +43,16 @@
             </div>
           </div>
           <div class="page-content">
-            <div class="block">
-              <p><i class="material-icons md-48" style="font-size: 48px; color:#00587a;">account_circle</i> Log in om uw
-                profielinformatie te zien</p>
+            <div class="block" style="text-align: center;">
+              <img id="userPhoto" src="" alt="" style="border-radius: 50%;">
+              <i id="defaultUserPhoto" class="material-icons md-48"
+                style="font-size: 96px; color:#00587a;">account_circle</i>
+              <p id="displayName">Log in om uw profielinformatie te zien</p>
             </div>
             <div class="col-50">
-              <a href="#" class="button button-raised button-outline login-screen-open"
-                data-login-screen="#my-login-screen" style="border-radius: 0px;">Log in</a>
+              <a href="#" id="btnLogIn" class="button button-raised button-outline login-screen-open"
+                data-login-screen="#my-login-screen">Log in</a>
+              <a href="#" id="btnLogOut" class="button button-raised button-outline hide">log out</a>
             </div>
             <div class="toolbar toolbar-bottom tabbar-labels" style="position: absolute;bottom: 0px;">
               <div class="toolbar-inner">
@@ -218,41 +221,8 @@
         <div class="page">
           <div class="page-content login-screen-content">
             <div class="login-screen-title">Login</div>
-            <div class="list">
-              <ul>
-                <li class="item-content item-input">
-                  <div class="item-inner">
-                    <div class="item-title item-label">Gebruikersnaam</div>
-                    <div class="item-input-wrap">
-
-                      <input type="text" name="username" placeholder="Uw gebruikersnaam">
-                    </div>
-                  </div>
-                </li>
-                <li class="item-content item-input">
-                  <div class="item-inner">
-                    <div class="item-title item-label">Wachtwoord</div>
-                    <div class="item-input-wrap">
-                      <input type="password" name="password" placeholder="Uw wachtwoord">
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="list">
-              <ul>
-                <li>
-                  <a href="#" class="item-link list-button login-button">Log In</a>
-                </li>
-                <li>
-                  <a href="#" onclick="" class="item-link list-button">redirect</a>
-                </li>
-              </ul>
-              <!-- <div class="block-footer">Some text about login information.<br>Click "Sign In" to close Login Screen</div> -->
-              <div class="block-footer">
-                <a href="#" class="item-link list-button link login-screen-close ">Cancel</a>
-              </div>
-            </div>
+            <div id="firebaseui-auth-container"></div>
+            <div id="loader" style="text-align: center;">Loading...</div>
           </div>
         </div>
       </div>
@@ -266,7 +236,7 @@
   <!-- Cordova APIs -->
   <script src="js/cordova-app.js"></script>
   <!-- Database scripts -->
-  <script src="js/dbFuncties.js"></script>  
+  <script src="js/dbFuncties.js"></script>
   <!-- App routes -->
   <script src="js/routes.js"></script>
   <script>
@@ -289,18 +259,21 @@
     https://firebase.google.com/docs/web/setup#available-libraries -->
   <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-analytics.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-auth.js"></script>
+  <!-- firbaseUI -->
+  <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
   <!-- script for firebase functions -->
   <script src="js/firebase.js"></script>
-  <script src="js/app.js"></script>
-
   <!-- App scripts -->
-
+  <script src="js/app.js"></script>
   <!-- script for timer -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- run at end of code for list to load -->
   <script>
     GetLocatiesFromDB()
   </script>
+  
 
 </body>
+
 </html>

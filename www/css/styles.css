@@ -88,6 +88,10 @@ body{
     width: 100%;
 }
 
+.hide{
+	display: none!important;
+}
+
 /*#region CSS FOR HIIT TIMER FOUND ON:  http://kellylougheed.com/blog/a-javascript-timer-for-hiit-workouts/*/
 .timer {
 	font-family: 'Oswald', 'Helvetica Neue', arial;

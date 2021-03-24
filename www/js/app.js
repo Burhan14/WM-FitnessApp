@@ -553,7 +553,7 @@ var app = new Framework7({
 
       var f7 = this;
         // Initialize Firebase
-        initFB();      
+        initFirebase();      
       if (f7.device.cordova) {
         // Init cordova APIs (see cordova-app.js)
         cordovaApp.init(f7);
@@ -1150,7 +1150,6 @@ $$(document).on('page:init', function (e, page) {
   }
 })
 //#region FireBase Sign In With Google
-
 
 
 //#endregion
