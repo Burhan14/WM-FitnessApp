@@ -69,8 +69,6 @@ function initFirebase() {
     privacyPolicyUrl: '<your-privacy-policy-url>'
   };
 
-
-
   //Handle login
   // var redLog = document.getElementById("redirectLogin")
   // redLog.addEventListener("click", function () {
@@ -89,9 +87,6 @@ function initFirebase() {
     ui.start('#firebaseui-auth-container', uiConfig);
 
   })
-
-
-
 
   function FireBaseSignOut() {
     firebase.auth().signOut().then(() => {
