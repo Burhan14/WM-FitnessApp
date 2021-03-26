@@ -3,6 +3,15 @@ function initFirebase() {
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
 
+  //Firestore
+  const fs = firebase.firestore();
+  fs.settings({timestampsInSnapshots: true});
+  fs.collection('Oefeningen').get().then((snapshot) => {
+    snapshot.docs.forEach(doc => {
+      console.log(doc.data())      
+    })
+  });
+
   //DOM-elements
   var defaultPhoto = document.getElementById("defaultUserPhoto")
   var userPhoto = document.getElementById("userPhoto")
