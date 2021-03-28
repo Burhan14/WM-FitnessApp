@@ -43,13 +43,16 @@
             </div>
           </div>
           <div class="page-content">
-            <div class="block">
-              <p><i class="material-icons md-48" style="font-size: 48px; color:#00587a;">account_circle</i> Log in om uw
-                profielinformatie te zien</p>
+            <div class="block" style="text-align: center;">
+              <img id="userPhoto" src="" alt="" style="border-radius: 50%;">
+              <i id="defaultUserPhoto" class="material-icons md-48"
+                style="font-size: 96px; color:#00587a;">account_circle</i>
+              <p id="displayName">Log in om uw profielinformatie te zien</p>
             </div>
             <div class="col-50">
-              <a href="#" class="button button-raised button-outline login-screen-open"
-                data-login-screen="#my-login-screen" style="border-radius: 0px;">Log in</a>
+              <a href="#" id="btnLogIn" class="button button-raised button-outline login-screen-open"
+                data-login-screen="#my-login-screen">Log in</a>
+              <a href="#" id="btnLogOut" class="button button-raised button-outline hide">log out</a>
             </div>
             <div class="toolbar toolbar-bottom tabbar-labels" style="position: absolute;bottom: 0px;">
               <div class="toolbar-inner">
@@ -186,9 +189,10 @@
                   </div>
                 </div>
                 <div class="flex-center plekToevoegen">
-                    <button class="button button-raised button-fill"
-                      style="min-width: 50%; max-width: 80%; color: #00587a;" onclick="getLocatieFormulier()"><i class="icon material-icons md-only">beenhere</i>&nbsp;&nbsp;Vul huidige locatie</button>
-                  </div>
+                  <button class="button button-raised button-fill"
+                    style="min-width: 50%; max-width: 80%; color: #00587a;" onclick="getLocatieFormulier()"><i
+                      class="icon material-icons md-only">beenhere</i>&nbsp;&nbsp;Vul huidige locatie</button>
+                </div>
               </div>
             </div>
           </div>
@@ -217,38 +221,8 @@
         <div class="page">
           <div class="page-content login-screen-content">
             <div class="login-screen-title">Login</div>
-            <div class="list">
-              <ul>
-                <li class="item-content item-input">
-                  <div class="item-inner">
-                    <div class="item-title item-label">Gebruikersnaam</div>
-                    <div class="item-input-wrap">
-
-                      <input type="text" name="username" placeholder="Uw gebruikersnaam">
-                    </div>
-                  </div>
-                </li>
-                <li class="item-content item-input">
-                  <div class="item-inner">
-                    <div class="item-title item-label">Wachtwoord</div>
-                    <div class="item-input-wrap">
-                      <input type="password" name="password" placeholder="Uw wachtwoord">
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="list">
-              <ul>
-                <li>
-                  <a href="#" class="item-link list-button login-button">Log In</a>
-                </li>
-              </ul>
-              <!-- <div class="block-footer">Some text about login information.<br>Click "Sign In" to close Login Screen</div> -->
-              <div class="block-footer">
-                <a href="#" class="item-link list-button link login-screen-close ">Cancel</a>
-              </div>
-            </div>
+            <div id="firebaseui-auth-container"></div>
+            <div id="loader" style="text-align: center;">Loading...</div>
           </div>
         </div>
       </div>
@@ -261,16 +235,45 @@
   <!-- <script src="framework7/js/framework7.min.js"></script> -->
   <!-- Cordova APIs -->
   <script src="js/cordova-app.js"></script>
-  <!-- App routes -->
-  <script src="js/routes.js"></script>
-  <!-- App scripts -->
-  <script src="js/app.js"></script>
   <!-- Database scripts -->
   <script src="js/dbFuncties.js"></script>
+  <!-- App routes -->
+  <script src="js/routes.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyDzEbWA-7z5ew_EAGyZb9OkaWRgZyVC6ic",
+      authDomain: "shredder-c8d60.firebaseapp.com",
+      databaseURL: "https://shredder-c8d60-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "shredder-c8d60",
+      storageBucket: "shredder-c8d60.appspot.com",
+      messagingSenderId: "711790613732",
+      appId: "1:711790613732:web:147d9f62598a64b02c88f1",
+      measurementId: "G-QHGF9E9TWJ"
+    };
+  </script>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js"></script>
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+    https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-firestore.js"></script> 
+  <!-- firbaseUI -->
+  <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
+  <!-- script for firebase functions -->
+  <script src="js/firebase.js"></script>
+  <!-- App scripts -->
+  <script src="js/app.js"></script>
   <!-- script for timer -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- run at end of code for list to load -->
+  <script>
+    GetLocatiesFromDB()
+  </script>
+  
 
 </body>
 

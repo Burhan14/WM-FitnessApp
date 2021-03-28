@@ -71,6 +71,11 @@ html {
     content: none!important;
 }
 
+.firebaseui-form-actions{
+	white-space: pre-wrap!important;
+	font-family: initial!important;
+}
+
 #afstand{
     height: 7vh;
     text-align: center;
@@ -86,6 +91,10 @@ html {
 body{
     height: 100%;
     width: 100%;
+}
+
+.hide{
+	display: none!important;
 }
 
 /*#region CSS FOR HIIT TIMER FOUND ON:  http://kellylougheed.com/blog/a-javascript-timer-for-hiit-workouts/*/
