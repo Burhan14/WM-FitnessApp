@@ -24,23 +24,47 @@ function initFirebase() {
     callbacks: {
       signInSuccessWithAuthResult: function (authResult, redirectUrl) {
         // User successfully signed in.
-        // Return type determines whether we continue the redirect automatically
-        // or whether we leave that to developer to handle.
-        var userInfo = authResult.additionalUserInfo;
-        if (userInfo.IsNewUser && providerId === 'password') {
-          // verify if email user is new => send email for confirmation and continue handling
 
+        var userInfo = authResult.additionalUserInfo;
+        var user = firebase.auth().currentUser;
+
+        // console.log(userInfo)
+        //create a document for new users 
+        if (userInfo.isNewUser == true) {
+          
+          fs.collection("Users").doc(user.uid).set({
+            DisplayName: user.displayName,
+            Email: user.email,
+            Uid: user.uid
+          })
+          .then(() => {
+            console.log("Document successfully written!");
+          })
+          .catch((error) => {
+            console.error("Error writing document: ", error);
+          });
+          
+          // Send email verification to new users logged in with email/password
+          if (userInfo.providerId == "password") {
+            user.sendEmailVerification()
+          }
         }
-        console.log(authResult)
-        console.log(userInfo)
-        console.log(authResult.user.uid)
-        defaultPhoto.classList.add("hide")
-        userPhoto.classList.remove("hide")
-        userPhoto.src = authResult.user.photoURL
-        displayName.innerHTML = authResult.user.displayName
+        
+        //if user has no PP set default image placeholder
+        if (user.photoURL != null) {
+          defaultPhoto.classList.add("hide")
+          userPhoto.classList.remove("hide")
+        }
         btnLogIn.classList.add("hide")
         btnLogOut.classList.remove("hide")
+        userPhoto.src = user.photoURL
+        displayName.innerHTML = user.displayName
         app.loginScreen.close('#my-login-screen');
+        
+        // reminder to verify the email address
+        if (user.emailVerified == false) {
+          app.dialog.alert('Please verify you email address!');
+        }
 
         return false;
       },
@@ -68,7 +92,6 @@ function initFirebase() {
       // firebase.auth.GithubAuthProvider.PROVIDER_ID,
       {
         provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-        signInMethod: firebase.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD,
         requireDisplayName: true
       }
     ],
@@ -91,7 +114,6 @@ function initFirebase() {
 
   var btnLogIn = document.getElementById("btnLogIn")
   btnLogIn.addEventListener("click", function () {
-    console.log("should open firebaseUI");
     // The start method will wait until the DOM is loaded.
     ui.start('#firebaseui-auth-container', uiConfig);
 
