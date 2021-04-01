@@ -35,7 +35,7 @@ function initFirebase() {
           fs.collection("Users").doc(user.uid).set({
             DisplayName: user.displayName,
             Email: user.email,
-            Uid: user.uid
+            Uid: user.uid,
           })
 
           fs.collection("Users").doc(user.uid).collection("Sessions").add({})
@@ -90,7 +90,13 @@ function initFirebase() {
           prompt: 'select_account'
         }
       },
-      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+      {
+        provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        customParameters: {
+          // Forces password re-entry.
+          auth_type: 'reauthenticate'
+        }
+      },
       // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
       // firebase.auth.GithubAuthProvider.PROVIDER_ID,
       {
