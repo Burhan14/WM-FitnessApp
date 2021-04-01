@@ -87,7 +87,13 @@ function initFirebase() {
           prompt: 'select_account'
         }
       },
-      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+      {
+        provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        customParameters: {
+          // Forces password re-entry.
+          auth_type: 'reauthenticate'
+        }
+      },
       // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
       // firebase.auth.GithubAuthProvider.PROVIDER_ID,
       {
