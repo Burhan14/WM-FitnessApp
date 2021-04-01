@@ -3,15 +3,6 @@ function initFirebase() {
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
 
-  //Firestore
-  const fs = firebase.firestore();
-  fs.settings({timestampsInSnapshots: true});
-  fs.collection('Oefeningen').get().then((snapshot) => {
-    snapshot.docs.forEach(doc => {
-      console.log(doc.data())      
-    })
-  });
-
   //DOM-elements
   var defaultPhoto = document.getElementById("defaultUserPhoto")
   var userPhoto = document.getElementById("userPhoto")
@@ -63,7 +54,13 @@ function initFirebase() {
           prompt: 'select_account'
         }
       },
-      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+      {
+        provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        customParameters: {
+          // Forces password re-entry.
+          auth_type: 'reauthenticate'
+        }
+      },
       // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
       // firebase.auth.GithubAuthProvider.PROVIDER_ID,
       {

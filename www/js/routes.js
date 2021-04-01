@@ -88,6 +88,13 @@ var routes = [
           },
         ]
   },
+  {
+    path: '/test/',
+    url: './pages/test.html',
+    options: {
+      transition: 'f7-dive',
+    },
+  },
 
   // Default route (404 page). MUST BE THE LAST
   {
