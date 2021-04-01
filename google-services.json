@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "711790613732",
+    "firebase_url": "https://shredder-c8d60-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "shredder-c8d60",
+    "storage_bucket": "shredder-c8d60.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:711790613732:android:af5ef253d81caf392c88f1",
+        "android_client_info": {
+          "package_name": "be.burhanatesalp.Shredder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "711790613732-08k0lpe7k1bkm0vg7gebag99lgjrrl9i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "be.burhanatesalp.Shredder",
+            "certificate_hash": "3eafac7361c1c31162481e307d05eafcb20d8df5"
+          }
+        },
+        {
+          "client_id": "711790613732-jejk928qn12bpf364e67md0gqi5mp98e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "be.burhanatesalp.Shredder",
+            "certificate_hash": "1d6d99b2f1438cd62d85ff1443ff2a359f299dfb"
+          }
+        },
+        {
+          "client_id": "711790613732-pmgdhtlffjp1hl9gv46dedqqrk8dbalc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfuw7vZ2e1KTv6IKPfE27KW51owssDXMo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "711790613732-pmgdhtlffjp1hl9gv46dedqqrk8dbalc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

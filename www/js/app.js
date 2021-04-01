@@ -1,3 +1,8 @@
+//#region Firebase
+
+
+//#endregion
+
 //#region GLOBALE/PUBLIEKE VARIABELEN
 var $$ = Dom7;
 var workoutPicker;
@@ -15,6 +20,8 @@ var Placesitems = [];
 var calories;
 var bmi;
 //#endregion
+
+
 
 var app = new Framework7({
   root: '#app', // App root element
@@ -545,10 +552,19 @@ var app = new Framework7({
     init: function () {
 
       var f7 = this;
+        // Initialize Firebase
+        initFirebase();      
       if (f7.device.cordova) {
         // Init cordova APIs (see cordova-app.js)
         cordovaApp.init(f7);
         placesVirtualList.update();
+        GetLocatiesFromDB()
+
+
+
+
+        
+
       }
     },
     pageInit: function () {
@@ -1133,3 +1149,7 @@ $$(document).on('page:init', function (e, page) {
       break;
   }
 })
+//#region FireBase Sign In With Google
+
+
+//#endregion
