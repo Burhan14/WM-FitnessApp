@@ -37,6 +37,9 @@ function initFirebase() {
             Email: user.email,
             Uid: user.uid
           })
+
+          fs.collection("Users").doc(user.uid).collection("Sessions").add({})
+
           .then(() => {
             console.log("Document successfully written!");
           })
