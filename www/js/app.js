@@ -1,8 +1,3 @@
-//#region Firebase
-
-
-//#endregion
-
 //#region GLOBALE/PUBLIEKE VARIABELEN
 var $$ = Dom7;
 var workoutPicker;
@@ -19,6 +14,9 @@ var globalLat;
 var Placesitems = [];
 var calories;
 var bmi;
+
+var user;
+var fs;
 //#endregion
 
 
@@ -552,13 +550,14 @@ var app = new Framework7({
     init: function () {
 
       var f7 = this;
-        // Initialize Firebase
-        initFirebase();      
+
+      initFirebase();    
+
       if (f7.device.cordova) {
         // Init cordova APIs (see cordova-app.js)
         cordovaApp.init(f7);
         placesVirtualList.update();
-        GetLocatiesFromDB()
+
 
 
 
@@ -639,14 +638,14 @@ placesVirtualList = app.virtualList.create({
   items: Placesitems,
   // List item Template7 template (EDITED BY FUAT & BURHAN)
   itemTemplate: '<li class="swipeout">' +
-    '<a href="" class="item-link item-content swipeout-content" onclick="getLocatie({{longitude}}, {{latitude}})">' +
+    '<a href="" class="item-link item-content swipeout-content" onclick="getLocatie({{Longitude}}, {{Latitude}})">' +
     '<div class="item-inner">' +
     '<div class="item-title-row no-chevron" style="justify-content: center;">' +
-    '<div class="item-title">{{locatie}}</div>' +
+    '<div class="item-title">{{Name}}</div>' +
     '</div>' +
     '</div>' +
     '</a>' +
-    '<div class="swipeout-actions-right"><a href="#" onclick="LocatieVerwijderen({{id}})" class="swipeout-delete">Delete</a></div>' +
+    '<div class="swipeout-actions-right"><a href="#" onclick="DeleteLocationsFromFS({{CreationDate}})" class="swipeout-delete">Delete</a></div>' +
     '<div class="sortable-handler"></div>' +
     '</li>',
   // Item height

@@ -69,7 +69,7 @@
     2- DELETE THE DOCUMENT'S DATA FOUND DOC.ID
     3- SHOW RESULT
 
-    firebase.firestore().collection("Users").doc(<UID>).collection("Sessions").where(<CONDTION>)
+    firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").where(<CONDTION>)
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -79,10 +79,10 @@
                 console.log(doc.id, " => ", doc.data());
 
                 // 2-DELETE DATA INSIDE DOC
-                firebase.firestore().collection("Users").doc(<UID>).collection("Sessions").doc(doc.id).delete();
+                firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").doc(doc.id).delete();
 
                 // 3-SHOW ALL DOCS INSIDE PARENT COLLECTION (CF. GET ALL DATA FROM COLLECTION)
-                firebase.firestore().collection("Users").doc(<UID>).collection("Sessions").get().then((querySnapshot) => {
+                firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").get().then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
                     // doc.data() is never undefined for query doc snapshots
                     console.log(doc.id, " => ", doc.data());
