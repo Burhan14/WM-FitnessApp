@@ -40,8 +40,9 @@ function initFirebase() {
             Uid: user.uid,
           })
 
-          fs.collection("Users").doc(user.uid).collection("Sessions").add({});
-          fs.collection("Users").doc(user.uid).collection("Locations").add({});
+          // fs.collection("Users").doc(user.uid).collection("Sessions").add({});
+          // fs.collection("Users").doc(user.uid).collection("Locations").add({});
+          
 
           // Send email verification to new users logged in with email/password
           if (userInfo.providerId == "password") {
