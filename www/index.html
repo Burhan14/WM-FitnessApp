@@ -141,7 +141,7 @@
                 class="elevation-demo elevation-6 elevation-hover-24 elevation-pressed-12 elevation-transition">Klik op
                 een plek om de afstand te berekenen</div>
               <div class="block-title page-title">
-                <a onclick="GetLocatiesFromDB()"><i class="icon material-icons md-only">cached</i>&nbsp; &nbsp; &nbsp;
+                <a onclick="GetLocationsFromFS()"><i class="icon material-icons md-only">cached</i>&nbsp; &nbsp; &nbsp;
                   &nbsp;</a>
                 SPORTPLEKKEN
                 <a class="link sortable-toggle" data-sortable=".sortable">&nbsp; &nbsp; &nbsp; &nbsp;<i
@@ -162,7 +162,8 @@
                 </div>
               </div>
               <div class="fab fab-extended fab-center-bottom popup-close">
-                <a onclick="nieuwePlek()">
+                <!-- <a onclick="nieuwePlek()"> -->
+                <a onclick="AddLocationToFS()">
                   <div class="fab-text">Voeg Toe</div>
                 </a>
               </div>
@@ -279,9 +280,9 @@
   <!-- script for timer -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- run at end of code for list to load -->
-  <script>
+  <!-- <script>
     GetLocatiesFromDB()
-  </script>
+  </script> -->
   
 
 </body>
