@@ -1,6 +1,7 @@
 //#region GLOBALE/PUBLIEKE VARIABELEN
 var $$ = Dom7;
 var workoutPicker;
+var placePicker;
 var calendarDateTime;
 var Planningitems;
 var planningVirtualList;
@@ -645,7 +646,7 @@ placesVirtualList = app.virtualList.create({
     '</div>' +
     '</div>' +
     '</a>' +
-    '<div class="swipeout-actions-right"><a href="#" onclick="DeleteLocationsFromFS({{CreationDate}})" class="swipeout-delete">Delete</a></div>' +
+    '<div class="swipeout-actions-right"><a href="#" onclick="DeleteLocationFromFS({{CreationDate}})" class="swipeout-delete">Delete</a></div>' +
     '<div class="sortable-handler"></div>' +
     '</li>',
   // Item height
@@ -960,7 +961,8 @@ $$(document).on('page:init', function (e, page) {
 
     case "planning":
       // Sessies ophalen van DB
-      GetSessiesFromDB();
+      // GetSessiesFromDB();
+      // GetSessionsFromFS();
 
       Planningitems = [];
 
@@ -984,12 +986,12 @@ $$(document).on('page:init', function (e, page) {
           '<a href="{{training}}+{{workout}}+{{moment}}/" class="item-link item-content swipeout-content">' +
           '<div class="item-inner">' +
           '<div class="item-title-row">' +
-          '<div class="item-title">{{workout}}  Workout @ {{training}}</div>' +
+          '<div class="item-title">{{Location}}</div>' +
           '</div>' +
-          '<div class="item-subtitle">{{momentShow}}</div>' +
+          '<div class="item-subtitle">{{Date}}</div>' +
           '</div>' +
           '</a>' +
-          '<div class="swipeout-actions-right"><a href="#" onclick="SessieVerwijderen({{id}})" class="swipeout-delete">Delete</a></div>' +
+          '<div class="swipeout-actions-right"><a href="#" onclick="DeleteSessionFromFS({{CreationDate}})" class="swipeout-delete">Delete</a></div>' +
           '</li>',
         // Item height
         height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
@@ -997,6 +999,20 @@ $$(document).on('page:init', function (e, page) {
       break;
 
     case "nieuw-event":
+
+    //#region place picker
+      var placeslist = GetLocationsFromFS()
+      placeslist.unshift('Home')
+      placePicker = app.picker.create({
+        inputEl: '#place-picker',
+        cols: [
+          {
+            textAlign: 'center',
+            values: placeslist
+          }
+        ]
+      });
+    //#endregion
 
       // kalender aanmaken
       calendarDateTime = app.calendar.create({
@@ -1013,41 +1029,45 @@ $$(document).on('page:init', function (e, page) {
 
       //#region Workout picker
 
-      // Array met workouts (fitness & home)
-      var workouts = {
-        Fitness: ['Chest', 'Leg', 'Abs', 'Back', 'Arm', 'Shoulder'],
-        Home: ['Full Body', 'Chest', 'Leg', 'Abs']
-      };
+      // // Array met workouts (fitness & home)
+      // var workouts = {
+      //   Fitness: ['Chest', 'Leg', 'Abs', 'Back', 'Arm', 'Shoulder'],
+      //   Home: ['Full Body', 'Chest', 'Leg', 'Abs']
+      // };
 
-      // picker aanmaken
-      workoutPicker = app.picker.create({
-        inputEl: '#workout-picker',
-        rotateEffect: true,
-        formatValue: function (values) {
-          return values[0] + ' - ' + values[1];
-        },
-        cols: [{
-            textAlign: 'center',
-            values: ['Fitness', 'Home'],
-            onChange: function (picker, workout) {
-              if (picker.cols[1].replaceValues) {
-                picker.cols[1].replaceValues(workouts[workout]);
-              }
-            }
-          },
-          {
-            values: workouts.Fitness,
-            width: 160,
-          },
-        ],
-      });
+      // // picker aanmaken
+      // workoutPicker = app.picker.create({
+      //   inputEl: '#workout-picker',
+      //   rotateEffect: true,
+      //   formatValue: function (values) {
+      //     return values[0] + ' - ' + values[1];
+      //   },
+      //   cols: [{
+      //       textAlign: 'center',
+      //       values: ['Fitness', 'Home'],
+      //       onChange: function (picker, workout) {
+      //         if (picker.cols[1].replaceValues) {
+      //           picker.cols[1].replaceValues(workouts[workout]);
+      //         }
+      //       }
+      //     },
+      //     {
+      //       values: workouts.Fitness,
+      //       width: 160,
+      //     },
+      //   ],
+      // });
+      //#endregion
+
+      
 
       // onButtonClick
       $$('#btnVoegToe').on('click', function () {
 
         //variabelen aanmaken om naar db te sturen
-        var training = workoutPicker.getValue()[0]
-        var workout = workoutPicker.getValue()[1]
+        // var training = workoutPicker.getValue()[0]
+        // var workout = workoutPicker.getValue()[1]
+        var place = placePicker.getValue()[0];
         var momentShow = calendarDateTime.value[0].toLocaleDateString([], {
           month: '2-digit',
           day: '2-digit',
@@ -1059,13 +1079,12 @@ $$(document).on('page:init', function (e, page) {
         var moment = calendarDateTime.value[0].toString()
 
         // verzend variabelen naar DB en update lijst (dbFuncties)
-        SessieToevoegen(training, workout, momentShow, moment)
-
+        // SessieToevoegen(training, workout, momentShow, moment)
+        AddSessionToFS(place,moment);
         planningVirtualList.update();
 
       });
 
-      //#endregion
       break;
 
     case "fotodagboek":
