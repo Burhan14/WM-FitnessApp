@@ -60,7 +60,8 @@ function initFirebase() {
         userPhoto.src = user.photoURL
         displayName.innerHTML = user.displayName
         app.loginScreen.close('#my-login-screen');
-        GetLocationsFromFS()
+        GetLocationsFromFS();
+        GetSessionsFromFS();
 
 
         // reminder to verify the email address
@@ -136,6 +137,7 @@ function initFirebase() {
       defaultPhoto.classList.remove("hide")
       userPhoto.classList.add("hide")
       placesVirtualList.deleteAllItems()
+      planningVirtualList.deleteAllItems()
     }).catch((error) => {
       // An error happened.
     });
@@ -157,24 +159,22 @@ function AddLocationToFS() {
   }
 }
 function GetLocationsFromFS() {
+  var placeNames = []
   try {
     placesVirtualList.deleteAllItems()
     firebase.firestore().collection("Users").doc(user.uid).collection("Locations").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        // console.log(doc.id, " => ", doc.data());
-
-        // placesVirtualList.appendItem(doc.data());
         placesVirtualList.appendItem(doc.data());
-
+        placeNames.push(doc.data().Name)
       });
     });
     placesVirtualList.update()
+    return placeNames
   } catch (error) {
-    app.dialog.alert("Log in om locaties te tonen");
+    app.dialog.alert("Log in om locaties te weergeven");
   }
 }
-function DeleteLocationsFromFS(CD) {
+function DeleteLocationFromFS(CD) {
   try {
     firebase.firestore().collection("Users").doc(user.uid).collection("Locations").where("CreationDate", "==",CD)
         .get()
@@ -197,6 +197,78 @@ function DeleteLocationsFromFS(CD) {
 
 //Firestore Sessions
 //...
+
+function AddSessionToFS(place, date) {
+  try {
+    fs.collection("Users").doc(user.uid).collection("Sessions").add({
+      Location: place,
+      Date: firebase.firestore.Timestamp.fromDate(new Date(date)),
+      CreationDate: Date.now()
+    });
+    GetSessionsFromFS()
+  } catch (error) {
+    app.dialog.alert("Log in om een sessie te kunnen toevoegen");
+  }
+}
+
+function GetSessionsFromFS() {
+  try {
+    planningVirtualList.deleteAllItems()
+    firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        if (doc.data().Location == 'Home') {
+          planningVirtualList.appendItem(
+            {
+              Location : 'Home workout',
+              // Date : doc.data().Date.toDate().toLocaleString(),
+              Date : new Intl.DateTimeFormat('en-GB', { dateStyle: 'full', timeStyle: 'long' }).format(doc.data().Date.toDate()),
+              CreationDate : doc.data().CreationDate
+            }
+          )
+        } else {
+          planningVirtualList.appendItem(
+            {
+              Location : 'Workout at ' + doc.data().Location + ' (fitness)',
+              // Date : doc.data().Date.toDate().toLocaleString(),
+              Date : new Intl.DateTimeFormat('en-GB', { dateStyle: 'full', timeStyle: 'long' }).format(doc.data().Date.toDate()),
+              CreationDate : doc.data().CreationDate
+            }
+          )
+        }
+        
+      });
+    });
+    planningVirtualList.update();
+  } catch (error) {
+    app.dialog.alert("Log in om sessies te weergeven");
+  }
+  
+}
+
+function DeleteSessionFromFS(CD) {
+  try {
+    firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").where("CreationDate", "==",CD)
+        .get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+
+                firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").doc(doc.id).delete();
+
+            });
+        })
+        .catch((error) => {
+            console.log("Error getting documents: ", error);
+        }); 
+
+    placesVirtualList.update()
+  } catch (error) {
+    app.dialog.alert("Log in om sessies te tonen");
+  }
+}
+
+//Firestore Exercises (to append in sessions) (full CRUD)
+//...
+
 
 //Firestore UserCalc
 //...
