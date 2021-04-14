@@ -987,7 +987,7 @@ $$(document).on('page:init', function (e, page) {
         },
         // List item Template7 template  (EDITED BY FUAT & BURHAN)
         itemTemplate: '<li class="swipeout">' +
-          '<a href="{{Location}}+{{Date}}+{{CreationDate}}/" onclick="GetExercisesFromFS({{CreationDate}})" class="item-link item-content swipeout-content">' +
+          '<a href="{{Location}}+{{Date}}+{{CreationDate}}/" class="item-link item-content swipeout-content">' +
           '<div class="item-inner">' +
           '<div class="item-title-row">' +
           '<div class="item-title">Workout @ {{Location}}</div>' +
@@ -1114,7 +1114,7 @@ $$(document).on('page:init', function (e, page) {
       // Item height
       height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
     });
-
+    GetExercisesFromFS(document.getElementById('sessionCD').value)
       //#region exercise picker
       
       if (document.getElementById('sessionLocation').value == 'Home') {
