@@ -39,7 +39,7 @@
           <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
-              <div class="title">Mijn profiel</div>
+              <div class="title">My profile</div>
             </div>
           </div>
           <div class="page-content">
@@ -47,19 +47,19 @@
               <img id="userPhoto" src="" alt="" style="border-radius: 50%;">
               <i id="defaultUserPhoto" class="material-icons md-48"
                 style="font-size: 96px; color:#00587a;">account_circle</i>
-              <p id="displayName">Log in om uw profielinformatie te zien</p>
+              <p id="displayName">Log in to view your profile information</p>
             </div>
             <div class="col-50">
               <a href="#" id="btnLogIn" class="button button-raised button-outline login-screen-open"
-                data-login-screen="#my-login-screen">Log in</a>
-              <a href="#" id="btnLogOut" class="button button-raised button-outline hide">log out</a>
+                data-login-screen="#my-login-screen">Login</a>
+              <a href="#" id="btnLogOut" class="button button-raised button-outline hide">Logout</a>
             </div>
             <div class="toolbar toolbar-bottom tabbar-labels" style="position: absolute;bottom: 0px;">
               <div class="toolbar-inner">
                 <a href="" class="tab-link tab-link-active">
                   <i class="icon f7-icons if-not-md">gear</i>
                   <i class="icon material-icons if-md">settings</i>
-                  <span class="tabbar-label">Instellingen</span>
+                  <span class="tabbar-label">Settings</span>
                 </a>
               </div>
             </div>
@@ -128,7 +128,7 @@
               class="popup-open" data-popup=".popup-plek">
               <i class="icon f7-icons if-not-md">plus</i>
               <i class="icon material-icons md-only">add</i>
-              <div class="fab-text">Nieuwe Plek</div>
+              <div class="fab-text">New Place</div>
             </a>
           </div>
 
@@ -138,12 +138,12 @@
             <!-- Inset content block -->
             <div class="block block-strong inset">
               <div id="afstand"
-                class="elevation-demo elevation-6 elevation-hover-24 elevation-pressed-12 elevation-transition">Klik op
-                een plek om de afstand te berekenen</div>
+                class="elevation-demo elevation-6 elevation-hover-24 elevation-pressed-12 elevation-transition">Click on a spot to calculate the distance
+              </div>
               <div class="block-title page-title">
                 <a onclick="GetLocationsFromFS()"><i class="icon material-icons md-only">cached</i>&nbsp; &nbsp; &nbsp;
                   &nbsp;</a>
-                SPORTPLEKKEN
+                SPORTS SPOTS
                 <a class="link sortable-toggle" data-sortable=".sortable">&nbsp; &nbsp; &nbsp; &nbsp;<i
                     class="icon material-icons md-only">low_priority</i></a>
               </div>
@@ -154,25 +154,25 @@
               <div class="navbar">
                 <div class="navbar-bg"></div>
                 <div class="navbar-inner">
-                  <div class="title">Nieuwe plek</div>
+                  <div class="title">New place</div>
                   <div class="right">
                     <!-- Link to close popup -->
-                    <a class="link popup-close">sluiten</a>
+                    <a class="link popup-close">close</a>
                   </div>
                 </div>
               </div>
               <div class="fab fab-extended fab-center-bottom popup-close">
                 <!-- <a onclick="nieuwePlek()"> -->
                 <a onclick="AddLocationToFS()">
-                  <div class="fab-text">Voeg Toe</div>
+                  <div class="fab-text">Add</div>
                 </a>
               </div>
               <div class="list">
                 <div class="item-content item-input">
                   <div class="item-inner">
-                    <div class="item-title item-label">Naam:</div>
+                    <div class="item-title item-label">Name:</div>
                     <div class="item-input-wrap">
-                      <input type="text" name="naam" id="plekNaam" placeholder="Naam van de locatie">
+                      <input type="text" name="naam" id="plekNaam" placeholder="Name of the location">
                     </div>
                   </div>
                 </div>
@@ -181,7 +181,7 @@
                     <div class="item-title item-label">Latitude:</div>
                     <div class="item-input-wrap">
                       <input type="text" name="Latitude" id="plekLatitude" inputmode="numeric" pattern="[0-9]*"
-                        placeholder="precieze latitude">
+                        placeholder="precise latitude">
                     </div>
                   </div>
                 </div>
@@ -190,14 +190,14 @@
                     <div class="item-title item-label">Longitude:</div>
                     <div class="item-input-wrap">
                       <input type="text" name="Longitude" id="plekLongitude" inputmode="numeric" pattern="[0-9]*"
-                        placeholder="precieze longitude">
+                        placeholder="precise longitude">
                     </div>
                   </div>
                 </div>
                 <div class="flex-center plekToevoegen">
                   <button class="button button-raised button-fill"
                     style="min-width: 50%; max-width: 80%; color: #00587a;" onclick="getLocatieFormulier()"><i
-                      class="icon material-icons md-only">beenhere</i>&nbsp;&nbsp;Vul huidige locatie</button>
+                      class="icon material-icons md-only">beenhere</i>&nbsp;&nbsp;Enter current location</button>
                 </div>
               </div>
             </div>

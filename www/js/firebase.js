@@ -270,8 +270,63 @@ function DeleteSessionFromFS(CD) {
 //...
 
 
-//Firestore UserCalc
-//...
+//Firestore UserData
+function GetDataFromFS() {
+  try {
+    mijnLichaamVirtualList.deleteAllItems()
+    firebase.firestore().collection("Users").doc(user.uid).collection("Data").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          mijnLichaamVirtualList.appendItem(
+            {
+              BMI : doc.data().BMI,
+              BMR : doc.data().BMR,        
+              DisplayDate : new Intl.DateTimeFormat('en-GB', { dateStyle: 'full', timeStyle: 'short' }).format(doc.data().Date.toDate()),       
+              CreationDate : doc.data().CreationDate
+            }
+          )         
+      });
+    });
+    mijnLichaamVirtualList.update();
+  } catch (error) {
+    app.dialog.alert("Log in to view your data");
+  }
+  
+}
+
+function AddDataToFS(bmi, calories) {
+  try {
+    fs.collection("Users").doc(user.uid).collection("Data").add({
+      BMI: calories,
+      BMR: bmi,
+      Date: firebase.firestore.Timestamp.fromDate(new Date(Date.now())),
+      CreationDate : Date.now()
+    });
+    GetDataFromFS()
+  } catch (error) {
+    app.dialog.alert("Login to add a calculation");
+  }
+}
+
+function DeleteDataFromFS(CD) {
+  try {
+    firebase.firestore().collection("Users").doc(user.uid).collection("Data").where("CreationDate", "==",CD)
+        .get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+
+                firebase.firestore().collection("Users").doc(user.uid).collection("Data").doc(doc.id).delete();
+
+            });
+        })
+        .catch((error) => {
+            console.log("Error getting documents: ", error);
+        }); 
+
+    mijnLichaamVirtualList.update()
+  } catch (error) {
+    app.dialog.alert("Log in to view your data");
+  }
+}
 
 //Firestore Pics
 //...
