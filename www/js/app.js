@@ -2,6 +2,7 @@
 var $$ = Dom7;
 var workoutPicker;
 var placePicker;
+var exercisePicker;
 var calendarDateTime;
 var Planningitems;
 var planningVirtualList;
@@ -15,6 +16,9 @@ var globalLat;
 var Placesitems = [];
 var calories;
 var bmi;
+var exercisesList = [];
+var sessionVirtualList;
+var sessionItems = [];
 
 var user;
 var fs;
@@ -983,12 +987,12 @@ $$(document).on('page:init', function (e, page) {
         },
         // List item Template7 template  (EDITED BY FUAT & BURHAN)
         itemTemplate: '<li class="swipeout">' +
-          '<a href="{{training}}+{{workout}}+{{moment}}/" class="item-link item-content swipeout-content">' +
+          '<a href="{{Location}}+{{Date}}+{{CreationDate}}/" onclick="GetExercisesFromFS({{CreationDate}})" class="item-link item-content swipeout-content">' +
           '<div class="item-inner">' +
           '<div class="item-title-row">' +
-          '<div class="item-title">{{Location}}</div>' +
+          '<div class="item-title">Workout @ {{Location}}</div>' +
           '</div>' +
-          '<div class="item-subtitle">{{Date}}</div>' +
+          '<div class="item-subtitle">{{DisplayDate}}</div>' +
           '</div>' +
           '</a>' +
           '<div class="swipeout-actions-right"><a href="#" onclick="DeleteSessionFromFS({{CreationDate}})" class="swipeout-delete">Delete</a></div>' +
@@ -996,6 +1000,7 @@ $$(document).on('page:init', function (e, page) {
         // Item height
         height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
       });
+
       break;
 
     case "nieuw-event":
@@ -1068,14 +1073,6 @@ $$(document).on('page:init', function (e, page) {
         // var training = workoutPicker.getValue()[0]
         // var workout = workoutPicker.getValue()[1]
         var place = placePicker.getValue()[0];
-        var momentShow = calendarDateTime.value[0].toLocaleDateString([], {
-          month: '2-digit',
-          day: '2-digit',
-          year: 'numeric'
-        }) + " @ " + calendarDateTime.value[0].toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit'
-        })
         var moment = calendarDateTime.value[0].toString()
 
         // verzend variabelen naar DB en update lijst (dbFuncties)
@@ -1084,6 +1081,57 @@ $$(document).on('page:init', function (e, page) {
         planningVirtualList.update();
 
       });
+
+      break;
+
+    case "sessionInfo":
+
+    // lijst aanmaken 
+    sessionVirtualList = app.virtualList.create({
+      // List Element
+      el: '.session-virtual-list',
+      items: sessionItems,
+      // Custom search function for searchbar
+      searchAll: function (query, items) {
+        var found = [];
+        for (var i = 0; i < items.length; i++) {
+          if (items[i].title.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i); 
+        }
+        return found; //return array with mathced indexes
+      },
+      // List item Template7 template  (EDITED BY FUAT & BURHAN)
+      itemTemplate: '<li class="swipeout">' +
+        '<a href="" class="item-link item-content swipeout-content">' +
+        '<div class="item-inner">' +
+        '<div class="item-title-row">' +
+        '<div class="item-title">{{Exercise}}</div>' +
+        '</div>' +
+        '<div class="item-subtitle">Repetitions: {{Reps}} - Weights: {{Weight}}</div>' +
+        '</div>' +
+        '</a>' +
+        '<div class="swipeout-actions-right"><a href="#" onclick="DeleteExerciseFromFS({{CreationDate}})" class="swipeout-delete">Delete</a></div>' +
+        '</li>',
+      // Item height
+      height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
+    });
+
+      //#region exercise picker
+      
+      if (document.getElementById('sessionLocation').value == 'Home') {
+        GetTypeExercisesFromFS('Home')
+      } else {
+        GetTypeExercisesFromFS('Fitness')
+      }
+      exercisePicker = app.picker.create({
+        inputEl: '#exercise-picker',
+        cols: [
+          {
+            textAlign: 'center',
+            values: exercisesList
+          }
+        ]
+      });
+    //#endregion
 
       break;
 

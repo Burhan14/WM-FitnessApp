@@ -42,7 +42,7 @@ function initFirebase() {
 
           // fs.collection("Users").doc(user.uid).collection("Sessions").add({});
           // fs.collection("Users").doc(user.uid).collection("Locations").add({});
-          
+
 
           // Send email verification to new users logged in with email/password
           if (userInfo.providerId == "password") {
@@ -110,12 +110,6 @@ function initFirebase() {
     privacyPolicyUrl: '<your-privacy-policy-url>'
   };
 
-  //Handle login
-  // var redLog = document.getElementById("redirectLogin")
-  // redLog.addEventListener("click", function () {
-  //   GoogleSignInRedirect(GoogleAuthProvider);
-  // })
-
   var btnLogOut = document.getElementById("btnLogOut")
   btnLogOut.addEventListener("click", function () {
     FireBaseSignOut();
@@ -125,7 +119,6 @@ function initFirebase() {
   btnLogIn.addEventListener("click", function () {
     // The start method will wait until the DOM is loaded.
     ui.start('#firebaseui-auth-container', uiConfig);
-
   })
 
   function FireBaseSignOut() {
@@ -158,6 +151,7 @@ function AddLocationToFS() {
     app.dialog.alert("Log in om een locatie te kunnen toevoegen");
   }
 }
+
 function GetLocationsFromFS() {
   var placeNames = []
   try {
@@ -174,20 +168,21 @@ function GetLocationsFromFS() {
     app.dialog.alert("Log in om locaties te weergeven");
   }
 }
+
 function DeleteLocationFromFS(CD) {
   try {
-    firebase.firestore().collection("Users").doc(user.uid).collection("Locations").where("CreationDate", "==",CD)
-        .get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
+    firebase.firestore().collection("Users").doc(user.uid).collection("Locations").where("CreationDate", "==", CD)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
 
-                firebase.firestore().collection("Users").doc(user.uid).collection("Locations").doc(doc.id).delete();
+          firebase.firestore().collection("Users").doc(user.uid).collection("Locations").doc(doc.id).delete();
 
-            });
-        })
-        .catch((error) => {
-            console.log("Error getting documents: ", error);
-        }); 
+        });
+      })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      });
 
     placesVirtualList.update()
   } catch (error) {
@@ -196,8 +191,6 @@ function DeleteLocationFromFS(CD) {
 }
 
 //Firestore Sessions
-//...
-
 function AddSessionToFS(place, date) {
   try {
     fs.collection("Users").doc(user.uid).collection("Sessions").add({
@@ -216,49 +209,39 @@ function GetSessionsFromFS() {
     planningVirtualList.deleteAllItems()
     firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        if (doc.data().Location == 'Home') {
-          planningVirtualList.appendItem(
-            {
-              Location : 'Home workout',
-              // Date : doc.data().Date.toDate().toLocaleString(),
-              Date : new Intl.DateTimeFormat('en-GB', { dateStyle: 'full', timeStyle: 'long' }).format(doc.data().Date.toDate()),
-              CreationDate : doc.data().CreationDate
-            }
-          )
-        } else {
-          planningVirtualList.appendItem(
-            {
-              Location : 'Workout at ' + doc.data().Location + ' (fitness)',
-              // Date : doc.data().Date.toDate().toLocaleString(),
-              Date : new Intl.DateTimeFormat('en-GB', { dateStyle: 'full', timeStyle: 'long' }).format(doc.data().Date.toDate()),
-              CreationDate : doc.data().CreationDate
-            }
-          )
-        }
-        
+        planningVirtualList.appendItem({
+          Location: doc.data().Location,
+          // Date : doc.data().Date.toDate().toLocaleString(),
+          DisplayDate: new Intl.DateTimeFormat('en-GB', {
+            dateStyle: 'full',
+            timeStyle: 'short'
+          }).format(doc.data().Date.toDate()),
+          Date: new Date(doc.data().Date.toDate()),
+          CreationDate: doc.data().CreationDate
+        })
       });
     });
     planningVirtualList.update();
   } catch (error) {
     app.dialog.alert("Log in om sessies te weergeven");
   }
-  
+
 }
 
 function DeleteSessionFromFS(CD) {
   try {
-    firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").where("CreationDate", "==",CD)
-        .get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
+    firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").where("CreationDate", "==", CD)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
 
-                firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").doc(doc.id).delete();
+          firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").doc(doc.id).delete();
 
-            });
-        })
-        .catch((error) => {
-            console.log("Error getting documents: ", error);
-        }); 
+        });
+      })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      });
 
     placesVirtualList.update()
   } catch (error) {
@@ -269,10 +252,62 @@ function DeleteSessionFromFS(CD) {
 //Firestore Exercises (to append in sessions) (full CRUD)
 //...
 
+function AddExerciseToFS(CD) {
+  try {
+    firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").where("CreationDate", "==", parseInt(CD)).get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        fs.collection("Users").doc(user.uid).collection("Sessions").doc(doc.id).collection("Exercises").add({
+          Done: false,
+          Exercise: document.getElementById('exercise-picker').value,
+          Reps: 0,
+          Weight:0,
+          CreationDate: Date.now()
+        })
+      });
+    })
+    GetExercisesFromFS(CD)
+  } catch (error) {
+    app.dialog.alert("Couldn't add exercise to session");
+  }
+}
+
+function GetTypeExercisesFromFS(type) {
+  exercisesList = []
+  try {
+    firebase.firestore().collection("Exercises").where("Type", "==", type).get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        // console.log(doc.data())
+        exercisesList.push(doc.data().Name)
+      });
+    });
+  } catch (error) {
+    app.dialog.alert("type error");
+  }
+
+}
+
+function GetExercisesFromFS(CD) {
+  try {
+    sessionVirtualList.deleteAllItems();
+    firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").where("CreationDate", "==", parseInt(CD)).get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        fs.collection("Users").doc(user.uid).collection("Sessions").doc(doc.id).collection("Exercises").get().then((querySnapshot) => {
+          querySnapshot.forEach((doc2) => {
+              // doc.data() is never undefined for query doc snapshots
+              sessionVirtualList.appendItem(doc2.data())
+              });
+          });
+      });
+    })
+    sessionVirtualList.update();
+  } catch (error) {
+    app.dialog.alert("couldn't get exercises for this session");
+  }
+  
+}
 
 //Firestore UserCalc
 //...
 
 //Firestore Pics
 //...
-
