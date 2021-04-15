@@ -4,7 +4,7 @@ var workoutPicker;
 var placePicker;
 var exercisePicker;
 var calendarDateTime;
-var Planningitems;
+var Planningitems = [];
 var planningVirtualList;
 var fotoVirtualList;
 var placesVirtualList;
@@ -675,7 +675,7 @@ function getLocatieFormulier() {
     );
 
   } else {
-    app.dialog.alert('Het spijt me, maar geolocatie wordt niet ondersteund door deze browser.', 'Geen geolocatie ondersteuning');
+    app.dialog.alert('I am sorry, but geolocation is not supported by this browser. "," No geolocation support');
   }
 }
 
@@ -716,7 +716,7 @@ function getLocatie(longitude, latitude) {
     globalLat = latitude;
 
   } else {
-    app.dialog.alert('Het spijt me, maar geolocatie wordt niet ondersteund door deze browser.', 'Geen geolocatie ondersteuning');
+    app.dialog.alert('I am sorry, but geolocation is not supported by this browser. "," No geolocation support');
   }
 }
 
@@ -743,7 +743,7 @@ function showLocation(position) {
   var d = (R * c).toFixed(0); // in metres
 
   $$("#afstand").html(
-    `Afstand tot de gekozen locatie : ${(d/1000).toFixed(1)}km (${d}m)`
+    `Distance to the chosen location: ${(d/1000).toFixed(1)}km (${d}m)`
   );
 }
 
@@ -758,16 +758,16 @@ function positionError(error) {
   switch (error.code) {
     case 0:
       // unknown error
-      app.dialog.alert('Onbekend probleem bij het bepalen van je positie. Zorg er voor dat de positiebepaling van je toestel actief is.', 'Positie probleem');
+      app.dialog.alert('Unknown problem determining your position. Make sure that the positioning of your device is active. ', 'Position problem');
     case 1:
       // permission denied
-      app.dialog.alert('Het spijt me, maar ik ga je moeten blijven pesten als je geen toestemming geeft om je positie te zien. Als je wilt, kan je de pagina herladen en eventueel de geschiedenis van je browser wissen. Het laatste uur is meer dan voldoende. <b>iPhone</b> : zorg er voor dat je locatie toestemming in het algemeen EN locatie toestemming aan Safari geeft.', 'Positie toelating probleem');
+      app.dialog.alert('I am sorry, but I am going to have to keep bullying you if you do not give permission to see your position. If you want, you can reload the page and possibly delete the history of your browser. The last hour is more than enough. <b> iPhone </b>: Make sure you give location permission in general AND location permission to Safari.', 'Position admission problem');
     case 2:
       // position unavailable (error response from location provider)
-      app.dialog.alert('Je positie is niet beschikbaar. Zorg er voor dat de positiebepaling van je toestel actief is.', 'Positie niet beschikbaar');
+      app.dialog.alert('Your position is not available. Make sure that the positioning of your device is active.', 'Position not available');
     case 3:
       // timed out
-      app.dialog.alert('Het duurt te lang om je positie te vinden. Zit je in een tunnel? Of zit je nog in de school? Op een heel aantal toestellen kan de positie sneller bepaald worden als je ook je wifi aanzet.', 'Positie timeout');
+      app.dialog.alert('It takes too long to find your position. Are you in a tunnel? Or are you still in school? On a large number of devices, the position can be determined faster if you also switch on your WiFi.', 'Position timeout');
   }
 };
 
@@ -794,7 +794,7 @@ function errorMessage(msg) {
 
 // onSuccess
 function showResults(calories, bmi) {
-  app.dialog.alert(`<p>BMR: ± <strong>${(calories).toFixed(2)} </strong> kcal. <br><br>BMI: ${(bmi)} </p>`, "Resultaat");
+  app.dialog.alert(`<p>BMR: ± <strong>${(calories)} </strong> kcal. <br><br>BMI: ${(bmi)} </p>`, "Resultaat");
 }
 
 // Handle form submit
@@ -823,6 +823,7 @@ function submitHandler() {
 
   }
 
+  // Weight
   let weight = document.getElementById('weight').value;
   if (isNaN(weight) || weight < 0) {
     return errorMessage('Voer een geldig gewicht in');
@@ -833,13 +834,31 @@ function submitHandler() {
     weight = 0.453592 * weight;
   }
 
+  // Activity
+  let activity = document.getElementById('activity').value;
+  if (activity == 'sedentary') {
+    activity = 1.25;
+  }
+  else if (activity == 'light') {
+    activity = 1.375;
+  }
+  else if (activity == 'moderate') {
+    activity = 1.55;
+  }
+  else if (activity == 'heavy') {
+    activity = 1.725;
+  }
+  else if (activity == 'athlete') {
+    activity = 1.9;
+  }
+
   calories = 0;
   let gender = document.getElementById('gender').value
   if (gender == 'Female') {
     //females =  655.09 + 9.56 x (Weight in kg) + 1.84 x (Height in cm) - 4.67 x age   
-    calories = 655.09 + (9.56 * weight) + (1.84 * heightCM) - (4.67 * age);
+    calories = (655.09 + (9.56 * weight) + (1.84 * heightCM) - (4.67 * age)) * activity;
   } else {
-    calories = 66.47 + (13.75 * weight) + (5 * heightCM) - (6.75 * age);
+    calories = (66.47 + (13.75 * weight) + (5 * heightCM) - (6.75 * age)) * activity;
   }
 
   bmi = (weight / (heightCM ** 2)) * 10000;
@@ -851,7 +870,7 @@ function submitHandler() {
   } else if (bmi < 30) {
     bmi = bmi.toFixed(1) + " (Overgewicht)";
   } else {
-    bmi = bmi.toFixed(1) + "(Zwaarlijvig)";
+    bmi = bmi.toFixed(1) + " (Zwaarlijvig)";
   }
 
   // Display results
@@ -861,17 +880,15 @@ function submitHandler() {
 // action: berekening + toevoegen in DB
 function BmrBmiBerekenen() {
   submitHandler();
-
-  // console.log(calories + ' - ' + bmi);
-
-  mijnLichaamItems.push({
-    bmr: calories,
-    bmi: bmi,
-    datum: new Date(Date.now()).toLocaleDateString(),
-  });
+  // mijnLichaamItems.push({
+  //   bmr: calories,
+  //   bmi: bmi,
+  //   datum: new Date(Date.now()).toLocaleDateString(),
+  // });
 
   // verzend naar DB en update lijst (dbFuncties)
-  BerekeningToevoegen(calories, bmi, new Date(Date.now()));
+  // BerekeningToevoegen(calories, bmi, new Date(Date.now()));
+  AddDataToFS(calories.toFixed(2), bmi);
   mijnLichaamVirtualList.update();
 
 };
@@ -968,8 +985,6 @@ $$(document).on('page:init', function (e, page) {
       // GetSessiesFromDB();
       // GetSessionsFromFS();
 
-      Planningitems = [];
-
       // lijst aanmaken 
       planningVirtualList = app.virtualList.create({
         // List Element
@@ -1061,8 +1076,6 @@ $$(document).on('page:init', function (e, page) {
       //   ],
       // });
       //#endregion
-
-
 
       // onButtonClick
       $$('#btnVoegToe').on('click', function () {
@@ -1215,7 +1228,6 @@ $$(document).on('page:init', function (e, page) {
       break;
 
     case "mijnLichaam":
-
       // lijst aanmaken
       mijnLichaamVirtualList = app.virtualList.create({
         // List Element
@@ -1236,16 +1248,17 @@ $$(document).on('page:init', function (e, page) {
           '<a href="" class="item-link item-content swipeout-content">' +
           '<div class="item-inner">' +
           '<div class="item-title-row">' +
-          '<div class="item-subtitle">BMR: {{bmr}} - BMI:{{bmi}}</div>' +
+          '<div class="item-title">BMR: {{BMR}} - BMI:{{BMI}}</div>' +
           '</div>' +
-          '<div class="item-title">{{datum}}</div>' +
+          '<div class="item-subtitle">{{DisplayDate}}</div>' +
           '</div>' +
           '</a>' +
-          '<div class="swipeout-actions-right"><a href="#" onclick="BerekeningVerwijderen({{id}})" class="swipeout-delete">Delete</a></div>' +
+          '<div class="swipeout-actions-right"><a href="#" onclick="DeleteDataFromFS({{CreationDate}})" class="swipeout-delete">Delete</a></div>' +
           '</li>',
         // Item height
         height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
       });
+      GetDataFromFS();
 
       break;
   }
