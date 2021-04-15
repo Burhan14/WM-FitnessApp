@@ -556,7 +556,7 @@ var app = new Framework7({
 
       var f7 = this;
 
-      initFirebase();    
+      initFirebase();
 
       if (f7.device.cordova) {
         // Init cordova APIs (see cordova-app.js)
@@ -567,7 +567,7 @@ var app = new Framework7({
 
 
 
-        
+
 
       }
     },
@@ -1005,19 +1005,17 @@ $$(document).on('page:init', function (e, page) {
 
     case "nieuw-event":
 
-    //#region place picker
+      //#region place picker
       var placeslist = GetLocationsFromFS()
       placeslist.unshift('Home')
       placePicker = app.picker.create({
         inputEl: '#place-picker',
-        cols: [
-          {
-            textAlign: 'center',
-            values: placeslist
-          }
-        ]
+        cols: [{
+          textAlign: 'center',
+          values: placeslist
+        }]
       });
-    //#endregion
+      //#endregion
 
       // kalender aanmaken
       calendarDateTime = app.calendar.create({
@@ -1064,7 +1062,7 @@ $$(document).on('page:init', function (e, page) {
       // });
       //#endregion
 
-      
+
 
       // onButtonClick
       $$('#btnVoegToe').on('click', function () {
@@ -1077,7 +1075,7 @@ $$(document).on('page:init', function (e, page) {
 
         // verzend variabelen naar DB en update lijst (dbFuncties)
         // SessieToevoegen(training, workout, momentShow, moment)
-        AddSessionToFS(place,moment);
+        AddSessionToFS(place, moment);
         planningVirtualList.update();
 
       });
@@ -1086,37 +1084,74 @@ $$(document).on('page:init', function (e, page) {
 
     case "sessionInfo":
 
-    // lijst aanmaken 
-    sessionVirtualList = app.virtualList.create({
-      // List Element
-      el: '.session-virtual-list',
-      items: sessionItems,
-      // Custom search function for searchbar
-      searchAll: function (query, items) {
-        var found = [];
-        for (var i = 0; i < items.length; i++) {
-          if (items[i].title.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i); 
-        }
-        return found; //return array with mathced indexes
-      },
-      // List item Template7 template  (EDITED BY FUAT & BURHAN)
-      itemTemplate: '<li class="swipeout">' +
-        '<a href="" class="item-link item-content swipeout-content">' +
-        '<div class="item-inner">' +
-        '<div class="item-title-row">' +
-        '<div class="item-title">{{Exercise}}</div>' +
-        '</div>' +
-        '<div class="item-subtitle">Repetitions: {{Reps}} - Weights: {{Weight}}</div>' +
-        '</div>' +
-        '</a>' +
-        '<div class="swipeout-actions-right"><a href="#" onclick="DeleteExerciseFromFS({{CreationDate}})" class="swipeout-delete">Delete</a></div>' +
-        '</li>',
-      // Item height
-      height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
-    });
-    GetExercisesFromFS(document.getElementById('sessionCD').value)
+      // lijst aanmaken 
+      sessionVirtualList = app.virtualList.create({
+        // List Element
+        el: '.session-virtual-list',
+        items: sessionItems,
+        // Custom search function for searchbar
+        searchAll: function (query, items) {
+          var found = [];
+          for (var i = 0; i < items.length; i++) {
+            if (items[i].title.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i);
+          }
+          return found; //return array with mathced indexes
+        },
+        // List item Template7 template  (EDITED BY FUAT & BURHAN)
+        itemTemplate: '<li class="swipeout">' +
+          '<a href="#" class="item-link item-content swipeout-content link popover-open" data-popover=".popover-{{CreationDate}}">' +
+          '<div class="item-inner">' +
+          '<div class="item-title-row">' +
+          '<div class="item-title">{{Exercise}}</div>' +
+          '</div>' +
+          '<div class="item-subtitle">Repetitions: {{Reps}} - Weights: {{Weight}}</div>' +
+          '</div>' +
+          '</a>' +
+          '<div class="swipeout-actions-right"><a href="#" onclick="DeleteThisExo({{CreationDate}})" class="swipeout-delete">Delete</a></div>' +
+          '<div class="popover popover-{{CreationDate}}">' +
+          '<div class="popover-inner">' +
+          '<div class="list">' +
+          '<ul>' +
+          '<li>' +
+          '<div class="item-content item-input">' +
+          '<div class="item-inner">' +
+          '<div class="item-title item-label">Reps:</div>' +
+          '<div class="item-input-wrap">' +
+          '<input type="text" name="reps" id="reps-{{CreationDate}}" inputmode="numeric" pattern="[0-9]*" value="{{Reps}}">' +
+          '</div>' +
+          '</div>' +
+          '</div>' +
+          '</li>' +
+          '<li>' +
+          '<div class="item-content item-input">' +
+          '<div class="item-inner">' +
+          '<div class="item-title item-label">Weight:</div>' +
+          '<div class="item-input-wrap">' +
+          '<input type="text" name="weight" id="weight-{{CreationDate}}" inputmode="numeric" pattern="[0-9]*" value="{{Weight}}">' +
+          '</div>' +
+          '</div>' +
+          '</div>' +
+          '</li>' +
+          '<li>' +
+          '<div class="item-content item-input">' +
+          '<div class="item-inner">' +
+          '<div class="item-input-wrap">' +
+          '<a href="#" class="button button-fill popover-close" onclick="UpdateThisExo({{CreationDate}})">update</a>' +
+          '</div>' +
+          '</div>' +
+          '</div>' +
+          '</li>' +
+          '</ul>' +
+          '</div>' +
+          '</div>' +
+          '</div>'+
+          '</li>' ,
+          // Item height
+        height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
+      });
+      GetExercisesFromFS(document.getElementById('sessionCD').value)
       //#region exercise picker
-      
+
       if (document.getElementById('sessionLocation').value == 'Home') {
         GetTypeExercisesFromFS('Home')
       } else {
@@ -1124,14 +1159,14 @@ $$(document).on('page:init', function (e, page) {
       }
       exercisePicker = app.picker.create({
         inputEl: '#exercise-picker',
-        cols: [
-          {
-            textAlign: 'center',
-            values: exercisesList
-          }
-        ]
+        cols: [{
+          textAlign: 'center',
+          values: exercisesList
+        }]
       });
-    //#endregion
+      //#endregion
+
+      
 
       break;
 
@@ -1215,7 +1250,16 @@ $$(document).on('page:init', function (e, page) {
       break;
   }
 })
-//#region FireBase Sign In With Google
 
+function DeleteThisExo(ECD) {
+  var SessionCD = document.getElementById('sessionCD').value;
+  DeleteExerciseFromFS(SessionCD,ECD);
+}
 
-//#endregion
+function UpdateThisExo(ECD) {
+  var SessionCD = document.getElementById('sessionCD').value;
+  var weight = document.getElementById('weight-'+ECD).value;
+  var reps = document.getElementById('reps-'+ECD).value;
+  UpdateExerciseInFS(SessionCD,ECD,reps,weight);
+  GetExercisesFromFS(SessionCD);
+}

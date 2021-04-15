@@ -257,7 +257,6 @@ function AddExerciseToFS(CD) {
     firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").where("CreationDate", "==", parseInt(CD)).get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         fs.collection("Users").doc(user.uid).collection("Sessions").doc(doc.id).collection("Exercises").add({
-          Done: false,
           Exercise: document.getElementById('exercise-picker').value,
           Reps: 0,
           Weight:0,
@@ -304,6 +303,35 @@ function GetExercisesFromFS(CD) {
     app.dialog.alert("couldn't get exercises for this session");
   }
   
+}
+
+function DeleteExerciseFromFS(SCD, ECD) {
+  //TODO
+  firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").where("CreationDate", "==", parseInt(SCD)).get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      fs.collection("Users").doc(user.uid).collection("Sessions").doc(doc.id).collection("Exercises").where("CreationDate", "==", parseInt(ECD)).get().then((querySnapshot) => {
+        querySnapshot.forEach((doc2) => {
+            firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").doc(doc.id).collection("Exercises").doc(doc2.id).delete();
+            });
+        });
+    });
+  })
+}
+
+function UpdateExerciseInFS(SCD, ECD, reps, weight) {
+  //TODO
+  firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").where("CreationDate", "==", parseInt(SCD)).get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      fs.collection("Users").doc(user.uid).collection("Sessions").doc(doc.id).collection("Exercises").where("CreationDate", "==", parseInt(ECD)).get().then((querySnapshot) => {
+        querySnapshot.forEach((doc2) => {
+            firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").doc(doc.id).collection("Exercises").doc(doc2.id).update({
+              Reps: reps,
+              Weight: weight
+            });
+            });
+        });
+    });
+  })
 }
 
 //Firestore UserCalc
