@@ -622,7 +622,8 @@ function fotoSuccess(imgURL) {
   var nr = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
   // verzend variabelen naar DB en update lijst (dbFuncties)
-  FotoToevoegen(title, subtitle, url, caption, nr)
+  // FotoToevoegen(title, subtitle, url, caption, nr)
+  AddImageToFS(url)
   fotoVirtualList.update();
 };
 
@@ -1202,28 +1203,29 @@ $$(document).on('page:init', function (e, page) {
         },
         // List item Template7 template  (EDITED BY FUAT & BURHAN)
         itemTemplate: '<li class="swipeout">' +
-          '<a href="" data-popup=".afb{{nr}}" class="popup-open item-link item-content swipeout-content">' +
+          '<a href="" data-popup=".afb{{CreationDate}}" class="popup-open item-link item-content swipeout-content">' +
           '<div class="item-inner">' +
           '<div class="item-title-row">' +
-          '<div class="item-title">{{title}}</div>' +
+          '<div class="item-title">{{Date}}</div>' +
           '</div>' +
-          '<div class="item-subtitle">{{subtitle}}</div>' +
+          '<div class="item-subtitle">{{Time}}</div>' +
           '</div>' +
           '</a>' +
-          '<div class="popup afb{{nr}}" data-swipe-to-close="true">' +
+          '<div class="popup afb{{CreationDate}}" data-swipe-to-close="true">' +
           '<div class="block text-align-center">' +
-          '<p>{{caption}} {{url}}</p>' +
-          '<img src="{{url}}" style="height: 100%; width: 100%;">' +
+          '<p>{{DisplayDate}}</p>' +
+          '<img src="{{Url}}" style="height: 100%; width: 100%;">' +
           '</div>' +
           '</div>' +
-          '<div class="swipeout-actions-right"><a href="#" onclick="FotoVerwijderen({{id}})" class="swipeout-delete">Delete</a></div>' +
+          '<div class="swipeout-actions-right"><a href="#" onclick="DeleteImageFromFS({{CreationDate}})" class="swipeout-delete">Delete</a></div>' +
           '</li>',
         // Item height
         height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
       });
 
       // fotos ophalen van DB
-      GetFotosFromDB();
+      // GetFotosFromDB();
+      GetImagesFromFS(); //TODO
 
       break;
 
@@ -1274,5 +1276,4 @@ function UpdateThisExo(ECD) {
   var weight = document.getElementById('weight-'+ECD).value;
   var reps = document.getElementById('reps-'+ECD).value;
   UpdateExerciseInFS(SessionCD,ECD,reps,weight);
-  GetExercisesFromFS(SessionCD);
 }
