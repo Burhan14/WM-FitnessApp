@@ -2,7 +2,7 @@
   "name": "Shredder",
   "private": true,
   "version": "1.0.0",
-  "description": "Shredder",
+  "description": "A begginer's fitness companion app",
   "repository": "",
   "license": "UNLICENSED",
   "scripts": {

@@ -105,9 +105,9 @@ function initFirebase() {
       }
     ],
     // Terms of service url.
-    tosUrl: '<your-tos-url>',
+    tosUrl: 'https://burhan-atesalp.be/Shredder/TermsOfService.html',
     // Privacy policy url.
-    privacyPolicyUrl: '<your-privacy-policy-url>'
+    privacyPolicyUrl: 'https://burhan-atesalp.be/Shredder/PrivacyPolicy.html'
   };
 
   var btnLogOut = document.getElementById("btnLogOut")
