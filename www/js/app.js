@@ -2,6 +2,7 @@
 var $$ = Dom7;
 var workoutPicker;
 var placePicker;
+var exercisePicker;
 var calendarDateTime;
 var Planningitems = [];
 var planningVirtualList;
@@ -15,6 +16,9 @@ var globalLat;
 var Placesitems = [];
 var calories;
 var bmi;
+var exercisesList = [];
+var sessionVirtualList;
+var sessionItems = [];
 
 var user;
 var fs;
@@ -552,7 +556,7 @@ var app = new Framework7({
 
       var f7 = this;
 
-      initFirebase();    
+      initFirebase();
 
       if (f7.device.cordova) {
         // Init cordova APIs (see cordova-app.js)
@@ -563,7 +567,7 @@ var app = new Framework7({
 
 
 
-        
+
 
       }
     },
@@ -998,12 +1002,12 @@ $$(document).on('page:init', function (e, page) {
         },
         // List item Template7 template  (EDITED BY FUAT & BURHAN)
         itemTemplate: '<li class="swipeout">' +
-          '<a href="{{training}}+{{workout}}+{{moment}}/" class="item-link item-content swipeout-content">' +
+          '<a href="{{Location}}+{{Date}}+{{CreationDate}}/" class="item-link item-content swipeout-content">' +
           '<div class="item-inner">' +
           '<div class="item-title-row">' +
-          '<div class="item-title">{{Location}}</div>' +
+          '<div class="item-title">Workout @ {{Location}}</div>' +
           '</div>' +
-          '<div class="item-subtitle">{{Date}}</div>' +
+          '<div class="item-subtitle">{{DisplayDate}}</div>' +
           '</div>' +
           '</a>' +
           '<div class="swipeout-actions-right"><a href="#" onclick="DeleteSessionFromFS({{CreationDate}})" class="swipeout-delete">Delete</a></div>' +
@@ -1011,23 +1015,22 @@ $$(document).on('page:init', function (e, page) {
         // Item height
         height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
       });
+
       break;
 
     case "nieuw-event":
 
-    //#region place picker
+      //#region place picker
       var placeslist = GetLocationsFromFS()
       placeslist.unshift('Home')
       placePicker = app.picker.create({
         inputEl: '#place-picker',
-        cols: [
-          {
-            textAlign: 'center',
-            values: placeslist
-          }
-        ]
+        cols: [{
+          textAlign: 'center',
+          values: placeslist
+        }]
       });
-    //#endregion
+      //#endregion
 
       // kalender aanmaken
       calendarDateTime = app.calendar.create({
@@ -1081,22 +1084,102 @@ $$(document).on('page:init', function (e, page) {
         // var training = workoutPicker.getValue()[0]
         // var workout = workoutPicker.getValue()[1]
         var place = placePicker.getValue()[0];
-        var momentShow = calendarDateTime.value[0].toLocaleDateString([], {
-          month: '2-digit',
-          day: '2-digit',
-          year: 'numeric'
-        }) + " @ " + calendarDateTime.value[0].toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit'
-        })
         var moment = calendarDateTime.value[0].toString()
 
         // verzend variabelen naar DB en update lijst (dbFuncties)
         // SessieToevoegen(training, workout, momentShow, moment)
-        AddSessionToFS(place,moment);
+        AddSessionToFS(place, moment);
         planningVirtualList.update();
 
       });
+
+      break;
+
+    case "sessionInfo":
+
+      // lijst aanmaken 
+      sessionVirtualList = app.virtualList.create({
+        // List Element
+        el: '.session-virtual-list',
+        items: sessionItems,
+        // Custom search function for searchbar
+        searchAll: function (query, items) {
+          var found = [];
+          for (var i = 0; i < items.length; i++) {
+            if (items[i].title.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i);
+          }
+          return found; //return array with mathced indexes
+        },
+        // List item Template7 template  (EDITED BY FUAT & BURHAN)
+        itemTemplate: '<li class="swipeout">' +
+          '<a href="#" class="item-link item-content swipeout-content link popover-open" data-popover=".popover-{{CreationDate}}">' +
+          '<div class="item-inner">' +
+          '<div class="item-title-row">' +
+          '<div class="item-title">{{Exercise}}</div>' +
+          '</div>' +
+          '<div class="item-subtitle">Repetitions: {{Reps}} - Weights: {{Weight}}</div>' +
+          '</div>' +
+          '</a>' +
+          '<div class="swipeout-actions-right"><a href="#" onclick="DeleteThisExo({{CreationDate}})" class="swipeout-delete">Delete</a></div>' +
+          '<div class="popover popover-{{CreationDate}}">' +
+          '<div class="popover-inner">' +
+          '<div class="list">' +
+          '<ul>' +
+          '<li>' +
+          '<div class="item-content item-input">' +
+          '<div class="item-inner">' +
+          '<div class="item-title item-label">Reps:</div>' +
+          '<div class="item-input-wrap">' +
+          '<input type="text" name="reps" id="reps-{{CreationDate}}" inputmode="numeric" pattern="[0-9]*" value="{{Reps}}">' +
+          '</div>' +
+          '</div>' +
+          '</div>' +
+          '</li>' +
+          '<li>' +
+          '<div class="item-content item-input">' +
+          '<div class="item-inner">' +
+          '<div class="item-title item-label">Weight:</div>' +
+          '<div class="item-input-wrap">' +
+          '<input type="text" name="weight" id="weight-{{CreationDate}}" inputmode="numeric" pattern="[0-9]*" value="{{Weight}}">' +
+          '</div>' +
+          '</div>' +
+          '</div>' +
+          '</li>' +
+          '<li>' +
+          '<div class="item-content item-input">' +
+          '<div class="item-inner">' +
+          '<div class="item-input-wrap">' +
+          '<a href="#" class="button button-fill popover-close" onclick="UpdateThisExo({{CreationDate}})">update</a>' +
+          '</div>' +
+          '</div>' +
+          '</div>' +
+          '</li>' +
+          '</ul>' +
+          '</div>' +
+          '</div>' +
+          '</div>'+
+          '</li>' ,
+          // Item height
+        height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
+      });
+      GetExercisesFromFS(document.getElementById('sessionCD').value)
+      //#region exercise picker
+
+      if (document.getElementById('sessionLocation').value == 'Home') {
+        GetTypeExercisesFromFS('Home')
+      } else {
+        GetTypeExercisesFromFS('Fitness')
+      }
+      exercisePicker = app.picker.create({
+        inputEl: '#exercise-picker',
+        cols: [{
+          textAlign: 'center',
+          values: exercisesList
+        }]
+      });
+      //#endregion
+
+      
 
       break;
 
@@ -1180,3 +1263,16 @@ $$(document).on('page:init', function (e, page) {
       break;
   }
 })
+
+function DeleteThisExo(ECD) {
+  var SessionCD = document.getElementById('sessionCD').value;
+  DeleteExerciseFromFS(SessionCD,ECD);
+}
+
+function UpdateThisExo(ECD) {
+  var SessionCD = document.getElementById('sessionCD').value;
+  var weight = document.getElementById('weight-'+ECD).value;
+  var reps = document.getElementById('reps-'+ECD).value;
+  UpdateExerciseInFS(SessionCD,ECD,reps,weight);
+  GetExercisesFromFS(SessionCD);
+}

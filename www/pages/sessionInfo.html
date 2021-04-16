@@ -1,0 +1,91 @@
+<template>
+    <div class="page" data-name="sessionInfo">
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="if-not-md">Back</span>
+                    </a>
+                </div>
+                <div class="title">Session from {{date}}</div>
+                <input type="hidden" id="sessionLocation" value="{{location}}">
+                <input type="hidden" id="sessionCD" value="{{cd}}">
+            </div>
+        </div>
+        <!-- Extended FAB Center Bottom -->
+        <div class="fab fab-extended fab-center-bottom" style="width: 50%;">
+            <a href="" data-popup=".popup-exercise" class="popup-open">
+                <i class="icon f7-icons if-not-md">plus</i>
+                <i class="icon material-icons md-only">add</i>
+                <div class="fab-text">New Exercise</div>
+            </a>
+        </div>
+        <div class="page-content">
+            <div class="block-title page-title">Exercises in this session</div>
+            <div class="list simple-list searchbar-not-found">
+                <ul>
+                    <li>Nothing found</li>
+                </ul>
+            </div>
+            <div class="list session-virtual-list media-list searchbar-found"></div>
+            <!-- popup -->
+            <div class="popup popup-exercise">
+                <div class="navbar">
+                    <div class="navbar-bg"></div>
+                    <div class="navbar-inner">
+                        <div class="title">New Exercise</div>
+                        <div class="right">
+                            <!-- Link to close popup -->
+                            <a class="link popup-close">close</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="fab fab-extended fab-center-bottom popup-close">
+                    <a onclick="AddExerciseToFS('{{cd}}')">
+                        <div class="fab-text">Add Exercise</div>
+                    </a>
+                </div>
+                <div class="list">
+                    <div class="item-content item-input">
+                        <div class="item-inner">
+                            <div class="block-title">Choose Exercise</div>
+                            <div class="list no-hairlines-md">
+                                <ul>
+                                    <li>
+                                        <div class="item-content item-input">
+                                            <div class="item-inner">
+                                                <div class="item-input-wrap">
+                                                    <input type="text" placeholder="Exercise" readonly="readonly"
+                                                        id="exercise-picker" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    return {
+        data: function () {
+            var sessionInfo = this.$route.params.sessionInfo;
+            var ldcSplit = sessionInfo.split("+");
+            var location = ldcSplit[0];
+            var date = new Date(ldcSplit[1]).toLocaleDateString('en-GB');
+            var creationDate = ldcSplit[2];
+            return {
+                location: location,
+                date: date,
+                cd: creationDate
+            };
+        }
+    };
+    
+</script>
