@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b8d4346-7591-4bf0-91a6-10f8b389caab" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/js/firebase.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/js/firebase.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/pages/vooruitgang.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages/vooruitgang.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/pages/BMR-BMI.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages/BMR-BMI.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,9 +38,9 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="728" y="239" width="1200" height="800" key="AVDManager" timestamp="1618324306580">
+    <state x="728" y="239" width="1200" height="800" key="AVDManager" timestamp="1618421921430">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="728" y="239" width="1200" height="800" key="AVDManager/0.0.2560.1400/2560.247.1920.1040@0.0.2560.1400" timestamp="1618324306580" />
+    <state x="728" y="239" width="1200" height="800" key="AVDManager/0.0.2560.1400/2560.247.1920.1040@0.0.2560.1400" timestamp="1618421921430" />
   </component>
 </project>
