@@ -332,6 +332,7 @@ function UpdateExerciseInFS(SCD, ECD, reps, weight) {
         });
     });
   })
+  GetExercisesFromFS(SCD)
 }
 
 //Firestore UserData
@@ -393,4 +394,62 @@ function DeleteDataFromFS(CD) {
 }
 
 //Firestore Pics
-//...
+
+function GetImagesFromFS() {
+  try {
+    fotoVirtualList.deleteAllItems()
+    firebase.firestore().collection("Users").doc(user.uid).collection("Images").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        fotoVirtualList.appendItem(
+            {
+              Date: new Date(doc.data().CreationDate).toLocaleDateString('en-GB'),
+              Time : new Date(doc.data().CreationDate).getHours() +":"+ new Date(doc.data().CreationDate).getMinutes(),
+              DisplayDate: new Intl.DateTimeFormat('en-GB', {
+                dateStyle: 'full',
+                timeStyle: 'short'
+              }).format(new Date(doc.data().CreationDate)),
+              CreationDate: doc.data().CreationDate,
+              Url: doc.data().Url
+            }
+          )         
+      });
+    });
+    fotoVirtualList.update();
+  } catch (error) {
+    app.dialog.alert("Log in to view your images");
+  }
+  
+}
+
+function AddImageToFS(url) { //TODO
+  try {
+    fs.collection("Users").doc(user.uid).collection("Images").add({
+      Url: url,
+      CreationDate : Date.now()
+    });
+    GetImagesFromFS()
+  } catch (error) {
+    app.dialog.alert("Login to add an image");
+  }
+}
+
+function DeleteImageFromFS(CD) {
+  try {
+    firebase.firestore().collection("Users").doc(user.uid).collection("Images").where("CreationDate", "==",CD)
+        .get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+
+                firebase.firestore().collection("Users").doc(user.uid).collection("Images").doc(doc.id).delete();
+
+            });
+        })
+        .catch((error) => {
+            console.log("Error getting documents: ", error);
+        }); 
+
+        fotoVirtualList.update()
+  } catch (error) {
+    app.dialog.alert("Log in to view your images");
+  }
+}
