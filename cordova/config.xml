@@ -55,11 +55,7 @@
     </universal-links>      
     </platform>
 
-
-
-    
     <preference name="AndroidLaunchMode" value="singleTask" /> 
-
 
     <preference name="DisallowOverscroll" value="true" />
     <preference name="BackupWebStorage" value="local" />
