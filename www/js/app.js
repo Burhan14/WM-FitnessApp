@@ -1214,7 +1214,7 @@ $$(document).on('page:init', function (e, page) {
           '<div class="popup afb{{CreationDate}}" data-swipe-to-close="true">' +
           '<div class="block text-align-center">' +
           '<p>{{DisplayDate}}</p>' +
-          '<img src="{{Url}}" style="height: 100%; width: 100%;">' +
+          '<img src="{{Url}}" style="width: 100%;">' +
           '</div>' +
           '</div>' +
           '<div class="swipeout-actions-right"><a href="#" onclick="DeleteImageFromFS({{CreationDate}})" class="swipeout-delete">Delete</a></div>' +

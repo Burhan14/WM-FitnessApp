@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0b8d4346-7591-4bf0-91a6-10f8b389caab" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cordova/ul_web_hooks/android/android_web_hook.html" beforeDir="false" afterPath="$PROJECT_DIR$/cordova/ul_web_hooks/android/android_web_hook.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,7 +18,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="AnalyzeApkAction.lastApkPath" value="$PROJECT_DIR$" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -45,22 +44,18 @@
     <state x="728" y="239" width="1200" height="800" key="AVDManager" timestamp="1618684786805">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="728" y="239" width="1200" height="800" key="AVDManager/0.0.2560.1400/2560.247.1920.1040@0.0.2560.1400" timestamp="1618684786805" />
-    <state x="1108" y="380" key="FileChooserDialogImpl" timestamp="1618689669437">
-      <screen x="0" y="0" width="2560" height="1400" />
+    <state x="728" y="239" width="1200" height="800" key="AVDManager/0.0.2560.1400/2560.247.1920.1040@0.0.2560.1400" timestamp="1618324306580" />
+    <state x="740" y="261" key="FileChooserDialogImpl" timestamp="1618690393172">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="1108" y="380" key="FileChooserDialogImpl/0.0.2560.1400/2560.247.1920.1040@0.0.2560.1400" timestamp="1618689669437" />
-    <state x="829" y="284" key="SettingsEditor" timestamp="1618690311430">
-      <screen x="0" y="0" width="2560" height="1400" />
+    <state x="740" y="261" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1618690393172" />
+    <state x="100" y="100" width="1720" height="840" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1618751764611">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="829" y="284" key="SettingsEditor/0.0.2560.1400/2560.247.1920.1040@0.0.2560.1400" timestamp="1618690311430" />
-    <state x="984" y="302" key="run.anything.popup" timestamp="1618662334742">
-      <screen x="0" y="0" width="2560" height="1400" />
+    <state x="100" y="100" width="1720" height="840" key="com.android.tools.idea.avdmanager.AvdListDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1618751764611" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1618690421607">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="984" y="302" key="run.anything.popup/0.0.2560.1400/2560.247.1920.1040@0.0.2560.1400" timestamp="1618662334742" />
-    <state x="991" y="358" width="672" height="678" key="search.everywhere.popup" timestamp="1618690323328">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state x="991" y="358" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400/2560.247.1920.1040@0.0.2560.1400" timestamp="1618690323328" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1618690421607" />
   </component>
 </project>
