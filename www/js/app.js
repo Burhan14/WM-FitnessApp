@@ -658,25 +658,33 @@ placesVirtualList = app.virtualList.create({
   height: app.theme === 'ios' ? 63 : (app.theme === 'md' ? 73 : 46),
 });
 
-// methode om huidige locatie automatisch in te vullen in formulier (ipv manueel)  
+// methode om huidige locatie automatisch in te vullen in formulier (ipv manueel) 
+// gebruik van permission plugin om expliciete toegang te krijgen tot de locatie om errors te vermijden in runtime. 
 function getLocatieFormulier() {
-  if (navigator.geolocation) {
-    var accurate = true;
-    if (app.watchPositionID !== null) {
-      // de vorige watch eerst stoppen, of we hebben meerdere simultane lopen.
-      navigator.geolocation.clearWatch(app.watchPositionID);
-    }
-
-    app.watchPositionID = navigator.geolocation.watchPosition(
-      showLocationFormulier,
-      positionError, {
-        enableHighAccuracy: accurate,
-        maximumAge: 10 * 1000
+  var permissions = cordova.plugins.permissions;
+  permissions.requestPermission(permissions.ACCESS_FINE_LOCATION, locSuccess, locError)
+  function locSuccess(){
+    if (navigator.geolocation) {
+      var accurate = true;
+      if (app.watchPositionID !== null) {
+        // de vorige watch eerst stoppen, of we hebben meerdere simultane lopen.
+        navigator.geolocation.clearWatch(app.watchPositionID);
       }
-    );
-
-  } else {
-    app.dialog.alert('I am sorry, but geolocation is not supported by this browser. "," No geolocation support');
+  
+      app.watchPositionID = navigator.geolocation.watchPosition(
+        showLocationFormulier,
+        positionError, {
+          enableHighAccuracy: accurate,
+          maximumAge: 10 * 1000
+        }
+      );
+  
+    } else {
+      app.dialog.alert('I am sorry, but geolocation is not supported by this browser. "," No geolocation support');
+    }
+  }
+  function locError(){
+    app.dialog.alert('Location is required"," No geolocation support');
   }
 }
 
@@ -749,27 +757,29 @@ function showLocation(position) {
 }
 
 // onFail
-function positionError(error) {
+async function positionError(error) {
   console.log('Error occurred. Error code: ' + error.code);
   // error.code can be:
   //   0: unknown error
   //   1: permission denied
   //   2: position unavailable (error response from location provider)
   //   3: timed out
-  switch (error.code) {
-    case 0:
-      // unknown error
-      app.dialog.alert('Unknown problem determining your position. Make sure that the positioning of your device is active. ', 'Position problem');
-    case 1:
-      // permission denied
-      app.dialog.alert('I am sorry, but I am going to have to keep bullying you if you do not give permission to see your position. If you want, you can reload the page and possibly delete the history of your browser. The last hour is more than enough. <b> iPhone </b>: Make sure you give location permission in general AND location permission to Safari.', 'Position admission problem');
-    case 2:
-      // position unavailable (error response from location provider)
-      app.dialog.alert('Your position is not available. Make sure that the positioning of your device is active.', 'Position not available');
-    case 3:
-      // timed out
-      app.dialog.alert('It takes too long to find your position. Are you in a tunnel? Or are you still in school? On a large number of devices, the position can be determined faster if you also switch on your WiFi.', 'Position timeout');
-  }
+  // switch (error.code) {
+  //   case 0:
+  //     // unknown error
+  //     app.dialog.alert('Unknown problem determining your position. Make sure that the positioning of your device is active. ', 'Position problem');
+  //   case 1:
+  //     // permission denied
+  //     app.dialog.alert('I am sorry, but I am going to have to keep bullying you if you do not give permission to see your position. If you want, you can reload the page and possibly delete the history of your browser. The last hour is more than enough. <b> iPhone </b>: Make sure you give location permission in general AND location permission to Safari.', 'Position admission problem');
+  //   case 2:
+  //     // position unavailable (error response from location provider)
+  //     app.dialog.alert('Your position is not available. Make sure that the positioning of your device is active.', 'Position not available');
+  //   case 3:
+  //     // timed out
+  //     app.dialog.alert('It takes too long to find your position. Are you in a tunnel? Or are you still in school? On a large number of devices, the position can be determined faster if you also switch on your WiFi.', 'Position timeout');
+  // }
+
+  app.dialog.alert('Did you give the permission to access your location ? Go to your location settings and give the permission to continue !','Permission ?');
 };
 
 // variabelen van nieuwe plek aanmaken om naar db te sturen

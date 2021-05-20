@@ -23,6 +23,7 @@
         <allow-intent href="itms-apps:*" />
     </platform>
 
+
     <allow-navigation href="*" />
 
     <platform name="android">
