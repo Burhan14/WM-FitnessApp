@@ -1281,6 +1281,7 @@ function DeleteThisExo(ECD) {
   DeleteExerciseFromFS(SessionCD,ECD);
 }
 
+//ECD = exercise creation date
 function UpdateThisExo(ECD) {
   var SessionCD = document.getElementById('sessionCD').value;
   var weight = document.getElementById('weight-'+ECD).value;

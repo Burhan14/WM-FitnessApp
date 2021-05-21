@@ -288,21 +288,21 @@ function GetTypeExercisesFromFS(type) {
 function GetExercisesFromFS(CD) {
   try {
     sessionVirtualList.deleteAllItems();
+    // sessionVirtualList.update();
     firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").where("CreationDate", "==", parseInt(CD)).get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         fs.collection("Users").doc(user.uid).collection("Sessions").doc(doc.id).collection("Exercises").get().then((querySnapshot) => {
           querySnapshot.forEach((doc2) => {
-              // doc.data() is never undefined for query doc snapshots
-              sessionVirtualList.appendItem(doc2.data())
-              });
+            // doc.data() is never undefined for query doc snapshots
+            sessionVirtualList.appendItem(doc2.data())
           });
+        });
       });
+      sessionVirtualList.update();
     })
-    sessionVirtualList.update();
   } catch (error) {
     app.dialog.alert("couldn't get exercises for this session");
   }
-  
 }
 
 function DeleteExerciseFromFS(SCD, ECD) {
@@ -324,15 +324,16 @@ function UpdateExerciseInFS(SCD, ECD, reps, weight) {
     querySnapshot.forEach((doc) => {
       fs.collection("Users").doc(user.uid).collection("Sessions").doc(doc.id).collection("Exercises").where("CreationDate", "==", parseInt(ECD)).get().then((querySnapshot) => {
         querySnapshot.forEach((doc2) => {
-            firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").doc(doc.id).collection("Exercises").doc(doc2.id).update({
-              Reps: reps,
-              Weight: weight
-            });
-            });
+          firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").doc(doc.id).collection("Exercises").doc(doc2.id).update({
+            Reps: reps,
+            Weight: weight
+          }).then(() => {
+            GetExercisesFromFS(SCD)
+          });
         });
+      });
     });
   })
-  GetExercisesFromFS(SCD)
 }
 
 //Firestore UserData
