@@ -51,8 +51,9 @@
                     mediaType: Camera.MediaType.PICTURE,
                     encodingType: Camera.EncodingType.JPEG,
                     cameraDirection: Camera.Direction.BACK,
-                    targetWidth: 300,
-                    targetHeight: 400
+                    // targetWidth: 300,
+                    // targetHeight: 500,
+                    correctOrientation:true
                 };
                 navigator.camera.getPicture(fotoSuccess, fotoFail, options)
             },

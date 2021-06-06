@@ -8,11 +8,6 @@ function initFirebase() {
   fs.settings({
     timestampsInSnapshots: true
   });
-  fs.collection('Oefeningen').get().then((snapshot) => {
-    snapshot.docs.forEach(doc => {
-      console.log(doc.data())
-    })
-  });
 
   //DOM-elements
   var defaultPhoto = document.getElementById("defaultUserPhoto")
@@ -39,10 +34,6 @@ function initFirebase() {
             Email: user.email,
             Uid: user.uid,
           })
-
-          // fs.collection("Users").doc(user.uid).collection("Sessions").add({});
-          // fs.collection("Users").doc(user.uid).collection("Locations").add({});
-
 
           // Send email verification to new users logged in with email/password
           if (userInfo.providerId == "password") {
@@ -97,8 +88,6 @@ function initFirebase() {
           auth_type: 'reauthenticate'
         }
       },
-      // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-      // firebase.auth.GithubAuthProvider.PROVIDER_ID,
       {
         provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
         requireDisplayName: true
@@ -137,6 +126,10 @@ function initFirebase() {
   }
 }
 
+//####################################################################################################################
+//FIRESTORE METHODS
+//####################################################################################################################
+
 //Firestore Locations
 function AddLocationToFS() {
   try {
@@ -151,7 +144,6 @@ function AddLocationToFS() {
     app.dialog.alert("Log in om een locatie te kunnen toevoegen");
   }
 }
-
 function GetLocationsFromFS() {
   var placeNames = []
   try {
@@ -168,7 +160,6 @@ function GetLocationsFromFS() {
     app.dialog.alert("Log in om locaties te weergeven");
   }
 }
-
 function DeleteLocationFromFS(CD) {
   try {
     firebase.firestore().collection("Users").doc(user.uid).collection("Locations").where("CreationDate", "==", CD)
@@ -189,7 +180,6 @@ function DeleteLocationFromFS(CD) {
     app.dialog.alert("Log in om locaties te tonen");
   }
 }
-
 //Firestore Sessions
 function AddSessionToFS(place, date) {
   try {
@@ -203,7 +193,6 @@ function AddSessionToFS(place, date) {
     app.dialog.alert("Log in om een sessie te kunnen toevoegen");
   }
 }
-
 function GetSessionsFromFS() {
   try {
     planningVirtualList.deleteAllItems()
@@ -227,7 +216,6 @@ function GetSessionsFromFS() {
   }
 
 }
-
 function DeleteSessionFromFS(CD) {
   try {
     firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").where("CreationDate", "==", CD)
@@ -248,10 +236,8 @@ function DeleteSessionFromFS(CD) {
     app.dialog.alert("Log in om sessies te tonen");
   }
 }
-
 //Firestore Exercises (to append in sessions) (full CRUD)
 //...
-
 function AddExerciseToFS(CD) {
   try {
     firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").where("CreationDate", "==", parseInt(CD)).get().then((querySnapshot) => {
@@ -269,7 +255,6 @@ function AddExerciseToFS(CD) {
     app.dialog.alert("Couldn't add exercise to session");
   }
 }
-
 function GetTypeExercisesFromFS(type) {
   exercisesList = []
   try {
@@ -284,27 +269,25 @@ function GetTypeExercisesFromFS(type) {
   }
 
 }
-
 function GetExercisesFromFS(CD) {
   try {
     sessionVirtualList.deleteAllItems();
+    // sessionVirtualList.update();
     firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").where("CreationDate", "==", parseInt(CD)).get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         fs.collection("Users").doc(user.uid).collection("Sessions").doc(doc.id).collection("Exercises").get().then((querySnapshot) => {
           querySnapshot.forEach((doc2) => {
-              // doc.data() is never undefined for query doc snapshots
-              sessionVirtualList.appendItem(doc2.data())
-              });
+            // doc.data() is never undefined for query doc snapshots
+            sessionVirtualList.appendItem(doc2.data())
           });
+        });
       });
+      sessionVirtualList.update();
     })
-    sessionVirtualList.update();
   } catch (error) {
     app.dialog.alert("couldn't get exercises for this session");
   }
-  
 }
-
 function DeleteExerciseFromFS(SCD, ECD) {
   //TODO
   firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").where("CreationDate", "==", parseInt(SCD)).get().then((querySnapshot) => {
@@ -317,24 +300,23 @@ function DeleteExerciseFromFS(SCD, ECD) {
     });
   })
 }
-
 function UpdateExerciseInFS(SCD, ECD, reps, weight) {
   //TODO
   firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").where("CreationDate", "==", parseInt(SCD)).get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
       fs.collection("Users").doc(user.uid).collection("Sessions").doc(doc.id).collection("Exercises").where("CreationDate", "==", parseInt(ECD)).get().then((querySnapshot) => {
         querySnapshot.forEach((doc2) => {
-            firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").doc(doc.id).collection("Exercises").doc(doc2.id).update({
-              Reps: reps,
-              Weight: weight
-            });
-            });
+          firebase.firestore().collection("Users").doc(user.uid).collection("Sessions").doc(doc.id).collection("Exercises").doc(doc2.id).update({
+            Reps: reps,
+            Weight: weight
+          }).then(() => {
+            GetExercisesFromFS(SCD)
+          });
         });
+      });
     });
   })
-  GetExercisesFromFS(SCD)
 }
-
 //Firestore UserData
 function GetDataFromFS() {
   try {
@@ -357,7 +339,6 @@ function GetDataFromFS() {
   }
   
 }
-
 function AddDataToFS(bmi, calories) {
   try {
     fs.collection("Users").doc(user.uid).collection("Data").add({
@@ -371,7 +352,6 @@ function AddDataToFS(bmi, calories) {
     app.dialog.alert("Login to add a calculation");
   }
 }
-
 function DeleteDataFromFS(CD) {
   try {
     firebase.firestore().collection("Users").doc(user.uid).collection("Data").where("CreationDate", "==",CD)
@@ -392,9 +372,7 @@ function DeleteDataFromFS(CD) {
     app.dialog.alert("Log in to view your data");
   }
 }
-
 //Firestore Pics
-
 function GetImagesFromFS() {
   try {
     fotoVirtualList.deleteAllItems()
@@ -418,10 +396,8 @@ function GetImagesFromFS() {
   } catch (error) {
     app.dialog.alert("Log in to view your images");
   }
-  
 }
-
-function AddImageToFS(url) { //TODO
+function AddImageToFS(url) {
   try {
     fs.collection("Users").doc(user.uid).collection("Images").add({
       Url: url,
@@ -432,7 +408,6 @@ function AddImageToFS(url) { //TODO
     app.dialog.alert("Login to add an image");
   }
 }
-
 function DeleteImageFromFS(CD) {
   try {
     firebase.firestore().collection("Users").doc(user.uid).collection("Images").where("CreationDate", "==",CD)
