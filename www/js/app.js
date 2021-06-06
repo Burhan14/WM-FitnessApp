@@ -556,19 +556,13 @@ var app = new Framework7({
 
       var f7 = this;
 
+      //Firebase INIT => firebase.js
       initFirebase();
 
       if (f7.device.cordova) {
         // Init cordova APIs (see cordova-app.js)
         cordovaApp.init(f7);
         placesVirtualList.update();
-
-
-
-
-
-
-
       }
     },
     pageInit: function () {
